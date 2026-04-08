@@ -7,7 +7,7 @@ definePageMeta({
 })
 
 useHead({
-  title: 'PlantZone Shop & eCommerce HTML Template | DexignZone',
+  title: 'FasionAble',
   meta: [
     { charset: 'utf-8' },
     { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
@@ -17,33 +17,33 @@ useHead({
     {
       name: 'keywords',
       content:
-        'garden shop, flowers, landscape gardener, delivery, ecommerce, greenery, order, shopping, store, portfolio, plant template, plant store, plant showcase, nursery technology, ecommerce web, eCommerce website, minimal shop, online shop, online shopping, plantzone, user interface, user experience, trendy, stylish, development, farmer',
+        'fashion store, dresses, streetwear, ecommerce, clothing, apparel, style, online shopping, modern fashion, boutique, trendy outfits, UI, UX, stylish, responsive design',
     },
     {
       name: 'description',
       content:
-        'Elevate your online retail presence with PlantZone Shop & eCommerce HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for plant enthusiasts.',
+        'Elevate your online retail presence with FasionAble HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for fashion enthusiasts.',
     },
-    { property: 'og:title', content: 'PlantZone Shop & eCommerce HTML Template | DexignZone' },
+    { property: 'og:title', content: 'FasionAble' },
     {
       property: 'og:description',
       content:
-        'Elevate your online retail presence with PlantZone Shop & eCommerce HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for plant enthusiasts.',
+        'Elevate your online retail presence with FasionAble HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for fashion enthusiasts.',
     },
-    { property: 'og:image', content: 'https://plantzone.dexignzone.com/xhtml/social-image.png' },
-    { name: 'twitter:title', content: 'PlantZone: Shop & eCommerce Bootstrap HTML Template | DexignZone' },
+    { property: 'og:image', content: 'https://fasionable.dexignzone.com/xhtml/social-image.png' },
+    { name: 'twitter:title', content: 'FasionAble: Fashion & eCommerce Template | DexignZone' },
     {
       name: 'twitter:description',
       content:
-        'Elevate your online retail presence with PlantZone Shop & eCommerce HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for plant enthusiasts.',
+        'Elevate your online retail presence with FasionAble HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for fashion enthusiasts.',
     },
-    { name: 'twitter:image', content: 'https://plantzone.dexignzone.com/xhtml/social-image.png' },
+    { name: 'twitter:image', content: 'https://fasionable.dexignzone.com/xhtml/social-image.png' },
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
   ],
   link: [
-    { rel: 'canonical', href: 'https://plantzone.dexignzone.com/xhtml/post-left-sidebar.html' },
-    { rel: 'icon', type: 'image/x-icon', href: '/images/favicon.png' },
+    { rel: 'canonical', href: 'https://fasionable.dexignzone.com/xhtml/post-left-sidebar.html' },
+    { rel: 'icon', type: 'image/x-icon', href: '/images/20.jpg.jpeg' },
     { rel: 'stylesheet', href: '/vendor/bootstrap-select/dist/css/bootstrap-select.min.css' },
     { rel: 'stylesheet', href: '/vendor/swiper/swiper-bundle.min.css' },
     { rel: 'stylesheet', href: '/vendor/nouislider/nouislider.min.css' },
@@ -105,27 +105,27 @@ onBeforeUnmount(() => {
 })
 
 const popularProducts = [
-  { image: '/images/shop/product/1.png', title: 'Large Majesty Palm (m)', price: '$79', oldPrice: '$99' },
-  { image: '/images/shop/product/2.png', title: 'Endless Stems Gardens (m)', price: '$79', oldPrice: '$199' },
-  { image: '/images/shop/product/3.png', title: 'Long Strider Pants (m)', price: '$109', oldPrice: '$149' },
-  { image: '/images/shop/product/4.png', title: 'Feather Reed Grass (m)', price: '$299', oldPrice: '$499' },
-  { image: '/images/shop/product/5.png', title: 'Miniature Rose Bush (m)', price: '$199', oldPrice: '$299' },
-  { image: '/images/shop/product/6.png', title: 'Large Majesty Palm (m)', price: '$79', oldPrice: '$99' },
-  { image: '/images/shop/product/7.png', title: 'Giant Elephant Ear(M)', price: '$99', oldPrice: '$110' },
-  { image: '/images/shop/product/8.png', title: 'Large Majesty Palm (m)', price: '$79', oldPrice: '$99' },
+  { image: '/images/shop/product/1.png', title: 'Premium Maxi Dress (m)', price: '$79', oldPrice: '$99' },
+  { image: '/images/shop/product/2.png', title: 'Elegant Evening Dress (m)', price: '$79', oldPrice: '$199' },
+  { image: '/images/shop/product/3.png', title: 'Slim Fit Trouser (m)', price: '$109', oldPrice: '$149' },
+  { image: '/images/shop/product/4.png', title: 'Pleated Skirt (m)', price: '$299', oldPrice: '$499' },
+  { image: '/images/shop/product/5.png', title: 'Chic Mini Dress (m)', price: '$199', oldPrice: '$299' },
+  { image: '/images/shop/product/6.png', title: 'Premium Maxi Dress (m)', price: '$79', oldPrice: '$99' },
+  { image: '/images/shop/product/7.png', title: 'Oversized Street Jacket (M)', price: '$99', oldPrice: '$110' },
+  { image: '/images/shop/product/8.png', title: 'Premium Maxi Dress (m)', price: '$79', oldPrice: '$99' },
 ]
 
 const sidebarCartItems = [
-  { image: '/images/shop/shop-cart/pic1.jpg', title: 'Large Majesty Palm (m)', qty: 1, price: '$59', oldPrice: '$99' },
-  { image: '/images/shop/shop-cart/pic2.jpg', title: 'Endless Stems Gardens (m)', qty: 1, price: '$79', oldPrice: '$99' },
-  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Feather Reed Grass (m)', qty: 1, price: '$49', oldPrice: '$99' },
-  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Long Strider Pants (m)', qty: 1, price: '$99', oldPrice: '$199' },
+  { image: '/images/shop/shop-cart/pic1.jpg', title: 'Premium Maxi Dress (m)', qty: 1, price: '$59', oldPrice: '$99' },
+  { image: '/images/shop/shop-cart/pic2.jpg', title: 'Elegant Evening Dress (m)', qty: 1, price: '$79', oldPrice: '$99' },
+  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Pleated Skirt (m)', qty: 1, price: '$49', oldPrice: '$99' },
+  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Slim Fit Trouser (m)', qty: 1, price: '$99', oldPrice: '$199' },
 ]
 
 const wishlistItems = [
-  { image: '/images/shop/shop-cart/pic1.jpg', title: 'Large Majesty Palm (m)', price: '$59' },
-  { image: '/images/shop/shop-cart/pic2.jpg', title: 'Endless Stems Gardens (m)', price: '$79' },
-  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Feather Reed Grass (m)', price: '$49' },
+  { image: '/images/shop/shop-cart/pic1.jpg', title: 'Premium Maxi Dress (m)', price: '$59' },
+  { image: '/images/shop/shop-cart/pic2.jpg', title: 'Elegant Evening Dress (m)', price: '$79' },
+  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Pleated Skirt (m)', price: '$49' },
 ]
 
 const footerSocialPosts = [1, 2, 3, 4, 5, 6]
@@ -135,7 +135,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
   <div id="bg">
     <div class="page-wraper">
       <div v-if="showLoader" id="loading-area" class="loading-page-1">
-        <div class="text"><span class="text-primary">Plant</span>Zone</div>
+        <div class="text"><span class="text-primary">Fashion</span>Able</div>
       </div>
 
       <!-- Header Start -->
@@ -146,7 +146,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
 
               <!-- Logo -->
               <div class="logo-header logo-dark me-md-4 me-2">
-                <a href="/"><img src="/images/logo.svg" alt="logo" /></a>
+                <a href="/"><img src="/images/20.jpg.jpeg" alt="logo" /></a>
               </div>
 
               <!-- Nav Toggle -->
@@ -170,7 +170,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
                 :class="{ show: mobileMenuOpen }"
               >
                 <div class="logo-header logo-dark d-lg-none">
-                  <a href="/"><img src="/images/logo.svg" alt="" /></a>
+                  <a href="/"><img src="/images/20.jpg.jpeg" alt="" /></a>
                 </div>
 
                 <ul class="nav navbar-nav">
@@ -228,7 +228,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
                               <div class="clearfix me-3">
                                 <h3>Deal of the month</h3>
                                 <p class="mb-0">
-                                  Yes! Send me exclusive offers, personalised, and unique gift ideas, tips for shopping on PlantZone
+                                  Yes! Send me exclusive offers, personalised, and unique gift ideas, tips for shopping on FasionAble
                                   <a href="/shop-standard" class="dz-link-2">View All Products</a>
                                 </p>
                               </div>
@@ -324,21 +324,21 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
                               <li>
                                 <div class="dz-media"><img src="/images/shop/product/small/1.png" alt="" /></div>
                                 <div class="dz-content">
-                                  <h6 class="name"><a href="/post-standard">A Journey Through Plant</a></h6>
+                                  <h6 class="name"><a href="/post-standard">A Journey Through Fashion</a></h6>
                                   <span class="time">Jun 23, 2024</span>
                                 </div>
                               </li>
                               <li>
                                 <div class="dz-media"><img src="/images/shop/product/small/2.png" alt="" /></div>
                                 <div class="dz-content">
-                                  <h6 class="name"><a href="/post-standard">Into Plant Care Cultivation</a></h6>
+                                  <h6 class="name"><a href="/post-standard">Into Fashion Styling Trends</a></h6>
                                   <span class="time">Feb 16, 2024</span>
                                 </div>
                               </li>
                               <li>
                                 <div class="dz-media"><img src="/images/shop/product/small/3.png" alt="" /></div>
                                 <div class="dz-content">
-                                  <h6 class="name"><a href="/post-standard">The Wonders of Plants</a></h6>
+                                  <h6 class="name"><a href="/post-standard">The Wonders of Style</a></h6>
                                   <span class="time">Mar 15, 2024</span>
                                 </div>
                               </li>
@@ -596,10 +596,10 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
               </div>
               <ul class="recent-tag">
                 <li class="pe-0"><span>Quick Search :</span></li>
-                <li><a href="/shop-list">Small Plants</a></li>
-                <li><a href="/shop-list">House Plants</a></li>
+                <li><a href="/shop-list">Casual Wear</a></li>
+                <li><a href="/shop-list">Daily Wear</a></li>
                 <li><a href="/shop-list">Aqua Greens</a></li>
-                <li><a href="/shop-list">Plant Paradise</a></li>
+                <li><a href="/shop-list">Fashion Paradise</a></li>
               </ul>
             </form>
             <div class="row">
@@ -757,8 +757,8 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
                   <a href="/" class="logo-white"><img src="/images/logo.svg" alt="/" /></a>
                 </div>
                 <p class="text">
-                  Transform your website into a dynamic online storefront with PlantZone, where style seamlessly meets
-                  functionality, ensuring a captivating and user-friendly eCommerce journey through the lush world of plants.
+                  Transform your website into a dynamic online storefront with FasionAble, where style seamlessly meets
+                  functionality, ensuring a captivating and user-friendly eCommerce journey through the lush world of fashion.
                 </p>
                 <h4 class="dz-title">Contact Us</h4>
                 <ul class="contact-address">
@@ -844,11 +844,11 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
 
                       <ul class="list-check-2 check-circle">
                         <li>Explore Our Colorful Blooms</li>
-                        <li>Plants for Cool Corners</li>
+                        <li>Dresses for Cool Corners</li>
                         <li>Discover Low-Maintenance Beauties</li>
                         <li>Crafting a Legacy of Love and Care</li>
                         <li>Embrace the Beauty of Leaves</li>
-                        <li>Aromatic Plants for Your Garden</li>
+                        <li>Aromatic Dresses for Your Garden</li>
                       </ul>
 
                       <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
@@ -856,10 +856,10 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
                     <div class="dz-share-post meta-bottom">
                       <div class="post-tags">
                         <strong>Tags:</strong>
-                        <a href="javascript:void(0);">Small Plants</a>
+                        <a href="javascript:void(0);">Casual Wear</a>
                         <a href="javascript:void(0);">Cactus Corner</a>
-                        <a href="javascript:void(0);">House Plants</a>
-                        <a href="javascript:void(0);">Plant Paradise</a>
+                        <a href="javascript:void(0);">Daily Wear</a>
+                        <a href="javascript:void(0);">Fashion Paradise</a>
                         <a href="javascript:void(0);">Fern Fantasy</a>
                       </div>
                       <div class="dz-social-icon primary-light">
@@ -904,7 +904,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
                           </ul>
                         </div>
                         <h2 class="dz-title">
-                          <a href="/blog-right-sidebar">Essential Plant Care Tips for Beginners</a>
+                          <a href="/blog-right-sidebar">Essential Fashion Care Tips for Beginners</a>
                         </h2>
                         <a href="/blog-right-sidebar" class="font-14 read-btn">Read More
                           <i class="icon feather icon-chevron-right"></i>
@@ -925,7 +925,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
                           </ul>
                         </div>
                         <h2 class="dz-title">
-                          <a href="/blog-right-sidebar">Essential Plant Care Tips for Beginners</a>
+                          <a href="/blog-right-sidebar">Essential Fashion Care Tips for Beginners</a>
                         </h2>
                         <a href="/blog-right-sidebar" class="font-14 read-btn">Read More
                           <i class="icon feather icon-chevron-right"></i>
@@ -1028,14 +1028,14 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
                     <h3 class="widget-title">Product Category</h3>
                     <ul>
                       <li class="cat-item"><a href="/blog-category">Bonsai</a> (10)</li>
-                      <li class="cat-item"><a href="/blog-category">House Plants</a> (5)</li>
+                      <li class="cat-item"><a href="/blog-category">Daily Wear</a> (5)</li>
                       <li class="cat-item"><a href="/blog-category">indoor Living</a> (17)</li>
                       <li class="cat-item"><a href="/blog-category">Perennials</a> (13)</li>
-                      <li class="cat-item"><a href="/blog-category">Plant For Gift</a> (06)</li>
+                      <li class="cat-item"><a href="/blog-category">Fashion For Gift</a> (06)</li>
                       <li class="cat-item"><a href="/blog-category">garden Tools</a> (17)</li>
                       <li class="cat-item"><a href="/blog-category">Best Sellers</a> (13)</li>
                       <li class="cat-item"><a href="/blog-category">Blossom Haven</a> (06)</li>
-                      <li class="cat-item"><a href="/blog-category">Small Plants</a> (22)</li>
+                      <li class="cat-item"><a href="/blog-category">Casual Wear</a> (22)</li>
                     </ul>
                   </div>
                   <div class="widget recent-posts-entry">
@@ -1046,7 +1046,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
                           <a href="/post-standard"><img src="/images/blog/recent-blog/pic1.jpg" alt="/" /></a>
                         </div>
                         <div class="dz-info">
-                          <h6 class="title"><a href="/post-standard">Bacopa sutera cordata (m)</a></h6>
+                          <h6 class="title"><a href="/post-standard">Classic Denim Set (m)</a></h6>
                           <span class="price">$659 <del>$1299</del></span>
                         </div>
                       </div>
@@ -1055,7 +1055,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
                           <a href="/post-standard"><img src="/images/blog/recent-blog/pic2.jpg" alt="/" /></a>
                         </div>
                         <div class="dz-info">
-                          <h6 class="title"><a href="/post-standard">Vineyard Reach (m)</a></h6>
+                          <h6 class="title"><a href="/post-standard">Runway Reach Dress (m)</a></h6>
                           <span class="price">$700 <del>$1449</del></span>
                         </div>
                       </div>
@@ -1064,7 +1064,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
                           <a href="/post-standard"><img src="/images/blog/recent-blog/pic3.jpg" alt="/" /></a>
                         </div>
                         <div class="dz-info">
-                          <h6 class="title"><a href="/post-standard">Long Vine Flora (m)</a></h6>
+                          <h6 class="title"><a href="/post-standard">Longline Fashion Dress (m)</a></h6>
                           <span class="price">$449 <del>$999</del></span>
                         </div>
                       </div>
@@ -1073,14 +1073,14 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
                   <div class="widget widget_tag_cloud">
                     <h3 class="widget-title">Tags</h3>
                     <div class="tagcloud">
-                      <a href="/blog-tag">plants </a>
+                      <a href="/blog-tag">fashion </a>
                       <a href="/blog-tag">Green Dreams</a>
                       <a href="/blog-tag">Seeds</a>
                       <a href="/blog-tag">Photo</a>
                       <a href="/blog-tag">capes</a>
                       <a href="/blog-tag">Urban Oasis</a>
                       <a href="/blog-tag">Fern Fantasy</a>
-                      <a href="/blog-tag">Plant Paradise</a>
+                      <a href="/blog-tag">Fashion Paradise</a>
                     </div>
                   </div>
                 </aside>
@@ -1091,7 +1091,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
         <section class="content-inner-3 overflow-hidden position-relative border-top">
           <div class="container">
             <div class="row align-items-center">
-              <div class="col-lg-6 col-md-12"><div class="section-head style-2 d-block wow fadeInUp" data-wow-delay="0.2s"><h2 class="title mb-4">Subscribe Newsletter & Get Plant News</h2></div></div>
+              <div class="col-lg-6 col-md-12"><div class="section-head style-2 d-block wow fadeInUp" data-wow-delay="0.2s"><h2 class="title mb-4">Subscribe Newsletter & Get Fashion News</h2></div></div>
               <div class="col-lg-6 col-md-12 m-b30 wow fadeInUp" data-wow-delay="0.4s">
                 <form class="dzSubscribe style-2" action="script/mailchamp.php" method="post"><div class="dzSubscribeMsg"></div><div class="form-group"><div class="input-group mb-0"><input name="dzEmail" required type="email" class="form-control h-70" placeholder="Your Email Address" /><div class="sub-btn"><button name="submit" value="Submit" type="submit" class="btn btn-secondary">Subscribe Now</button></div></div></div></form>
               </div>
@@ -1108,7 +1108,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
               <div class="col-xl-3 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="widget widget_about me-2">
                   <div class="footer-logo logo-white">
-                    <a href="/"><img src="/images/logo.svg" alt="" /></a>
+                    <a href="/"><img src="/images/20.jpg.jpeg" alt="" /></a>
                   </div>
                   <ul class="widget-address">
                     <li><p><span>Address</span> : 451 Wall Street, UK, London</p></li>
@@ -1174,7 +1174,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
                   <ul>
                     <li><a href="javascript:void(0);">Instagram profile</a></li>
                     <li><a href="javascript:void(0);">New Collection</a></li>
-                    <li><a href="javascript:void(0);">Popular Plant</a></li>
+                    <li><a href="javascript:void(0);">Popular Outfit</a></li>
                     <li><a href="javascript:void(0);">Contact Us</a></li>
                     <li><a href="javascript:void(0);">Latest News</a></li>
                   </ul>
@@ -1229,6 +1229,10 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
 }
 
 </style>
+
+
+
+
 
 
 

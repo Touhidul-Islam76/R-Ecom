@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { ref, onBeforeUnmount, onMounted, watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -7,7 +7,7 @@ definePageMeta({
 })
 
 useHead({
-  title: 'PlantZone Shop & eCommerce HTML Template | DexignZone',
+  title: 'FasionAble',
   meta: [
     { charset: 'utf-8' },
     { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
@@ -17,33 +17,33 @@ useHead({
     {
       name: 'keywords',
       content:
-        'garden shop, flowers, landscape gardener, delivery, ecommerce, greenery, order, shopping, store, portfolio, plant template, plant store, plant showcase, nursery technology, ecommerce web, eCommerce website, minimal shop, online shop, online shopping, plantzone, user interface, user experience, trendy, stylish, development, farmer',
+        'fashion store, dresses, streetwear, ecommerce, clothing, apparel, style, online shopping, modern fashion, boutique, trendy outfits, UI, UX, stylish, responsive design',
     },
     {
       name: 'description',
       content:
-        'Elevate your online retail presence with PlantZone Shop & eCommerce HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for plant enthusiasts.',
+        'Elevate your online retail presence with FasionAble HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for fashion enthusiasts.',
     },
-    { property: 'og:title', content: 'PlantZone Shop & eCommerce HTML Template | DexignZone' },
+    { property: 'og:title', content: 'FasionAble' },
     {
       property: 'og:description',
       content:
-        'Elevate your online retail presence with PlantZone Shop & eCommerce HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for plant enthusiasts.',
+        'Elevate your online retail presence with FasionAble HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for fashion enthusiasts.',
     },
-    { property: 'og:image', content: 'https://plantzone.dexignzone.com/xhtml/social-image.png' },
-    { name: 'twitter:title', content: 'PlantZone: Shop & eCommerce Bootstrap HTML Template | DexignZone' },
+    { property: 'og:image', content: 'https://fasionable.dexignzone.com/xhtml/social-image.png' },
+    { name: 'twitter:title', content: 'FasionAble: Fashion & eCommerce Template | DexignZone' },
     {
       name: 'twitter:description',
       content:
-        'Elevate your online retail presence with PlantZone Shop & eCommerce HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for plant enthusiasts.',
+        'Elevate your online retail presence with FasionAble HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for fashion enthusiasts.',
     },
-    { name: 'twitter:image', content: 'https://plantzone.dexignzone.com/xhtml/social-image.png' },
+    { name: 'twitter:image', content: 'https://fasionable.dexignzone.com/xhtml/social-image.png' },
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
   ],
   link: [
-    { rel: 'canonical', href: 'https://plantzone.dexignzone.com/xhtml/about-us.html' },
-    { rel: 'icon', type: 'image/x-icon', href: '/images/favicon.png' },
+    { rel: 'canonical', href: 'https://fasionable.dexignzone.com/xhtml/about-us.html' },
+    { rel: 'icon', type: 'image/x-icon', href: '/images/20.jpg.jpeg' },
     { rel: 'stylesheet', href: '/vendor/bootstrap-select/dist/css/bootstrap-select.min.css' },
     { rel: 'stylesheet', href: '/vendor/swiper/swiper-bundle.min.css' },
     { rel: 'stylesheet', href: '/vendor/nouislider/nouislider.min.css' },
@@ -105,27 +105,27 @@ onBeforeUnmount(() => {
 })
 
 const popularProducts = [
-  { image: '/images/shop/product/1.png', title: 'Large Majesty Palm (m)', price: '$79', oldPrice: '$99' },
-  { image: '/images/shop/product/2.png', title: 'Endless Stems Gardens (m)', price: '$79', oldPrice: '$199' },
-  { image: '/images/shop/product/3.png', title: 'Long Strider Pants (m)', price: '$109', oldPrice: '$149' },
-  { image: '/images/shop/product/4.png', title: 'Feather Reed Grass (m)', price: '$299', oldPrice: '$499' },
-  { image: '/images/shop/product/5.png', title: 'Miniature Rose Bush (m)', price: '$199', oldPrice: '$299' },
-  { image: '/images/shop/product/6.png', title: 'Large Majesty Palm (m)', price: '$79', oldPrice: '$99' },
-  { image: '/images/shop/product/7.png', title: 'Giant Elephant Ear(M)', price: '$99', oldPrice: '$110' },
-  { image: '/images/shop/product/8.png', title: 'Large Majesty Palm (m)', price: '$79', oldPrice: '$99' },
+  { image: '/images/shop/product/1.png', title: 'Premium Maxi Dress (m)', price: '$79', oldPrice: '$99' },
+  { image: '/images/shop/product/2.png', title: 'Elegant Evening Dress (m)', price: '$79', oldPrice: '$199' },
+  { image: '/images/shop/product/3.png', title: 'Slim Fit Trouser (m)', price: '$109', oldPrice: '$149' },
+  { image: '/images/shop/product/4.png', title: 'Pleated Skirt (m)', price: '$299', oldPrice: '$499' },
+  { image: '/images/shop/product/5.png', title: 'Chic Mini Dress (m)', price: '$199', oldPrice: '$299' },
+  { image: '/images/shop/product/6.png', title: 'Premium Maxi Dress (m)', price: '$79', oldPrice: '$99' },
+  { image: '/images/shop/product/7.png', title: 'Oversized Street Jacket (M)', price: '$99', oldPrice: '$110' },
+  { image: '/images/shop/product/8.png', title: 'Premium Maxi Dress (m)', price: '$79', oldPrice: '$99' },
 ]
 
 const sidebarCartItems = [
-  { image: '/images/shop/shop-cart/pic1.jpg', title: 'Large Majesty Palm (m)', qty: 1, price: '$59', oldPrice: '$99' },
-  { image: '/images/shop/shop-cart/pic2.jpg', title: 'Endless Stems Gardens (m)', qty: 1, price: '$79', oldPrice: '$99' },
-  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Feather Reed Grass (m)', qty: 1, price: '$49', oldPrice: '$99' },
-  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Long Strider Pants (m)', qty: 1, price: '$99', oldPrice: '$199' },
+  { image: '/images/shop/shop-cart/pic1.jpg', title: 'Premium Maxi Dress (m)', qty: 1, price: '$59', oldPrice: '$99' },
+  { image: '/images/shop/shop-cart/pic2.jpg', title: 'Elegant Evening Dress (m)', qty: 1, price: '$79', oldPrice: '$99' },
+  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Pleated Skirt (m)', qty: 1, price: '$49', oldPrice: '$99' },
+  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Slim Fit Trouser (m)', qty: 1, price: '$99', oldPrice: '$199' },
 ]
 
 const wishlistItems = [
-  { image: '/images/shop/shop-cart/pic1.jpg', title: 'Large Majesty Palm (m)', price: '$59' },
-  { image: '/images/shop/shop-cart/pic2.jpg', title: 'Endless Stems Gardens (m)', price: '$79' },
-  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Feather Reed Grass (m)', price: '$49' },
+  { image: '/images/shop/shop-cart/pic1.jpg', title: 'Premium Maxi Dress (m)', price: '$59' },
+  { image: '/images/shop/shop-cart/pic2.jpg', title: 'Elegant Evening Dress (m)', price: '$79' },
+  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Pleated Skirt (m)', price: '$49' },
 ]
 
 const footerSocialPosts = [1, 2, 3, 4, 5, 6]
@@ -135,7 +135,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
   <div id="bg">
     <div class="page-wraper">
       <div v-if="showLoader" id="loading-area" class="loading-page-1">
-        <div class="text"><span class="text-primary">Plant</span>Zone</div>
+        <div class="text"><span class="text-primary">Fashion</span>Able</div>
       </div>
 
       <!-- Header Start -->
@@ -146,7 +146,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
 
               <!-- Logo -->
               <div class="logo-header logo-dark me-md-4 me-2">
-                <NuxtLink to="/"><img src="/images/logo.svg" alt="logo" /></NuxtLink>
+                <NuxtLink to="/"><img src="/images/20.jpg.jpeg" alt="logo" /></NuxtLink>
               </div>
 
               <!-- Nav Toggle -->
@@ -170,7 +170,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
                 :class="{ show: mobileMenuOpen }"
               >
                 <div class="logo-header logo-dark d-lg-none">
-                  <NuxtLink to="/"><img src="/images/logo.svg" alt="" /></NuxtLink>
+                  <NuxtLink to="/"><img src="/images/20.jpg.jpeg" alt="" /></NuxtLink>
                 </div>
 
                 <ul class="nav navbar-nav">
@@ -228,7 +228,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
                               <div class="clearfix me-3">
                                 <h3>Deal of the month</h3>
                                 <p class="mb-0">
-                                  Yes! Send me exclusive offers, personalised, and unique gift ideas, tips for shopping on PlantZone
+                                  Yes! Send me exclusive offers, personalised, and unique gift ideas, tips for shopping on FasionAble
                                   <a href="/shop-standard" class="dz-link-2">View All Products</a>
                                 </p>
                               </div>
@@ -324,21 +324,21 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
                               <li>
                                 <div class="dz-media"><img src="/images/shop/product/small/1.png" alt="" /></div>
                                 <div class="dz-content">
-                                  <h6 class="name"><a href="/post-standard">A Journey Through Plant</a></h6>
+                                  <h6 class="name"><a href="/post-standard">A Journey Through Fashion</a></h6>
                                   <span class="time">Jun 23, 2024</span>
                                 </div>
                               </li>
                               <li>
                                 <div class="dz-media"><img src="/images/shop/product/small/2.png" alt="" /></div>
                                 <div class="dz-content">
-                                  <h6 class="name"><a href="/post-standard">Into Plant Care Cultivation</a></h6>
+                                  <h6 class="name"><a href="/post-standard">Into Fashion Styling Trends</a></h6>
                                   <span class="time">Feb 16, 2024</span>
                                 </div>
                               </li>
                               <li>
                                 <div class="dz-media"><img src="/images/shop/product/small/3.png" alt="" /></div>
                                 <div class="dz-content">
-                                  <h6 class="name"><a href="/post-standard">The Wonders of Plants</a></h6>
+                                  <h6 class="name"><a href="/post-standard">The Wonders of Style</a></h6>
                                   <span class="time">Mar 15, 2024</span>
                                 </div>
                               </li>
@@ -596,10 +596,10 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
               </div>
               <ul class="recent-tag">
                 <li class="pe-0"><span>Quick Search :</span></li>
-                <li><a href="/shop-list">Small Plants</a></li>
-                <li><a href="/shop-list">House Plants</a></li>
+                <li><a href="/shop-list">Casual Wear</a></li>
+                <li><a href="/shop-list">Daily Wear</a></li>
                 <li><a href="/shop-list">Aqua Greens</a></li>
-                <li><a href="/shop-list">Plant Paradise</a></li>
+                <li><a href="/shop-list">Fashion Paradise</a></li>
               </ul>
             </form>
             <div class="row">
@@ -757,8 +757,8 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
                   <NuxtLink to="/" class="logo-white"><img src="/images/logo.svg" alt="/" /></NuxtLink>
                 </div>
                 <p class="text">
-                  Transform your website into a dynamic online storefront with PlantZone, where style seamlessly meets
-                  functionality, ensuring a captivating and user-friendly eCommerce journey through the lush world of plants.
+                  Transform your website into a dynamic online storefront with FasionAble, where style seamlessly meets
+                  functionality, ensuring a captivating and user-friendly eCommerce journey through the lush world of fashion.
                 </p>
                 <h4 class="dz-title">Contact Us</h4>
                 <ul class="contact-address">
@@ -836,7 +836,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
                 <div class="section-head wow fadeInUp m-md-r100" data-wow-delay="0.1s">
                   <h2 class="title">Growing Green, Nurturing Life</h2>
                   <p>
-                    At PlantZone, we are on a mission to redefine fashion by blending style, quality, and individuality into every garment we offer.
+                    At FasionAble, we are on a mission to redefine fashion by blending style, quality, and individuality into every garment we offer.
                     We believe that what you wear is an extension of your unique personality, and it should reflect your values and aspirations.
                   </p>
                 </div>
@@ -883,7 +883,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
             <ul class="list-check style-2">
               <li>Our Botanical Journey: Tracing our passion from roots to flourishing expertise.</li>
               <li>The Green Difference: Innovative care and personalized approaches set us apart.</li>
-              <li>Meet Our Plant Whisperers: Dedicated to fostering flourishing ecosystems and green happiness.</li>
+              <li>Meet Our Fashion Whisperers: Dedicated to fostering flourishing ecosystems and green happiness.</li>
             </ul>
           </div>
         </section>
@@ -1066,7 +1066,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
                   <div class="dz-media"><img src="/images/blog/grid/1.jpg" alt="" /></div>
                   <div class="dz-info">
                     <div class="dz-meta"><ul><li class="post-date">20 Apr 2023</li></ul></div>
-                    <h2 class="dz-title"><a class="text-white" href="/post-left-sidebar">Essential Plant Care Tips for Beginners</a></h2>
+                    <h2 class="dz-title"><a class="text-white" href="/post-left-sidebar">Essential Fashion Care Tips for Beginners</a></h2>
                     <a href="/post-left-sidebar" class="font-14 mt-auto read-btn">Read More <i class="icon feather icon-chevron-right"></i></a>
                   </div>
                 </div>
@@ -1086,7 +1086,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
                   <div class="dz-media"><img src="/images/blog/grid/3.jpg" alt="" /></div>
                   <div class="dz-info">
                     <div class="dz-meta"><ul><li class="post-date">20 Apr 2023</li></ul></div>
-                    <h2 class="dz-title"><a class="text-white" href="/post-left-sidebar">Nurturing Your Plants with Expert Care</a></h2>
+                    <h2 class="dz-title"><a class="text-white" href="/post-left-sidebar">Nurturing Your Dresses with Expert Care</a></h2>
                     <a href="/post-left-sidebar" class="font-14 mt-auto read-btn">Read More <i class="icon feather icon-chevron-right"></i></a>
                   </div>
                 </div>
@@ -1096,7 +1096,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
                   <div class="dz-media"><img src="/images/blog/grid/4.jpg" alt="" /></div>
                   <div class="dz-info">
                     <div class="dz-meta"><ul><li class="post-date">20 Apr 2023</li></ul></div>
-                    <h2 class="dz-title"><a class="text-white" href="/post-left-sidebar">the Basics for Healthy and Happy Plants</a></h2>
+                    <h2 class="dz-title"><a class="text-white" href="/post-left-sidebar">the Basics for Healthy and Happy Dresses</a></h2>
                     <a href="/post-left-sidebar" class="font-14 mt-auto read-btn">Read More <i class="icon feather icon-chevron-right"></i></a>
                   </div>
                 </div>
@@ -1138,7 +1138,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
             <div class="row align-items-center">
               <div class="col-lg-6 col-md-12">
                 <div class="section-head style-2 d-block wow fadeInUp" data-wow-delay="0.2s">
-                  <h2 class="title mb-4">Subscribe Newsletter & Get Plant News</h2>
+                  <h2 class="title mb-4">Subscribe Newsletter & Get Fashion News</h2>
                 </div>
               </div>
               <div class="col-lg-6 col-md-12 m-b30 wow fadeInUp" data-wow-delay="0.4s">
@@ -1167,7 +1167,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
               <div class="col-xl-3 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="widget widget_about me-2">
                   <div class="footer-logo logo-white">
-                    <NuxtLink to="/"><img src="/images/logo.svg" alt="" /></NuxtLink>
+                    <NuxtLink to="/"><img src="/images/20.jpg.jpeg" alt="" /></NuxtLink>
                   </div>
                   <ul class="widget-address">
                     <li><p><span>Address</span> : 451 Wall Street, UK, London</p></li>
@@ -1233,7 +1233,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
                   <ul>
                     <li><a href="javascript:void(0);">Instagram profile</a></li>
                     <li><a href="javascript:void(0);">New Collection</a></li>
-                    <li><a href="javascript:void(0);">Popular Plant</a></li>
+                    <li><a href="javascript:void(0);">Popular Outfit</a></li>
                     <li><a href="javascript:void(0);">Contact Us</a></li>
                     <li><a href="javascript:void(0);">Latest News</a></li>
                   </ul>
@@ -1288,4 +1288,8 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
 }
 
 </style>
+
+
+
+
 

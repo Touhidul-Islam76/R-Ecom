@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div>
     <!-- Register Section -->
     <section class="px-3">
@@ -113,7 +113,7 @@
         <div class="row align-items-center">
           <div class="col-lg-6 col-md-12">
             <div class="section-head style-2 d-block wow fadeInUp" data-wow-delay="0.2s">
-              <h2 class="title mb-4">Subscribe Newsletter & Get Plant News</h2>
+              <h2 class="title mb-4">Subscribe Newsletter & Get Fashion News</h2>
             </div>
           </div>
           <div class="col-lg-6 col-md-12 m-b30 wow fadeInUp" data-wow-delay="0.4s">
@@ -139,7 +139,7 @@
 import { onBeforeUnmount, onMounted } from 'vue'
 
 definePageMeta({ footerStyle: '2' })
-useHead({ title: 'Registration - PlantZone' })
+useHead({ title: 'FasionAble' })
 
 let showTimer
 let activeTimer
@@ -171,3 +171,6 @@ onBeforeUnmount(() => {
   clearTimeout(hideTimer)
 })
 </script>
+
+
+

@@ -1,9 +1,9 @@
-<template>
+﻿<template>
   <div class="page-wraper" id="scroll-container">
 
     <!-- Loading -->
     <div v-if="showLoader" id="loading-area" class="loading-page-1">
-      <div class="text"><span class="text-primary">Plant</span>Zone</div>
+      <div class="text"><span class="text-primary">Fashion</span>Able</div>
     </div>
 
     <!-- Header -->
@@ -14,7 +14,7 @@
 
             <!-- Logo -->
             <div class="logo-header logo-dark me-md-4 me-2">
-              <a href="/"><img src="/images/logo.svg" alt="logo"></a>
+              <a href="/"><img src="/images/20.jpg.jpeg" alt="logo"></a>
             </div>
 
             <!-- Nav Toggle -->
@@ -29,7 +29,7 @@
             <!-- Main Nav -->
             <div class="header-nav w3menu navbar-collapse collapse justify-content-start" id="navbarNavDropdown">
               <div class="logo-header logo-dark">
-                <a href="/"><img src="/images/logo.svg" alt=""></a>
+                <a href="/"><img src="/images/20.jpg.jpeg" alt=""></a>
               </div>
               <ul class="nav navbar-nav">
                 <li class="has-mega-menu sub-menu-down auto-width menu-left">
@@ -76,7 +76,7 @@
                           <li class="month-deal">
                             <div class="clearfix me-3">
                               <h3>Deal of the month</h3>
-                              <p class="mb-0">Yes! Send me exclusive offers, personalised, and unique gift ideas, tips for shopping on PlantZone <a href="/shop-standard" class="dz-link-2">View All Products</a></p>
+                              <p class="mb-0">Yes! Send me exclusive offers, personalised, and unique gift ideas, tips for shopping on FasionAble <a href="/shop-standard" class="dz-link-2">View All Products</a></p>
                             </div>
                             <div class="sale-countdown">
                               <div class="countdown text-center">
@@ -169,21 +169,21 @@
                             <li>
                               <div class="dz-media"><img src="/images/shop/product/small/1.png" alt=""></div>
                               <div class="dz-content">
-                                <h6 class="name"><a href="/post-standard">A Journey Through Plant</a></h6>
+                                <h6 class="name"><a href="/post-standard">A Journey Through Fashion</a></h6>
                                 <span class="time">Jun 23, 2024</span>
                               </div>
                             </li>
                             <li>
                               <div class="dz-media"><img src="/images/shop/product/small/2.png" alt=""></div>
                               <div class="dz-content">
-                                <h6 class="name"><a href="/post-standard">Into Plant Care Cultivation</a></h6>
+                                <h6 class="name"><a href="/post-standard">Into Fashion Styling Trends</a></h6>
                                 <span class="time">Feb 16, 2024</span>
                               </div>
                             </li>
                             <li>
                               <div class="dz-media"><img src="/images/shop/product/small/3.png" alt=""></div>
                               <div class="dz-content">
-                                <h6 class="name"><a href="/post-standard">The Wonders of Plants</a></h6>
+                                <h6 class="name"><a href="/post-standard">The Wonders of Style</a></h6>
                                 <span class="time">Mar 15, 2024</span>
                               </div>
                             </li>
@@ -434,10 +434,10 @@
           </div>
           <ul class="recent-tag">
             <li class="pe-0"><span>Quick Search :</span></li>
-            <li><a href="/shop-list">Small Plants</a></li>
-            <li><a href="/shop-list">House Plants</a></li>
+            <li><a href="/shop-list">Casual Wear</a></li>
+            <li><a href="/shop-list">Daily Wear</a></li>
             <li><a href="/shop-list">Aqua Greens</a></li>
-            <li><a href="/shop-list">Plant Paradise</a></li>
+            <li><a href="/shop-list">Fashion Paradise</a></li>
           </ul>
         </form>
         <div class="row">
@@ -558,7 +558,7 @@
             <div class="logo-contact logo-header m-0">
               <a href="/" class="logo-white"><img src="/images/logo.svg" alt="/"></a>
             </div>
-            <p class="text">Transform your website into a dynamic online storefront with PlantZone, where style seamlessly meets functionality, ensuring a captivating and user-friendly eCommerce journey through the lush world of plants.</p>
+            <p class="text">Transform your website into a dynamic online storefront with FasionAble, where style seamlessly meets functionality, ensuring a captivating and user-friendly eCommerce journey through the lush world of fashion.</p>
             <h4 class="dz-title">Contact Us</h4>
             <ul class="contact-address">
               <li>785 15h Street, Office 478 Berlin, De 81566</li>
@@ -607,7 +607,7 @@
             <div class="col-xl-3 col-lg-7 col-md-7 align-self-start order-md-0 order-1">
               <div class="single-product-info-left">
                 <div class="content-info">
-                  <h1 class="title wow fadeInUp" data-wow-delay="0.2s">Plant make better life</h1>
+                  <h1 class="title wow fadeInUp" data-wow-delay="0.2s">Fashion makes better life</h1>
                   <div class="meta-content wow fadeInUp m-b20" data-wow-delay="0.4s">
                     <span class="price-name">Price</span>
                     <span class="price-num">$125.75</span>
@@ -717,14 +717,14 @@
             <li><img src="/images/shop/small/pic2.png" alt=""></li>
           </ul>
         </div>
-        <span class="data-text">Plant</span>
+        <span class="data-text">Fashion</span>
       </div>
 
       <!-- Category Section -->
       <section class="content-inner p-b0">
         <div class="container">
           <div class="section-head style-3 d-flex align-items-center justify-content-between left wow fadeInUp m-b30">
-            <div class="left-content"><h2 class="title">Find Plant Category</h2></div>
+            <div class="left-content"><h2 class="title">Find Fashion Category</h2></div>
             <div class="right-content">
               <a class="tranding-button-prev me-3">
                 <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -777,7 +777,7 @@
                       </div>
                     </div>
                     <div class="dz-content">
-                      <h2 class="title"><a href="/shop-list">Large Majesty Palm (m)</a></h2>
+                      <h2 class="title"><a href="/shop-list">Premium Maxi Dress (m)</a></h2>
                       <h6 class="price">$1099 <del>$659</del></h6>
                     </div>
                   </div>
@@ -802,7 +802,7 @@
                       </div>
                     </div>
                     <div class="dz-content">
-                      <h2 class="title"><a href="/shop-list">Large Majesty Palm (m)</a></h2>
+                      <h2 class="title"><a href="/shop-list">Premium Maxi Dress (m)</a></h2>
                       <h6 class="price">$1099 <del>$659</del></h6>
                     </div>
                   </div>
@@ -846,7 +846,7 @@
         </div>
       </section>
 
-      <!-- Plant Tabs Section -->
+      <!-- Fashion Tabs Section -->
       <section class="content-inner position-relative z-1 overflow-hidden" id="Plant_section">
         <div class="container">
           <div class="row justify-content-center">
@@ -1002,7 +1002,7 @@
       <div class="col-lg-6 col-md-8 col-sm-12">
         <div class="section-head style-1 wow fadeInUp" data-wow-delay="0.1s">
           <div class="left-content">
-            <h2 class="title">Latest Plant News</h2>
+            <h2 class="title">Latest Fashion News</h2>
           </div>
         </div>
       </div>
@@ -1059,7 +1059,7 @@
         <div class="container">
           <div class="section-head style-1 d-block wow fadeInUp text-center" data-wow-delay="0.1s">
             <div class="max-w900 mx-auto">
-              <h2 class="title mb-4">Subscribe Newsletter & Get Plant News</h2>
+              <h2 class="title mb-4">Subscribe Newsletter & Get Fashion News</h2>
             </div>
           </div>
           <form class="dzSubscribe style-2" action="script/mailchamp.php" method="post">
@@ -1088,8 +1088,8 @@
                   <div class="follow-link">
                     <div class="follow-link-icon"><img src="/images/insta-follow.png" alt=""></div>
                     <div class="follow-link-content">
-                      <h6>Share with #PlantZone</h6>
-                      <p class="m-0">Follow <span>@PlantZone </span>for inspiration.</p>
+                      <h6>Share with #FasionAble</h6>
+                      <p class="m-0">Follow <span>@FasionAble </span>for inspiration.</p>
                     </div>
                   </div>
                 </a>
@@ -1109,7 +1109,7 @@
             <div class="col-xl-3 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
               <div class="widget widget_about me-2">
                 <div class="footer-logo logo-white">
-                  <a href="/"><img src="/images/logo.svg" alt=""></a>
+                  <a href="/"><img src="/images/20.jpg.jpeg" alt=""></a>
                 </div>
                 <ul class="widget-address">
                   <li><p><span>Address</span> : 451 Wall Street, UK, London</p></li>
@@ -1172,7 +1172,7 @@
               <div class="widget widget_services">
                 <h2 class="footer-title">Footer Menu</h2>
                 <ul>
-                  <li v-for="link in ['Instagram profile','New Collection','Popular Plant','Contact Us','Latest News']" :key="link">
+                  <li v-for="link in ['Instagram profile','New Collection','Popular Outfit','Contact Us','Latest News']" :key="link">
                     <a href="javascript:void(0);">{{ link }}</a>
                   </li>
                 </ul>
@@ -1185,7 +1185,7 @@
         <div class="container">
           <div class="row fb-inner wow fadeInUp" data-wow-delay="0.1s">
             <div class="col-lg-6 col-md-12 text-start">
-              <p class="copyright-text">© 2024 <a href="https://www.dexignzone.com/">DexignZone</a> Theme. All Rights Reserved.</p>
+              <p class="copyright-text">Â© 2024 <a href="https://www.dexignzone.com/">DexignZone</a> Theme. All Rights Reserved.</p>
             </div>
             <div class="col-lg-6 col-md-12 text-end">
               <div class="d-flex align-items-center justify-content-center justify-content-md-center justify-content-xl-end">
@@ -1221,7 +1221,7 @@
                   <div class="dz-content">
                     <div class="dz-content-footer">
                       <div class="dz-content-start">
-                        <h4 class="title mb-1"><a href="/shop-list">Large Majesty Palm (m)</a></h4>
+                        <h4 class="title mb-1"><a href="/shop-list">Premium Maxi Dress (m)</a></h4>
                       </div>
                     </div>
                     <p class="para-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
@@ -1258,16 +1258,16 @@
                       <ul><li><strong>SKU:</strong></li><li>PRT584E63A</li></ul>
                       <ul>
                         <li><strong>Category:</strong></li>
-                        <li><a href="/shop-standard">Small Plants,</a></li>
+                        <li><a href="/shop-standard">Casual Wear,</a></li>
                         <li><a href="/shop-standard">Fern Fantasy,</a></li>
                         <li><a href="/shop-standard">Blossom Haven,</a></li>
                       </ul>
                       <ul>
                         <li><strong>Tags:</strong></li>
-                        <li><a href="/shop-standard">Plants,</a></li>
+                        <li><a href="/shop-standard">Dresses,</a></li>
                         <li><a href="/shop-standard">Garden Care,</a></li>
                         <li><a href="/shop-standard">Aqua Greens,</a></li>
-                        <li><a href="/shop-standard">House Plants,</a></li>
+                        <li><a href="/shop-standard">Daily Wear,</a></li>
                       </ul>
                       <ul class="social-icon">
                         <li><strong>Share:</strong></li>
@@ -1342,10 +1342,10 @@ onBeforeUnmount(() => {
 
 // SEO Meta
 useHead({
-  title: 'PlantZone Shop & eCommerce',
+  title: 'FasionAble',
   meta: [
-    { name: 'description', content: 'Elevate your online retail presence with PlantZone Shop & eCommerce.' },
-    { name: 'keywords', content: 'garden shop, flowers, plants, ecommerce, greenery' }
+    { name: 'description', content: 'Elevate your online retail presence with FasionAble.' },
+    { name: 'keywords', content: 'garden shop, flowers, fashion, ecommerce, greenery' }
   ],
   link: [
     { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -1355,71 +1355,71 @@ useHead({
 
 // Popular Products Data
 const popularProducts = [
-  { img: '/images/shop/product/1.png', name: 'Large Majesty Palm (m)', price: '79', oldPrice: '99' },
-  { img: '/images/shop/product/2.png', name: 'Endless Stems Gardens (m)', price: '79', oldPrice: '199' },
-  { img: '/images/shop/product/3.png', name: 'Long Strider Pants (m)', price: '109', oldPrice: '149' },
-  { img: '/images/shop/product/4.png', name: 'Feather Reed Grass (m)', price: '299', oldPrice: '499' },
-  { img: '/images/shop/product/5.png', name: 'Miniature Rose Bush (m)', price: '199', oldPrice: '299' },
-  { img: '/images/shop/product/6.png', name: 'Large Majesty Palm (m)', price: '79', oldPrice: '99' },
+  { img: '/images/shop/product/1.png', name: 'Premium Maxi Dress (m)', price: '79', oldPrice: '99' },
+  { img: '/images/shop/product/2.png', name: 'Elegant Evening Dress (m)', price: '79', oldPrice: '199' },
+  { img: '/images/shop/product/3.png', name: 'Slim Fit Trouser (m)', price: '109', oldPrice: '149' },
+  { img: '/images/shop/product/4.png', name: 'Pleated Skirt (m)', price: '299', oldPrice: '499' },
+  { img: '/images/shop/product/5.png', name: 'Chic Mini Dress (m)', price: '199', oldPrice: '299' },
+  { img: '/images/shop/product/6.png', name: 'Premium Maxi Dress (m)', price: '79', oldPrice: '99' },
   { img: '/images/shop/product/7.png', name: 'Giant Elephant Ear (M)', price: '99', oldPrice: '110' },
-  { img: '/images/shop/product/8.png', name: 'Large Majesty Palm (m)', price: '79', oldPrice: '99' },
+  { img: '/images/shop/product/8.png', name: 'Premium Maxi Dress (m)', price: '79', oldPrice: '99' },
 ]
 
 // Cart Items
 const cartItems = [
-  { img: '/images/shop/shop-cart/pic1.jpg', name: 'Large Majesty Palm (m)', price: '59', oldPrice: '99' },
-  { img: '/images/shop/shop-cart/pic2.jpg', name: 'Endless Stems Gardens (m)', price: '79', oldPrice: '99' },
-  { img: '/images/shop/shop-cart/pic3.jpg', name: 'Feather Reed Grass (m)', price: '49', oldPrice: '99' },
-  { img: '/images/shop/shop-cart/pic3.jpg', name: 'Long Strider Pants (m)', price: '99', oldPrice: '199' },
+  { img: '/images/shop/shop-cart/pic1.jpg', name: 'Premium Maxi Dress (m)', price: '59', oldPrice: '99' },
+  { img: '/images/shop/shop-cart/pic2.jpg', name: 'Elegant Evening Dress (m)', price: '79', oldPrice: '99' },
+  { img: '/images/shop/shop-cart/pic3.jpg', name: 'Pleated Skirt (m)', price: '49', oldPrice: '99' },
+  { img: '/images/shop/shop-cart/pic3.jpg', name: 'Slim Fit Trouser (m)', price: '99', oldPrice: '199' },
 ]
 
 // Wishlist Items
 const wishlistItems = [
-  { img: '/images/shop/shop-cart/pic1.jpg', name: 'Large Majesty Palm (m)', price: '59' },
-  { img: '/images/shop/shop-cart/pic2.jpg', name: 'Endless Stems Gardens (m)', price: '79' },
-  { img: '/images/shop/shop-cart/pic3.jpg', name: 'Feather Reed Grass (m)', price: '49' },
+  { img: '/images/shop/shop-cart/pic1.jpg', name: 'Premium Maxi Dress (m)', price: '59' },
+  { img: '/images/shop/shop-cart/pic2.jpg', name: 'Elegant Evening Dress (m)', price: '79' },
+  { img: '/images/shop/shop-cart/pic3.jpg', name: 'Pleated Skirt (m)', price: '49' },
 ]
 
 // Categories
 const categories = [
-  { name: 'Indoor Plants', img: '/images/shop/plant/1.png' },
-  { name: 'House Plant', img: '/images/shop/plant/2.png' },
+  { name: 'Indoor Dresses', img: '/images/shop/plant/1.png' },
+  { name: 'House Fashion', img: '/images/shop/plant/2.png' },
   { name: 'Tropical', img: '/images/shop/plant/3.png' },
   { name: 'Succulents', img: '/images/shop/plant/4.png' },
   { name: 'Lavender', img: '/images/shop/plant/5.png' },
-  { name: 'Indoor Plants', img: '/images/shop/plant/1.png' },
-  { name: 'House Plant', img: '/images/shop/plant/2.png' },
+  { name: 'Indoor Dresses', img: '/images/shop/plant/1.png' },
+  { name: 'House Fashion', img: '/images/shop/plant/2.png' },
 ]
 
-// Plant Tabs
+// Fashion Tabs
 const plantTabs = [
-  { thumb: '/images/shop/small/pic1.png', img: '/images/shop/product/1.png', name: 'Vineyard Reach (m)', price: '659', oldPrice: '1099' },
-  { thumb: '/images/shop/small/pic2.png', img: '/images/shop/product/2.png', name: 'TallStalk Gardens (m)', price: '759', oldPrice: '1199' },
-  { thumb: '/images/shop/small/pic3.png', img: '/images/shop/product/3.png', name: 'Endless Stems Gardens (m)', price: '459', oldPrice: '999' },
-  { thumb: '/images/shop/small/pic4.png', img: '/images/shop/product/4.png', name: 'Long Vine Flora (m)', price: '989', oldPrice: '2199' },
-  { thumb: '/images/shop/small/pic5.png', img: '/images/shop/product/5.png', name: 'Long Vine Flora (m)', price: '565', oldPrice: '1099' },
-  { thumb: '/images/shop/small/pic6.png', img: '/images/shop/product/6.png', name: 'Bacopa sutera cordata (m)', price: '659', oldPrice: '1099' },
+  { thumb: '/images/shop/small/pic1.png', img: '/images/shop/product/1.png', name: 'Runway Reach Dress (m)', price: '659', oldPrice: '1099' },
+  { thumb: '/images/shop/small/pic2.png', img: '/images/shop/product/2.png', name: 'Tall Fit Collection (m)', price: '759', oldPrice: '1199' },
+  { thumb: '/images/shop/small/pic3.png', img: '/images/shop/product/3.png', name: 'Elegant Evening Dress (m)', price: '459', oldPrice: '999' },
+  { thumb: '/images/shop/small/pic4.png', img: '/images/shop/product/4.png', name: 'Longline Fashion Dress (m)', price: '989', oldPrice: '2199' },
+  { thumb: '/images/shop/small/pic5.png', img: '/images/shop/product/5.png', name: 'Longline Fashion Dress (m)', price: '565', oldPrice: '1099' },
+  { thumb: '/images/shop/small/pic6.png', img: '/images/shop/product/6.png', name: 'Classic Denim Set (m)', price: '659', oldPrice: '1099' },
 ]
 
 // Shop Products
 const shopProducts = [
-  { img: '/images/shop/product/1.png', name: 'Vineyard Reach (m)', price: '1099', oldPrice: '659', categories: 'herbs' },
-  { img: '/images/shop/product/2.png', name: 'TallStalk Gardens (m)', price: '1099', oldPrice: '659', categories: 'shrubs ferns' },
-  { img: '/images/shop/product/3.png', name: 'Endless Stems Gardens (m)', price: '1099', oldPrice: '659', categories: 'shrubs' },
-  { img: '/images/shop/product/4.png', name: 'Long Vine Flora (m)', price: '1099', oldPrice: '659', categories: 'herbs ferns' },
-  { img: '/images/shop/product/5.png', name: 'Long Vine Flora (m)', price: '1099', oldPrice: '659', categories: 'shrubs' },
-  { img: '/images/shop/product/6.png', name: 'Bacopa sutera cordata (m)', price: '1099', oldPrice: '659', categories: 'vines' },
-  { img: '/images/shop/product/7.png', name: 'Towering Twigs Botanicals (m)', price: '1099', oldPrice: '659', categories: 'shrubs' },
-  { img: '/images/shop/product/8.png', name: 'Large Majesty Palm (m)', price: '1099', oldPrice: '659', categories: 'herbs' },
+  { img: '/images/shop/product/1.png', name: 'Runway Reach Dress (m)', price: '1099', oldPrice: '659', categories: 'herbs' },
+  { img: '/images/shop/product/2.png', name: 'Tall Fit Collection (m)', price: '1099', oldPrice: '659', categories: 'shrubs ferns' },
+  { img: '/images/shop/product/3.png', name: 'Elegant Evening Dress (m)', price: '1099', oldPrice: '659', categories: 'shrubs' },
+  { img: '/images/shop/product/4.png', name: 'Longline Fashion Dress (m)', price: '1099', oldPrice: '659', categories: 'herbs ferns' },
+  { img: '/images/shop/product/5.png', name: 'Longline Fashion Dress (m)', price: '1099', oldPrice: '659', categories: 'shrubs' },
+  { img: '/images/shop/product/6.png', name: 'Classic Denim Set (m)', price: '1099', oldPrice: '659', categories: 'vines' },
+  { img: '/images/shop/product/7.png', name: 'Streetwear Edit (m)', price: '1099', oldPrice: '659', categories: 'shrubs' },
+  { img: '/images/shop/product/8.png', name: 'Premium Maxi Dress (m)', price: '1099', oldPrice: '659', categories: 'herbs' },
 ]
 
 // Blog Posts
 const blogPosts = [
-  { img: '/images/blog/grid/1.jpg', date: '17 May 2022', title: 'Insights into Plant Care & Cultivation' },
-  { img: '/images/blog/grid/2.jpg', date: '16 May 2022', title: 'Exploring the World of Plants Stories' },
-  { img: '/images/blog/grid/3.jpg', date: '07 Jun 2022', title: 'Stories from the Plant Kingdom' },
-  { img: '/images/blog/grid/4.jpg', date: '02 Feb 2022', title: 'All About Plants and Gardens Corner' },
-  { img: '/images/blog/grid/5.jpg', date: '17 May 2022', title: 'Nurturing Your Passion for Plants' },
+  { img: '/images/blog/grid/1.jpg', date: '17 May 2022', title: 'Insights into Fashion Care & Cultivation' },
+  { img: '/images/blog/grid/2.jpg', date: '16 May 2022', title: 'Exploring the World of Dresses Stories' },
+  { img: '/images/blog/grid/3.jpg', date: '07 Jun 2022', title: 'Stories from the Fashion Kingdom' },
+  { img: '/images/blog/grid/4.jpg', date: '02 Feb 2022', title: 'All About Dresses and Gardens Corner' },
+  { img: '/images/blog/grid/5.jpg', date: '17 May 2022', title: 'Nurturing Your Passion for Dresses' },
 ]
 
 // Instagram Images
@@ -1434,9 +1434,13 @@ const instaImages = [
 
 // Footer Posts
 const footerPosts = [
-  { img: '/images/shop/product/small/1.png', title: 'A Journey Through Plant', date: 'July 23, 2023' },
-  { img: '/images/shop/product/small/2.png', title: 'Into Plant Care Cultivation', date: 'Feb 23, 2024' },
-  { img: '/images/shop/product/small/3.png', title: 'The Wonders of Plants', date: 'Jun 26, 2024' },
+  { img: '/images/shop/product/small/1.png', title: 'A Journey Through Fashion', date: 'July 23, 2023' },
+  { img: '/images/shop/product/small/2.png', title: 'Into Fashion Styling Trends', date: 'Feb 23, 2024' },
+  { img: '/images/shop/product/small/3.png', title: 'The Wonders of Style', date: 'Jun 26, 2024' },
 ]
 </script>
+
+
+
+
 

@@ -1,4 +1,4 @@
-const repository = process.env.GITHUB_REPOSITORY?.split('/')[1]
+﻿const repository = process.env.GITHUB_REPOSITORY?.split('/')[1]
 const baseURL = process.env.NUXT_APP_BASE_URL || (repository ? `/${repository}/` : '/')
 const withBase = (assetPath: string) => `${baseURL}${assetPath.replace(/^\/+/, '')}`
 
@@ -27,8 +27,9 @@ export default defineNuxtConfig({
   app: {
     baseURL,
     head: {
+      title: 'FasionAble',
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: withBase('/images/favicon.png') },
+        { rel: 'icon', type: 'image/x-icon', href: withBase('/images/20.jpg.jpeg') },
 
         { rel: 'stylesheet', href: withBase('/icons/iconly/index.min.css') },
         { rel: 'stylesheet', href: withBase('/vendor/magnific-popup/magnific-popup.min.css') },
@@ -48,4 +49,5 @@ export default defineNuxtConfig({
     },
   },
 })
+
 

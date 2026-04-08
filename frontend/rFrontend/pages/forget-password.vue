@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="min-h-screen bg-white text-slate-900">
     <main>
       <section class="px-4 sm:px-6 lg:px-8">
@@ -20,7 +20,7 @@
                   Forgot Password?
                 </h1>
                 <p class="mt-4 max-w-xl text-sm leading-7 text-white/85 sm:text-base">
-                  Enter your email address and we’ll send you a link to reset your password and
+                  Enter your email address and weâ€™ll send you a link to reset your password and
                   get back into your account.
                 </p>
               </div>
@@ -146,7 +146,7 @@
                     </p>
 
                     <p class="text-sm text-slate-500">
-                      Don’t have an account?
+                      Donâ€™t have an account?
                       <NuxtLink
                         to="/registration"
                         class="font-semibold text-emerald-600 hover:text-emerald-700"
@@ -186,3 +186,4 @@ const handleForgotPassword = () => {
   font-family: 'Marcellus', serif;
 }
 </style>
+

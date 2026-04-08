@@ -7,7 +7,7 @@ definePageMeta({
 })
 
 useHead({
-  title: 'PlantZone Shop & eCommerce HTML Template | DexignZone',
+  title: 'FasionAble',
   meta: [
     { charset: 'utf-8' },
     { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
@@ -17,33 +17,33 @@ useHead({
     {
       name: 'keywords',
       content:
-        'garden shop, flowers, landscape gardener, delivery, ecommerce, greenery, order, shopping, store, portfolio, plant template, plant store, plant showcase, nursery technology, ecommerce web, eCommerce website, minimal shop, online shop, online shopping, plantzone, user interface, user experience, trendy, stylish, development, farmer',
+        'fashion store, dresses, streetwear, ecommerce, clothing, apparel, style, online shopping, modern fashion, boutique, trendy outfits, UI, UX, stylish, responsive design',
     },
     {
       name: 'description',
       content:
-        'Elevate your online retail presence with PlantZone Shop & eCommerce HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for plant enthusiasts.',
+        'Elevate your online retail presence with FasionAble HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for fashion enthusiasts.',
     },
-    { property: 'og:title', content: 'PlantZone Shop & eCommerce HTML Template | DexignZone' },
+    { property: 'og:title', content: 'FasionAble' },
     {
       property: 'og:description',
       content:
-        'Elevate your online retail presence with PlantZone Shop & eCommerce HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for plant enthusiasts.',
+        'Elevate your online retail presence with FasionAble HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for fashion enthusiasts.',
     },
-    { property: 'og:image', content: 'https://plantzone.dexignzone.com/xhtml/social-image.png' },
-    { name: 'twitter:title', content: 'PlantZone: Shop & eCommerce Bootstrap HTML Template | DexignZone' },
+    { property: 'og:image', content: 'https://fasionable.dexignzone.com/xhtml/social-image.png' },
+    { name: 'twitter:title', content: 'FasionAble: Fashion & eCommerce Template | DexignZone' },
     {
       name: 'twitter:description',
       content:
-        'Elevate your online retail presence with PlantZone Shop & eCommerce HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for plant enthusiasts.',
+        'Elevate your online retail presence with FasionAble HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for fashion enthusiasts.',
     },
-    { name: 'twitter:image', content: 'https://plantzone.dexignzone.com/xhtml/social-image.png' },
+    { name: 'twitter:image', content: 'https://fasionable.dexignzone.com/xhtml/social-image.png' },
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
   ],
   link: [
-    { rel: 'canonical', href: 'https://plantzone.dexignzone.com/xhtml/shop-with-category.html' },
-    { rel: 'icon', type: 'image/x-icon', href: '/images/favicon.png' },
+    { rel: 'canonical', href: 'https://fasionable.dexignzone.com/xhtml/shop-with-category.html' },
+    { rel: 'icon', type: 'image/x-icon', href: '/images/20.jpg.jpeg' },
     { rel: 'stylesheet', href: '/vendor/bootstrap-select/dist/css/bootstrap-select.min.css' },
     { rel: 'stylesheet', href: '/vendor/swiper/swiper-bundle.min.css' },
     { rel: 'stylesheet', href: '/vendor/nouislider/nouislider.min.css' },
@@ -105,41 +105,41 @@ onBeforeUnmount(() => {
 })
 
 const popularProducts = [
-  { image: '/images/shop/product/1.png', title: 'Large Majesty Palm (m)', price: '$79', oldPrice: '$99' },
-  { image: '/images/shop/product/2.png', title: 'Endless Stems Gardens (m)', price: '$79', oldPrice: '$199' },
-  { image: '/images/shop/product/3.png', title: 'Long Strider Pants (m)', price: '$109', oldPrice: '$149' },
-  { image: '/images/shop/product/4.png', title: 'Feather Reed Grass (m)', price: '$299', oldPrice: '$499' },
-  { image: '/images/shop/product/5.png', title: 'Miniature Rose Bush (m)', price: '$199', oldPrice: '$299' },
-  { image: '/images/shop/product/6.png', title: 'Large Majesty Palm (m)', price: '$79', oldPrice: '$99' },
-  { image: '/images/shop/product/7.png', title: 'Giant Elephant Ear(M)', price: '$99', oldPrice: '$110' },
-  { image: '/images/shop/product/8.png', title: 'Large Majesty Palm (m)', price: '$79', oldPrice: '$99' },
+  { image: '/images/shop/product/1.png', title: 'Premium Maxi Dress (m)', price: '$79', oldPrice: '$99' },
+  { image: '/images/shop/product/2.png', title: 'Elegant Evening Dress (m)', price: '$79', oldPrice: '$199' },
+  { image: '/images/shop/product/3.png', title: 'Slim Fit Trouser (m)', price: '$109', oldPrice: '$149' },
+  { image: '/images/shop/product/4.png', title: 'Pleated Skirt (m)', price: '$299', oldPrice: '$499' },
+  { image: '/images/shop/product/5.png', title: 'Chic Mini Dress (m)', price: '$199', oldPrice: '$299' },
+  { image: '/images/shop/product/6.png', title: 'Premium Maxi Dress (m)', price: '$79', oldPrice: '$99' },
+  { image: '/images/shop/product/7.png', title: 'Oversized Street Jacket (M)', price: '$99', oldPrice: '$110' },
+  { image: '/images/shop/product/8.png', title: 'Premium Maxi Dress (m)', price: '$79', oldPrice: '$99' },
 ]
 
 const sidebarCartItems = [
-  { image: '/images/shop/shop-cart/pic1.jpg', title: 'Large Majesty Palm (m)', qty: 1, price: '$59', oldPrice: '$99' },
-  { image: '/images/shop/shop-cart/pic2.jpg', title: 'Endless Stems Gardens (m)', qty: 1, price: '$79', oldPrice: '$99' },
-  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Feather Reed Grass (m)', qty: 1, price: '$49', oldPrice: '$99' },
-  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Long Strider Pants (m)', qty: 1, price: '$99', oldPrice: '$199' },
+  { image: '/images/shop/shop-cart/pic1.jpg', title: 'Premium Maxi Dress (m)', qty: 1, price: '$59', oldPrice: '$99' },
+  { image: '/images/shop/shop-cart/pic2.jpg', title: 'Elegant Evening Dress (m)', qty: 1, price: '$79', oldPrice: '$99' },
+  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Pleated Skirt (m)', qty: 1, price: '$49', oldPrice: '$99' },
+  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Slim Fit Trouser (m)', qty: 1, price: '$99', oldPrice: '$199' },
 ]
 
 const wishlistItems = [
-  { image: '/images/shop/shop-cart/pic1.jpg', title: 'Large Majesty Palm (m)', price: '$59' },
-  { image: '/images/shop/shop-cart/pic2.jpg', title: 'Endless Stems Gardens (m)', price: '$79' },
-  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Feather Reed Grass (m)', price: '$49' },
+  { image: '/images/shop/shop-cart/pic1.jpg', title: 'Premium Maxi Dress (m)', price: '$59' },
+  { image: '/images/shop/shop-cart/pic2.jpg', title: 'Elegant Evening Dress (m)', price: '$79' },
+  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Pleated Skirt (m)', price: '$49' },
 ]
 
 const footerSocialPosts = [1, 2, 3, 4, 5, 6]
 
 const filterCategories = [
   { id: 'basic_checkbox_01', name: 'Bonsai', count: '10' },
-  { id: 'basic_checkbox_02', name: 'House Plants', count: '5' },
+  { id: 'basic_checkbox_02', name: 'Daily Wear', count: '5' },
   { id: 'basic_checkbox_03', name: 'indoor Living', count: '17' },
   { id: 'basic_checkbox_04', name: 'Perennials', count: '13' },
-  { id: 'basic_checkbox_05', name: 'Plant For Gift', count: '06' },
+  { id: 'basic_checkbox_05', name: 'Fashion For Gift', count: '06' },
   { id: 'basic_checkbox_06', name: 'garden Tools', count: '17' },
   { id: 'basic_checkbox_07', name: 'Best Sellers', count: '13' },
   { id: 'basic_checkbox_08', name: 'Blossom Haven', count: '06' },
-  { id: 'basic_checkbox_09', name: 'Small Plants', count: '22' },
+  { id: 'basic_checkbox_09', name: 'Casual Wear', count: '22' },
 ]
 
 const sizeFilters = [
@@ -149,57 +149,57 @@ const sizeFilters = [
 ]
 
 const featuredProducts = [
-  { img: '/images/blog/recent-blog/pic1.jpg', title: 'Bacopa sutera cordata (m)', price: '$659', oldPrice: '$1299' },
-  { img: '/images/blog/recent-blog/pic2.jpg', title: 'Vineyard Reach (m)', price: '$700', oldPrice: '$1449' },
-  { img: '/images/blog/recent-blog/pic3.jpg', title: 'Long Vine Flora (m)', price: '$449', oldPrice: '$999' },
+  { img: '/images/blog/recent-blog/pic1.jpg', title: 'Classic Denim Set (m)', price: '$659', oldPrice: '$1299' },
+  { img: '/images/blog/recent-blog/pic2.jpg', title: 'Runway Reach Dress (m)', price: '$700', oldPrice: '$1449' },
+  { img: '/images/blog/recent-blog/pic3.jpg', title: 'Longline Fashion Dress (m)', price: '$449', oldPrice: '$999' },
 ]
 
-const filterTags = ['plants', 'Green Dreams', 'Seeds', 'Photo', 'capes', 'Urban Oasis', 'Fern Fantasy', 'Plant Paradise']
+const filterTags = ['fashion', 'Green Dreams', 'Seeds', 'Photo', 'capes', 'Urban Oasis', 'Fern Fantasy', 'Fashion Paradise']
 
 const categorySlider = [
   { img: '/images/shop/product/1.png', title: 'Bonsai' },
-  { img: '/images/shop/product/3.png', title: 'House Plants' },
+  { img: '/images/shop/product/3.png', title: 'Daily Wear' },
   { img: '/images/shop/product/4.png', title: 'Perennials' },
-  { img: '/images/shop/product/2.png', title: 'Plant For Gift' },
+  { img: '/images/shop/product/2.png', title: 'Fashion For Gift' },
   { img: '/images/shop/product/3.png', title: 'Best Sellers' },
   { img: '/images/shop/product/4.png', title: 'Blossom Haven' },
-  { img: '/images/shop/product/2.png', title: 'Small Plants' },
+  { img: '/images/shop/product/2.png', title: 'Casual Wear' },
   { img: '/images/shop/product/4.png', title: 'Bonsai' },
 ]
 
 const listViewProducts = [
   { img: '/images/shop/product/1.png', title: 'Indoor Oasis Lush looking its layout', review: '250', price: '$40.00', sale: false },
-  { img: '/images/shop/product/2.png', title: 'Towering Twigs Botanicals', review: '650', price: '$94.00', sale: false },
-  { img: '/images/shop/product/3.png', title: 'Long Vine Flora plants and convey', review: '458', price: '$35.00', sale: false },
+  { img: '/images/shop/product/2.png', title: 'Streetwear Edit', review: '650', price: '$94.00', sale: false },
+  { img: '/images/shop/product/3.png', title: 'Long Vine Flora fashion and convey', review: '458', price: '$35.00', sale: false },
   { img: '/images/shop/product/4.png', title: 'Lengthy Leaf Landscapes layout', review: '630', price: '$25.00', sale: false },
   { img: '/images/shop/product/5.png', title: 'Stretching Vine Nursery layout', review: '520', price: '$45.00', sale: true },
   { img: '/images/shop/product/6.png', title: 'Stretching Vine Nursery layout', review: '256', price: '$70.00', sale: false },
   { img: '/images/shop/product/7.png', title: 'Indoor Oasis Lush looking its layout', review: '776', price: '$75.00', sale: true },
-  { img: '/images/shop/product/8.png', title: 'Towering Twigs Botanicals', review: '255', price: '$36.00', sale: false },
+  { img: '/images/shop/product/8.png', title: 'Streetwear Edit', review: '255', price: '$36.00', sale: false },
 ]
 
 const columnViewProducts = [
-  { img: '/images/shop/product/1.png', title: 'Vineyard Reach (m)', price: '$1099', oldPrice: '$659' },
-  { img: '/images/shop/product/2.png', title: 'TallS talk Gardens (m)', price: '$1099', oldPrice: '$659' },
-  { img: '/images/shop/product/3.png', title: 'Endless Stems Gardens (m)', price: '$1099', oldPrice: '$659' },
-  { img: '/images/shop/product/4.png', title: 'Long Vine Flora (m)', price: '$1099', oldPrice: '$659' },
-  { img: '/images/shop/product/5.png', title: 'Long Vine Flora (m)', price: '$1099', oldPrice: '$659' },
-  { img: '/images/shop/product/6.png', title: 'Bacopa sutera cordata', price: '$1099', oldPrice: '$659' },
-  { img: '/images/shop/product/7.png', title: 'Towering Twigs Botanicals', price: '$1099', oldPrice: '$659' },
-  { img: '/images/shop/product/8.png', title: 'Vineyard Reach (m)', price: '$1099', oldPrice: '$659' },
-  { img: '/images/shop/product/9.png', title: 'Long Vine Flora (m)', price: '$1099', oldPrice: '$659' },
+  { img: '/images/shop/product/1.png', title: 'Runway Reach Dress (m)', price: '$1099', oldPrice: '$659' },
+  { img: '/images/shop/product/2.png', title: 'Tall Fit Collection (m)', price: '$1099', oldPrice: '$659' },
+  { img: '/images/shop/product/3.png', title: 'Elegant Evening Dress (m)', price: '$1099', oldPrice: '$659' },
+  { img: '/images/shop/product/4.png', title: 'Longline Fashion Dress (m)', price: '$1099', oldPrice: '$659' },
+  { img: '/images/shop/product/5.png', title: 'Longline Fashion Dress (m)', price: '$1099', oldPrice: '$659' },
+  { img: '/images/shop/product/6.png', title: 'Classic Denim Set', price: '$1099', oldPrice: '$659' },
+  { img: '/images/shop/product/7.png', title: 'Streetwear Edit', price: '$1099', oldPrice: '$659' },
+  { img: '/images/shop/product/8.png', title: 'Runway Reach Dress (m)', price: '$1099', oldPrice: '$659' },
+  { img: '/images/shop/product/9.png', title: 'Longline Fashion Dress (m)', price: '$1099', oldPrice: '$659' },
 ]
 
 const gridViewProducts = [
-  { img: '/images/shop/product/1.png', title: 'Vineyard Reach (m)', price: '$1099', oldPrice: '$659' },
-  { img: '/images/shop/product/2.png', title: 'TallS talk Gardens (m)', price: '$1099', oldPrice: '$659' },
-  { img: '/images/shop/product/3.png', title: 'Endless Stems Gardens (m)', price: '$1099', oldPrice: '$659' },
-  { img: '/images/shop/product/4.png', title: 'Long Vine Flora (m)', price: '$1099', oldPrice: '$659' },
-  { img: '/images/shop/product/5.png', title: 'Long Vine Flora (m)', price: '$1099', oldPrice: '$659' },
-  { img: '/images/shop/product/6.png', title: 'Bacopa sutera cordata (m)', price: '$1099', oldPrice: '$659' },
-  { img: '/images/shop/product/7.png', title: 'Towering Twigs Botanicals (m)', price: '$1099', oldPrice: '$659' },
-  { img: '/images/shop/product/8.png', title: 'Vineyard Reach (m)', price: '$1099', oldPrice: '$659' },
-  { img: '/images/shop/product/9.png', title: 'Long Vine Flora (m)', price: '$1099', oldPrice: '$659' },
+  { img: '/images/shop/product/1.png', title: 'Runway Reach Dress (m)', price: '$1099', oldPrice: '$659' },
+  { img: '/images/shop/product/2.png', title: 'Tall Fit Collection (m)', price: '$1099', oldPrice: '$659' },
+  { img: '/images/shop/product/3.png', title: 'Elegant Evening Dress (m)', price: '$1099', oldPrice: '$659' },
+  { img: '/images/shop/product/4.png', title: 'Longline Fashion Dress (m)', price: '$1099', oldPrice: '$659' },
+  { img: '/images/shop/product/5.png', title: 'Longline Fashion Dress (m)', price: '$1099', oldPrice: '$659' },
+  { img: '/images/shop/product/6.png', title: 'Classic Denim Set (m)', price: '$1099', oldPrice: '$659' },
+  { img: '/images/shop/product/7.png', title: 'Streetwear Edit (m)', price: '$1099', oldPrice: '$659' },
+  { img: '/images/shop/product/8.png', title: 'Runway Reach Dress (m)', price: '$1099', oldPrice: '$659' },
+  { img: '/images/shop/product/9.png', title: 'Longline Fashion Dress (m)', price: '$1099', oldPrice: '$659' },
   { img: '/images/shop/product/10.png', title: 'Creeping Thyme Elfin (s)', price: '$1099', oldPrice: '$659' },
   { img: '/images/shop/product/11.png', title: 'Tall Fescue Grass (m)', price: '$1099', oldPrice: '$659' },
   { img: '/images/shop/product/12.png', title: 'Compact Hinoki Cypress (M)', price: '$1099', oldPrice: '$659' },
@@ -210,7 +210,7 @@ const gridViewProducts = [
   <div id="bg">
     <div class="page-wraper">
       <div v-if="showLoader" id="loading-area" class="loading-page-1">
-        <div class="text"><span class="text-primary">Plant</span>Zone</div>
+        <div class="text"><span class="text-primary">Fashion</span>Able</div>
       </div>
 
       <!-- Header Start -->
@@ -221,7 +221,7 @@ const gridViewProducts = [
 
               <!-- Logo -->
               <div class="logo-header logo-dark me-md-4 me-2">
-                <a href="/"><img src="/images/logo.svg" alt="logo" /></a>
+                <a href="/"><img src="/images/20.jpg.jpeg" alt="logo" /></a>
               </div>
 
               <!-- Nav Toggle -->
@@ -245,7 +245,7 @@ const gridViewProducts = [
                 :class="{ show: mobileMenuOpen }"
               >
                 <div class="logo-header logo-dark d-lg-none">
-                  <a href="/"><img src="/images/logo.svg" alt="" /></a>
+                  <a href="/"><img src="/images/20.jpg.jpeg" alt="" /></a>
                 </div>
 
                 <ul class="nav navbar-nav">
@@ -303,7 +303,7 @@ const gridViewProducts = [
                               <div class="clearfix me-3">
                                 <h3>Deal of the month</h3>
                                 <p class="mb-0">
-                                  Yes! Send me exclusive offers, personalised, and unique gift ideas, tips for shopping on PlantZone
+                                  Yes! Send me exclusive offers, personalised, and unique gift ideas, tips for shopping on FasionAble
                                   <a href="/shop-standard" class="dz-link-2">View All Products</a>
                                 </p>
                               </div>
@@ -399,21 +399,21 @@ const gridViewProducts = [
                               <li>
                                 <div class="dz-media"><img src="/images/shop/product/small/1.png" alt="" /></div>
                                 <div class="dz-content">
-                                  <h6 class="name"><a href="/post-standard">A Journey Through Plant</a></h6>
+                                  <h6 class="name"><a href="/post-standard">A Journey Through Fashion</a></h6>
                                   <span class="time">Jun 23, 2024</span>
                                 </div>
                               </li>
                               <li>
                                 <div class="dz-media"><img src="/images/shop/product/small/2.png" alt="" /></div>
                                 <div class="dz-content">
-                                  <h6 class="name"><a href="/post-standard">Into Plant Care Cultivation</a></h6>
+                                  <h6 class="name"><a href="/post-standard">Into Fashion Styling Trends</a></h6>
                                   <span class="time">Feb 16, 2024</span>
                                 </div>
                               </li>
                               <li>
                                 <div class="dz-media"><img src="/images/shop/product/small/3.png" alt="" /></div>
                                 <div class="dz-content">
-                                  <h6 class="name"><a href="/post-standard">The Wonders of Plants</a></h6>
+                                  <h6 class="name"><a href="/post-standard">The Wonders of Style</a></h6>
                                   <span class="time">Mar 15, 2024</span>
                                 </div>
                               </li>
@@ -671,10 +671,10 @@ const gridViewProducts = [
               </div>
               <ul class="recent-tag">
                 <li class="pe-0"><span>Quick Search :</span></li>
-                <li><a href="/shop-list">Small Plants</a></li>
-                <li><a href="/shop-list">House Plants</a></li>
+                <li><a href="/shop-list">Casual Wear</a></li>
+                <li><a href="/shop-list">Daily Wear</a></li>
                 <li><a href="/shop-list">Aqua Greens</a></li>
-                <li><a href="/shop-list">Plant Paradise</a></li>
+                <li><a href="/shop-list">Fashion Paradise</a></li>
               </ul>
             </form>
             <div class="row">
@@ -832,8 +832,8 @@ const gridViewProducts = [
                   <a href="/" class="logo-white"><img src="/images/logo.svg" alt="/" /></a>
                 </div>
                 <p class="text">
-                  Transform your website into a dynamic online storefront with PlantZone, where style seamlessly meets
-                  functionality, ensuring a captivating and user-friendly eCommerce journey through the lush world of plants.
+                  Transform your website into a dynamic online storefront with FasionAble, where style seamlessly meets
+                  functionality, ensuring a captivating and user-friendly eCommerce journey through the lush world of fashion.
                 </p>
                 <h4 class="dz-title">Contact Us</h4>
                 <ul class="contact-address">
@@ -1098,7 +1098,7 @@ const gridViewProducts = [
                                 <div>
                                   <h2 class="title mb-0"><a href="javascript:void(0);">{{ item.title }}</a></h2>
                                   <ul class="dz-tags">
-                                    <li><a href="javascript:void(0);">Plants,</a></li>
+                                    <li><a href="javascript:void(0);">Dresses,</a></li>
                                     <li><a href="javascript:void(0);">Accessorie</a></li>
                                   </ul>
                                 </div>
@@ -1240,7 +1240,7 @@ const gridViewProducts = [
         <section class="content-inner-3 overflow-hidden position-relative border-top">
           <div class="container">
             <div class="row align-items-center">
-              <div class="col-lg-6 col-md-12"><div class="section-head style-2 d-block wow fadeInUp" data-wow-delay="0.2s"><h2 class="title mb-4">Subscribe Newsletter & Get Plant News</h2></div></div>
+              <div class="col-lg-6 col-md-12"><div class="section-head style-2 d-block wow fadeInUp" data-wow-delay="0.2s"><h2 class="title mb-4">Subscribe Newsletter & Get Fashion News</h2></div></div>
               <div class="col-lg-6 col-md-12 m-b30 wow fadeInUp" data-wow-delay="0.4s">
                 <form class="dzSubscribe style-2" action="script/mailchamp.php" method="post"><div class="dzSubscribeMsg"></div><div class="form-group"><div class="input-group mb-0"><input name="dzEmail" required type="email" class="form-control h-70" placeholder="Your Email Address" /><div class="sub-btn"><button name="submit" value="Submit" type="submit" class="btn btn-secondary">Subscribe Now</button></div></div></div></form>
               </div>
@@ -1257,7 +1257,7 @@ const gridViewProducts = [
               <div class="col-xl-3 col-md-4 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
                 <div class="widget widget_about me-2">
                   <div class="footer-logo logo-white">
-                    <a href="/"><img src="/images/logo.svg" alt="" /></a>
+                    <a href="/"><img src="/images/20.jpg.jpeg" alt="" /></a>
                   </div>
                   <ul class="widget-address">
                     <li><p><span>Address</span> : 451 Wall Street, UK, London</p></li>
@@ -1323,7 +1323,7 @@ const gridViewProducts = [
                   <ul>
                     <li><a href="javascript:void(0);">Instagram profile</a></li>
                     <li><a href="javascript:void(0);">New Collection</a></li>
-                    <li><a href="javascript:void(0);">Popular Plant</a></li>
+                    <li><a href="javascript:void(0);">Popular Outfit</a></li>
                     <li><a href="javascript:void(0);">Contact Us</a></li>
                     <li><a href="javascript:void(0);">Latest News</a></li>
                   </ul>
@@ -1378,5 +1378,9 @@ const gridViewProducts = [
 }
 
 </style>
+
+
+
+
 
 
