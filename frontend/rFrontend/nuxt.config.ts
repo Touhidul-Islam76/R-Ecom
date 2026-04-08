@@ -1,4 +1,13 @@
+const repository = process.env.GITHUB_REPOSITORY?.split('/')[1]
+const baseURL = process.env.NUXT_APP_BASE_URL || (repository ? `/${repository}/` : '/')
+
 export default defineNuxtConfig({
+  compatibilityDate: '2026-04-08',
+  nitro: {
+    prerender: {
+      failOnError: false,
+    },
+  },
   css: [
     '~/assets/css/main.css',
   ],
@@ -14,6 +23,7 @@ export default defineNuxtConfig({
   
 
   app: {
+    baseURL,
     head: {
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/images/favicon.png' },
