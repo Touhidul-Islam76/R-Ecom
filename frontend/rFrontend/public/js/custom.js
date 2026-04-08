@@ -107,7 +107,9 @@ var PlantZone = function(){
 				var headerHeight =   parseInt($('.onepage').css('height'), 10);
 				
 				
-				$('body').scrollspy({target: ".navbar", offset: headerHeight+2}); 
+				if (jQuery.fn && typeof jQuery.fn.scrollspy === 'function') {
+					$('body').scrollspy({target: ".navbar", offset: headerHeight+2});
+				}
 				
 				var scrollTopPosition = seactionPosition - (headerHeight);
 				
@@ -118,7 +120,9 @@ var PlantZone = function(){
 				});
 			}   
 		});
-		$('body').scrollspy({target: ".navbar", offset: headerHeight + 2});  
+		if (jQuery.fn && typeof jQuery.fn.scrollspy === 'function') {
+			$('body').scrollspy({target: ".navbar", offset: headerHeight + 2});
+		}
 	}
 
 	
@@ -863,10 +867,20 @@ var PlantZone = function(){
 	
 	var wishlistBtn = function(){
 		jQuery('.wishlist-link').on('click',function(){
-			jQuery('.product-description .nav-tabs button[data-bs-target="#wishlist-pane"]').tab('show');
+			var wishlistTab = jQuery('.product-description .nav-tabs button[data-bs-target="#wishlist-pane"]');
+			if (jQuery.fn && typeof jQuery.fn.tab === 'function') {
+				wishlistTab.tab('show');
+			} else {
+				wishlistTab.trigger('click');
+			}
 		})
 		jQuery('.cart-btn').on('click',function(){
-			jQuery('.product-description .nav-tabs button[data-bs-target="#shopping-cart-pane"]').tab('show');
+			var cartTab = jQuery('.product-description .nav-tabs button[data-bs-target="#shopping-cart-pane"]');
+			if (jQuery.fn && typeof jQuery.fn.tab === 'function') {
+				cartTab.tab('show');
+			} else {
+				cartTab.trigger('click');
+			}
 		})
 	}
 	
@@ -1019,7 +1033,14 @@ var PlantZone = function(){
 		jQuery('body').append(modalBox);
 		setTimeout(function() {
 			if(!getCookie('inquiryModal')){
-				jQuery("#myModal").modal('show');
+				if (jQuery.fn && typeof jQuery.fn.modal === 'function') {
+					jQuery("#myModal").modal('show');
+				} else {
+					var modalElement = document.getElementById('myModal');
+					if (window.bootstrap && window.bootstrap.Modal && modalElement) {
+						window.bootstrap.Modal.getOrCreateInstance(modalElement).show();
+					}
+				}
 				setCookie('inquiryModal',true);
 			}
 		}, 5000)
