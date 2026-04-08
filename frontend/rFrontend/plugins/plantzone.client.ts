@@ -1,6 +1,9 @@
 export default defineNuxtPlugin(async () => {
   if (!import.meta.client) return
 
+  const { app } = useRuntimeConfig()
+  const withBase = (assetPath: string) => `${app.baseURL}${assetPath.replace(/^\/+/, '')}`
+
   const alreadyLoaded = document.getElementById('plantzone-scripts-loaded')
   if (alreadyLoaded) return
 
@@ -25,28 +28,28 @@ export default defineNuxtPlugin(async () => {
     })
 
   const scripts = [
-    '/js/jquery.min.js',
-    '/vendor/wow/wow.min.js',
-    '/vendor/bootstrap/dist/js/bootstrap.bundle.min.js',
-    '/vendor/bootstrap-select/dist/js/bootstrap-select.min.js',
-    '/vendor/bootstrap-touchspin/bootstrap-touchspin.js',
-    '/vendor/counter/waypoints-min.js',
-    '/vendor/counter/counterup.min.js',
-    '/vendor/swiper/swiper-bundle.min.js',
-    '/vendor/magnific-popup/magnific-popup.js',
-    '/vendor/group-slide/group-loop.js',
-    '/vendor/imagesloaded/imagesloaded.js',
-    '/vendor/masonry/masonry-4.2.2.js',
-    '/vendor/masonry/isotope.pkgd.min.js',
-    '/vendor/countdown/jquery.countdown.js',
-    '/vendor/wnumb/wNumb.js',
-    '/vendor/nouislider/nouislider.min.js',
-    '/js/dz.carousel.js',
-    '/vendor/lightgallery/dist/lightgallery.min.js',
-    '/vendor/lightgallery/dist/plugins/thumbnail/lg-thumbnail.min.js',
-    '/vendor/lightgallery/dist/plugins/zoom/lg-zoom.min.js',
-    '/js/dz.ajax.js',
-    '/js/custom.js',
+    withBase('/js/jquery.min.js'),
+    withBase('/vendor/wow/wow.min.js'),
+    withBase('/vendor/bootstrap/dist/js/bootstrap.bundle.min.js'),
+    withBase('/vendor/bootstrap-select/dist/js/bootstrap-select.min.js'),
+    withBase('/vendor/bootstrap-touchspin/bootstrap-touchspin.js'),
+    withBase('/vendor/counter/waypoints-min.js'),
+    withBase('/vendor/counter/counterup.min.js'),
+    withBase('/vendor/swiper/swiper-bundle.min.js'),
+    withBase('/vendor/magnific-popup/magnific-popup.js'),
+    withBase('/vendor/group-slide/group-loop.js'),
+    withBase('/vendor/imagesloaded/imagesloaded.js'),
+    withBase('/vendor/masonry/masonry-4.2.2.js'),
+    withBase('/vendor/masonry/isotope.pkgd.min.js'),
+    withBase('/vendor/countdown/jquery.countdown.js'),
+    withBase('/vendor/wnumb/wNumb.js'),
+    withBase('/vendor/nouislider/nouislider.min.js'),
+    withBase('/js/dz.carousel.js'),
+    withBase('/vendor/lightgallery/dist/lightgallery.min.js'),
+    withBase('/vendor/lightgallery/dist/plugins/thumbnail/lg-thumbnail.min.js'),
+    withBase('/vendor/lightgallery/dist/plugins/zoom/lg-zoom.min.js'),
+    withBase('/js/dz.ajax.js'),
+    withBase('/js/custom.js'),
   ]
 
   for (const src of scripts) {
