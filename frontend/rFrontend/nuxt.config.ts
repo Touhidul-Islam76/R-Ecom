@@ -33,7 +33,7 @@ export default defineNuxtConfig({
 
         { rel: 'stylesheet', href: withBase('/icons/iconly/index.min.css') },
         { rel: 'stylesheet', href: withBase('/vendor/magnific-popup/magnific-popup.min.css') },
-        { rel: 'stylesheet', href: withBase('/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') },
+        { rel: 'stylesheet', href: withBase('/vendor/bootstrap-select/css/bootstrap-select.min.css') },
         { rel: 'stylesheet', href: withBase('/vendor/swiper/swiper-bundle.min.css') },
         { rel: 'stylesheet', href: withBase('/vendor/nouislider/nouislider.min.css') },
         { rel: 'stylesheet', href: withBase('/vendor/animate/animate.css') },

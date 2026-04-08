@@ -86,8 +86,8 @@ export default defineNuxtPlugin(async () => {
   const scripts = [
     withBase('/js/jquery.min.js'),
     withBase('/vendor/wow/wow.min.js'),
-    withBase('/vendor/bootstrap/dist/js/bootstrap.bundle.min.js'),
-    withBase('/vendor/bootstrap-select/dist/js/bootstrap-select.min.js'),
+    withBase('/vendor/bootstrap/js/bootstrap.bundle.min.js'),
+    withBase('/vendor/bootstrap-select/js/bootstrap-select.min.js'),
     withBase('/vendor/bootstrap-touchspin/bootstrap-touchspin.js'),
     withBase('/vendor/counter/waypoints-min.js'),
     withBase('/vendor/counter/counterup.min.js'),
