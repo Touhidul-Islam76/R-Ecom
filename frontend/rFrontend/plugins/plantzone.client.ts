@@ -3,6 +3,60 @@ export default defineNuxtPlugin(async () => {
 
   const { app } = useRuntimeConfig()
   const withBase = (assetPath: string) => `${app.baseURL}${assetPath.replace(/^\/+/, '')}`
+  const bridgeBootstrapJQueryPlugins = () => {
+    const w = window as any
+    const $ = w.jQuery || w.$
+    const bs = w.bootstrap
+
+    if (!$?.fn || !bs) return
+
+    if (!$.fn.scrollspy && bs.ScrollSpy) {
+      $.fn.scrollspy = function (option?: any) {
+        return this.each(function () {
+          const el = this as Element
+          const opts = typeof option === 'object' ? option : undefined
+          const instance = bs.ScrollSpy.getOrCreateInstance(el, opts)
+
+          if (typeof option === 'string' && typeof instance?.[option] === 'function') {
+            instance[option]()
+          } else if (typeof instance?.refresh === 'function') {
+            instance.refresh()
+          }
+        })
+      }
+    }
+
+    if (!$.fn.tab && bs.Tab) {
+      $.fn.tab = function (option?: any) {
+        return this.each(function () {
+          const el = this as Element
+          const instance = bs.Tab.getOrCreateInstance(el)
+
+          if (typeof option === 'string' && typeof instance?.[option] === 'function') {
+            instance[option]()
+          } else if (typeof instance?.show === 'function') {
+            instance.show()
+          }
+        })
+      }
+    }
+
+    if (!$.fn.modal && bs.Modal) {
+      $.fn.modal = function (option?: any) {
+        return this.each(function () {
+          const el = this as Element
+          const opts = typeof option === 'object' ? option : undefined
+          const instance = bs.Modal.getOrCreateInstance(el, opts)
+
+          if (typeof option === 'string' && typeof instance?.[option] === 'function') {
+            instance[option]()
+          } else if (typeof instance?.show === 'function') {
+            instance.show()
+          }
+        })
+      }
+    }
+  }
 
   const alreadyLoaded = document.getElementById('plantzone-scripts-loaded')
   if (alreadyLoaded) return
@@ -54,7 +108,15 @@ export default defineNuxtPlugin(async () => {
 
   for (const src of scripts) {
     try {
+      if (src.endsWith('/js/custom.js')) {
+        bridgeBootstrapJQueryPlugins()
+      }
+
       await loadScript(src)
+
+      if (src.endsWith('/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')) {
+        bridgeBootstrapJQueryPlugins()
+      }
     } catch (error) {
       console.error(error)
     }
