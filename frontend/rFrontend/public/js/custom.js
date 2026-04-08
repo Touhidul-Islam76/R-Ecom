@@ -294,46 +294,39 @@ var PlantZone = function(){
 	}
 	//lightGallery
 	var handleLightgallery = function() {
-		if(jQuery('#lightgallery').length > 0){
-			lightGallery(document.getElementById('lightgallery'), {
-				plugins: [lgThumbnail, lgZoom],
-				selector: '.lg-item',
-				thumbnail:true,
-				exThumbImage: 'data-src'
-            });
+		if (typeof lightGallery !== 'function') {
+			return;
 		}
-		if(jQuery('#lightgallery2').length > 0){
-			lightGallery(document.getElementById('lightgallery2'), {
-				plugins: [lgThumbnail, lgZoom],
-				selector: '.lg-item',
-				thumbnail:true,
-				exThumbImage: 'data-src'
-            });
+
+		var lgPlugins = [];
+		if (typeof lgThumbnail !== 'undefined') {
+			lgPlugins.push(lgThumbnail);
 		}
-		if(jQuery('#lightgallery3').length > 0){
-			lightGallery(document.getElementById('lightgallery3'),{
-				plugins: [lgThumbnail, lgZoom],
-				selector: '.lg-item',
-				thumbnail:true,
-				exThumbImage: 'data-src'
-            });
+		if (typeof lgZoom !== 'undefined') {
+			lgPlugins.push(lgZoom);
 		}
-		if(jQuery('#lightgallery4').length > 0){
-			lightGallery(document.getElementById('lightgallery4'),{
-				plugins: [lgThumbnail, lgZoom],
+
+		var initLightGallery = function(id) {
+			if (jQuery('#' + id).length === 0) return;
+
+			var options = {
 				selector: '.lg-item',
-				thumbnail:true,
+				thumbnail: true,
 				exThumbImage: 'data-src'
-            });
-		}
-		if(jQuery('#lightgallery5').length > 0){
-			lightGallery(document.getElementById('lightgallery5'),{
-				plugins: [lgThumbnail, lgZoom],
-				selector: '.lg-item',
-				thumbnail:true,
-				exThumbImage: 'data-src'
-            });
-		}
+			};
+
+			if (lgPlugins.length) {
+				options.plugins = lgPlugins;
+			}
+
+			lightGallery(document.getElementById(id), options);
+		};
+
+		initLightGallery('lightgallery');
+		initLightGallery('lightgallery2');
+		initLightGallery('lightgallery3');
+		initLightGallery('lightgallery4');
+		initLightGallery('lightgallery5');
 	}
 	
 	/* Magnific Popup ============ */
