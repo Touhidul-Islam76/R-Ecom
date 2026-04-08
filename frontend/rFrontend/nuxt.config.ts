@@ -16,6 +16,7 @@ export default defineNuxtConfig({
     '/index.vue': { redirect: '/' },
   },
   plugins: [
+    { src: '~/plugins/base-url-rewrite.client.ts', mode: 'client' },
     { src: '~/plugins/bootstrap.client.ts', mode: 'client' },
     { src: '~/plugins/loader.client.ts', mode: 'client' },
     { src: '~/plugins/plantzone.client.ts', mode: 'client' },
