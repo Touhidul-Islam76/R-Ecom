@@ -2,7 +2,9 @@ export default defineNuxtPlugin(async () => {
   if (!import.meta.client) return
 
   const { app } = useRuntimeConfig()
-  const withBase = (assetPath: string) => `${app.baseURL}${assetPath.replace(/^\/+/, '')}`
+  const buildVersion = encodeURIComponent(app.buildId || 'dev')
+  const withBase = (assetPath: string) =>
+    `${app.baseURL}${assetPath.replace(/^\/+/, '')}?v=${buildVersion}`
   const bridgeBootstrapJQueryPlugins = () => {
     const w = window as any
     const $ = w.jQuery || w.$
