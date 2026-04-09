@@ -32,7 +32,7 @@ const wishlistItems = [
         <div class="container-fluid clearfix d-lg-flex d-block bg-light position-relative">
           <div class="logo-header logo-dark me-md-4 me-2">
             <NuxtLink to="/">
-              <img src="/images/logo.svg" alt="logo" />
+              <img src="/images/20.jpg.jpeg" alt="logo" />
             </NuxtLink>
           </div>
 
@@ -56,7 +56,7 @@ const wishlistItems = [
           >
             <div class="logo-header logo-dark d-lg-none">
               <NuxtLink to="/">
-                <img src="/images/logo.svg" alt="logo" />
+                <img src="/images/20.jpg.jpeg" alt="logo" />
               </NuxtLink>
             </div>
 
@@ -630,7 +630,7 @@ const wishlistItems = [
           <div class="contact-box1 deznav-scroll">
             <div class="logo-contact logo-header m-0">
               <NuxtLink to="/" class="logo-white">
-                <img src="/images/logo.svg" alt="/" />
+                <img src="/images/20.jpg.jpeg" alt="/" />
               </NuxtLink>
             </div>
             <p class="text">

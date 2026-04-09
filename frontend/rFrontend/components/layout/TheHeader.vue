@@ -6,7 +6,7 @@
 
           <!-- Logo -->
           <div class="logo-header logo-dark me-md-4 me-2">
-            <NuxtLink to="/"><img src="/images/logo.svg" alt="logo"></NuxtLink>
+            <NuxtLink to="/"><img src="/images/20.jpg.jpeg" alt="logo"></NuxtLink>
           </div>
 
           <!-- Nav Toggle -->
@@ -19,7 +19,7 @@
           <!-- Main Nav -->
           <div class="header-nav w3menu navbar-collapse collapse justify-content-start" id="navbarNavDropdown">
             <div class="logo-header logo-dark">
-              <NuxtLink to="/"><img src="/images/logo.svg" alt=""></NuxtLink>
+              <NuxtLink to="/"><img src="/images/20.jpg.jpeg" alt=""></NuxtLink>
             </div>
             <ul class="nav navbar-nav">
               <li class="has-mega-menu sub-menu-down auto-width menu-left">
@@ -457,7 +457,7 @@
       <div class="contact-sidebar">
         <div class="contact-box1 deznav-scroll">
           <div class="logo-contact logo-header m-0">
-            <NuxtLink to="/" class="logo-white"><img src="/images/logo.svg" alt="/"></NuxtLink>
+            <NuxtLink to="/" class="logo-white"><img src="/images/20.jpg.jpeg" alt="/"></NuxtLink>
           </div>
           <p class="text">Transform your website into a dynamic online storefront with PlantZone, where style seamlessly meets functionality, ensuring a captivating and user-friendly eCommerce journey through the lush world of plants.</p>
           <h4 class="dz-title">Contact Us</h4>

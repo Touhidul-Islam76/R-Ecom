@@ -4,6 +4,12 @@ const withBase = (assetPath: string) => `${baseURL}${assetPath.replace(/^\/+/, '
 
 export default defineNuxtConfig({
   compatibilityDate: '2026-04-08',
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: false,
+    },
+  ],
   nitro: {
     prerender: {
       failOnError: false,
@@ -49,5 +55,4 @@ export default defineNuxtConfig({
     },
   },
 })
-
 
