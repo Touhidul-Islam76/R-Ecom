@@ -1,10 +1,5 @@
-﻿<script setup lang="ts">
-import { ref, onBeforeUnmount, onMounted, nextTick } from 'vue'
-
-definePageMeta({
-  layout: false,
-})
-
+<script setup lang="ts">
+import { onMounted, nextTick } from 'vue'
 useHead({
   title: 'FasionAble',
   meta: [
@@ -53,27 +48,7 @@ useHead({
   ],
 })
 
-const showLoader = ref(true)
-let showTimer: ReturnType<typeof setTimeout> | null = null
-let activeTimer: ReturnType<typeof setTimeout> | null = null
-let hideTimer: ReturnType<typeof setTimeout> | null = null
-
-
 onMounted(() => {
-  const loader = document.getElementById('loading-area')
-  if (loader) {
-    showTimer = setTimeout(() => {
-      loader.classList.add('show')
-    }, 500)
-
-    activeTimer = setTimeout(() => {
-      loader.classList.add('active')
-    }, 1500)
-
-    hideTimer = setTimeout(() => {
-      showLoader.value = false
-    }, 3500)
-  }
 
   const plantZone = (window as Window & { PlantZone?: { init: () => void; load: () => void } }).PlantZone
   if (plantZone) {
@@ -88,38 +63,6 @@ onMounted(() => {
     }
   })
 })
-
-onBeforeUnmount(() => {
-  if (showTimer) clearTimeout(showTimer)
-  if (activeTimer) clearTimeout(activeTimer)
-  if (hideTimer) clearTimeout(hideTimer)
-})
-
-const popularProducts = [
-  { image: '/images/shop/product/1.png', title: 'Premium Maxi Dress (m)', price: '$79', oldPrice: '$99' },
-  { image: '/images/shop/product/2.png', title: 'Elegant Evening Dress (m)', price: '$79', oldPrice: '$199' },
-  { image: '/images/shop/product/3.png', title: 'Slim Fit Trouser (m)', price: '$109', oldPrice: '$149' },
-  { image: '/images/shop/product/4.png', title: 'Pleated Skirt (m)', price: '$299', oldPrice: '$499' },
-  { image: '/images/shop/product/5.png', title: 'Chic Mini Dress (m)', price: '$199', oldPrice: '$299' },
-  { image: '/images/shop/product/6.png', title: 'Premium Maxi Dress (m)', price: '$79', oldPrice: '$99' },
-  { image: '/images/shop/product/7.png', title: 'Oversized Street Jacket (M)', price: '$99', oldPrice: '$110' },
-  { image: '/images/shop/product/8.png', title: 'Premium Maxi Dress (m)', price: '$79', oldPrice: '$99' },
-]
-
-const sidebarCartItems = [
-  { image: '/images/shop/shop-cart/pic1.jpg', title: 'Premium Maxi Dress (m)', qty: 1, price: '$59', oldPrice: '$99' },
-  { image: '/images/shop/shop-cart/pic2.jpg', title: 'Elegant Evening Dress (m)', qty: 1, price: '$79', oldPrice: '$99' },
-  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Pleated Skirt (m)', qty: 1, price: '$49', oldPrice: '$99' },
-  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Slim Fit Trouser (m)', qty: 1, price: '$99', oldPrice: '$199' },
-]
-
-const wishlistItems = [
-  { image: '/images/shop/shop-cart/pic1.jpg', title: 'Premium Maxi Dress (m)', price: '$59' },
-  { image: '/images/shop/shop-cart/pic2.jpg', title: 'Elegant Evening Dress (m)', price: '$79' },
-  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Pleated Skirt (m)', price: '$49' },
-]
-
-const footerSocialPosts = [1, 2, 3, 4, 5, 6]
 
 const filterCategories = [
   { id: 'basic_checkbox_01', name: 'Bonsai', count: '10' },
@@ -200,10 +143,9 @@ const gridViewProducts = [
 <template>
   <div id="bg">
     <div class="page-wraper">
-      <PageLoader :show-loader="showLoader" />
+      
 
-      <SiteHeaderMobile :popular-products="popularProducts" :sidebar-cart-items="sidebarCartItems" :wishlist-items="wishlistItems" />
-
+      
             <div class="page-content">
         <!--Banner Start-->
         <div class="dz-bnr-inr" style="background-image: url('/images/background/bg1.jpg')">
@@ -576,8 +518,7 @@ const gridViewProducts = [
         </section>
       </div>
 
-      <SiteFooterStandard :footer-social-posts="footerSocialPosts" />
-
+      
     </div>
   </div>
 </template>
@@ -600,14 +541,4 @@ const gridViewProducts = [
 }
 
 </style>
-
-
-
-
-
-
-
-
-
-
 

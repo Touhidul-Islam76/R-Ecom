@@ -1,11 +1,10 @@
-﻿<template>
+<template>
   <div class="page-wraper" id="scroll-container">
 
     <!-- Loading -->
-    <PageLoader :show-loader="showLoader" />
+    
 
-    <SiteHeaderHome :popular-products="popularProducts" :cart-items="cartItems" :wishlist-items="wishlistItems" />
-
+    
     <!-- Page Content -->
     <div class="page-content">
 
@@ -510,8 +509,7 @@
 
     </div><!-- end page-content -->
 
-    <SiteFooterHome :footer-posts="footerPosts" />
-
+    
     <!-- Quick View Modal -->
     <div class="modal quick-view-modal fade" id="exampleModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
@@ -600,33 +598,9 @@
 </template>
 
 <script setup>
-import { nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
-
-definePageMeta({
-  layout: false,
-})
-
-const showLoader = ref(true)
-let showTimer
-let activeTimer
-let hideTimer
-
+import { onMounted, nextTick } from 'vue'
 // Reinitialize PlantZone JS on every page mount (needed for Nuxt SPA navigation)
 onMounted(() => {
-  const loader = document.getElementById('loading-area')
-  if (loader) {
-    showTimer = setTimeout(() => {
-      loader.classList.add('show')
-    }, 500)
-
-    activeTimer = setTimeout(() => {
-      loader.classList.add('active')
-    }, 1500)
-
-    hideTimer = setTimeout(() => {
-      showLoader.value = false
-    }, 3500)
-  }
 
   if (typeof window !== 'undefined') {
     const plantZoneWindow = window
@@ -644,12 +618,6 @@ onMounted(() => {
   }
 })
 
-onBeforeUnmount(() => {
-  clearTimeout(showTimer)
-  clearTimeout(activeTimer)
-  clearTimeout(hideTimer)
-})
-
 // SEO Meta
 useHead({
   title: 'FasionAble',
@@ -662,34 +630,6 @@ useHead({
     { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Marcellus&display=swap' }
   ]
 })
-
-// Popular Products Data
-const popularProducts = [
-  { img: '/images/shop/product/1.png', name: 'Premium Maxi Dress (m)', price: '79', oldPrice: '99' },
-  { img: '/images/shop/product/2.png', name: 'Elegant Evening Dress (m)', price: '79', oldPrice: '199' },
-  { img: '/images/shop/product/3.png', name: 'Slim Fit Trouser (m)', price: '109', oldPrice: '149' },
-  { img: '/images/shop/product/4.png', name: 'Pleated Skirt (m)', price: '299', oldPrice: '499' },
-  { img: '/images/shop/product/5.png', name: 'Chic Mini Dress (m)', price: '199', oldPrice: '299' },
-  { img: '/images/shop/product/6.png', name: 'Premium Maxi Dress (m)', price: '79', oldPrice: '99' },
-  { img: '/images/shop/product/7.png', name: 'Giant Elephant Ear (M)', price: '99', oldPrice: '110' },
-  { img: '/images/shop/product/8.png', name: 'Premium Maxi Dress (m)', price: '79', oldPrice: '99' },
-]
-
-// Cart Items
-const cartItems = [
-  { img: '/images/shop/shop-cart/pic1.jpg', name: 'Premium Maxi Dress (m)', price: '59', oldPrice: '99' },
-  { img: '/images/shop/shop-cart/pic2.jpg', name: 'Elegant Evening Dress (m)', price: '79', oldPrice: '99' },
-  { img: '/images/shop/shop-cart/pic3.jpg', name: 'Pleated Skirt (m)', price: '49', oldPrice: '99' },
-  { img: '/images/shop/shop-cart/pic3.jpg', name: 'Slim Fit Trouser (m)', price: '99', oldPrice: '199' },
-]
-
-// Wishlist Items
-const wishlistItems = [
-  { img: '/images/shop/shop-cart/pic1.jpg', name: 'Premium Maxi Dress (m)', price: '59' },
-  { img: '/images/shop/shop-cart/pic2.jpg', name: 'Elegant Evening Dress (m)', price: '79' },
-  { img: '/images/shop/shop-cart/pic3.jpg', name: 'Pleated Skirt (m)', price: '49' },
-]
-
 // Categories
 const categories = [
   { name: 'Indoor Dresses', img: '/images/shop/plant/1.png' },
@@ -742,17 +682,5 @@ const instaImages = [
   '/images/plants/feature/6.png',
 ]
 
-// Footer Posts
-const footerPosts = [
-  { img: '/images/shop/product/small/1.png', title: 'A Journey Through Fashion', date: 'July 23, 2023' },
-  { img: '/images/shop/product/small/2.png', title: 'Into Fashion Styling Trends', date: 'Feb 23, 2024' },
-  { img: '/images/shop/product/small/3.png', title: 'The Wonders of Style', date: 'Jun 26, 2024' },
-]
 </script>
-
-
-
-
-
-
 

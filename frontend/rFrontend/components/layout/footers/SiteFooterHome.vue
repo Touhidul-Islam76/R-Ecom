@@ -1,12 +1,9 @@
-﻿<script setup lang="ts">
-withDefaults(
-  defineProps<{
-    footerPosts?: Array<Record<string, any>>
-  }>(),
-  {
-    footerPosts: () => [],
-  }
-)
+<script setup lang="ts">
+const footerPosts = [
+  { img: '/images/shop/product/small/1.png', title: 'A Journey Through Fashion', date: 'July 23, 2023' },
+  { img: '/images/shop/product/small/2.png', title: 'Into Fashion Styling Trends', date: 'Feb 23, 2024' },
+  { img: '/images/shop/product/small/3.png', title: 'The Wonders of Style', date: 'Jun 26, 2024' },
+]
 </script>
 <template>
 <!-- Footer -->

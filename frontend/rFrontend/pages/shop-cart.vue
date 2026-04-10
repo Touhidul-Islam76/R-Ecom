@@ -1,10 +1,5 @@
-﻿<script setup lang="ts">
-import { ref, onBeforeUnmount, onMounted } from 'vue'
-
-definePageMeta({
-  layout: false,
-})
-
+<script setup lang="ts">
+import { onMounted } from 'vue'
 useHead({
   title: 'FasionAble',
   meta: [
@@ -49,58 +44,8 @@ useHead({
   ],
 })
 
-const showLoader = ref(true)
-let showTimer: ReturnType<typeof setTimeout> | null = null
-let activeTimer: ReturnType<typeof setTimeout> | null = null
-let hideTimer: ReturnType<typeof setTimeout> | null = null
-
-
 onMounted(() => {
-  const loader = document.getElementById('loading-area')
-  if (!loader) return
-
-  showTimer = setTimeout(() => {
-    loader.classList.add('show')
-  }, 500)
-
-  activeTimer = setTimeout(() => {
-    loader.classList.add('active')
-  }, 1500)
-
-  hideTimer = setTimeout(() => {
-    showLoader.value = false
-  }, 3500)
 })
-
-onBeforeUnmount(() => {
-  if (showTimer) clearTimeout(showTimer)
-  if (activeTimer) clearTimeout(activeTimer)
-  if (hideTimer) clearTimeout(hideTimer)
-})
-
-const popularProducts = [
-  { image: '/images/shop/product/1.png', title: 'Premium Maxi Dress (m)', price: '$79', oldPrice: '$99' },
-  { image: '/images/shop/product/2.png', title: 'Elegant Evening Dress (m)', price: '$79', oldPrice: '$199' },
-  { image: '/images/shop/product/3.png', title: 'Slim Fit Trouser (m)', price: '$109', oldPrice: '$149' },
-  { image: '/images/shop/product/4.png', title: 'Pleated Skirt (m)', price: '$299', oldPrice: '$499' },
-  { image: '/images/shop/product/5.png', title: 'Chic Mini Dress (m)', price: '$199', oldPrice: '$299' },
-  { image: '/images/shop/product/6.png', title: 'Premium Maxi Dress (m)', price: '$79', oldPrice: '$99' },
-  { image: '/images/shop/product/7.png', title: 'Oversized Street Jacket (M)', price: '$99', oldPrice: '$110' },
-  { image: '/images/shop/product/8.png', title: 'Premium Maxi Dress (m)', price: '$79', oldPrice: '$99' },
-]
-
-const sidebarCartItems = [
-  { image: '/images/shop/shop-cart/pic1.jpg', title: 'Premium Maxi Dress (m)', qty: 1, price: '$59', oldPrice: '$99' },
-  { image: '/images/shop/shop-cart/pic2.jpg', title: 'Elegant Evening Dress (m)', qty: 1, price: '$79', oldPrice: '$99' },
-  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Pleated Skirt (m)', qty: 1, price: '$49', oldPrice: '$99' },
-  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Slim Fit Trouser (m)', qty: 1, price: '$99', oldPrice: '$199' },
-]
-
-const wishlistItems = [
-  { image: '/images/shop/shop-cart/pic1.jpg', title: 'Premium Maxi Dress (m)', price: '$59' },
-  { image: '/images/shop/shop-cart/pic2.jpg', title: 'Elegant Evening Dress (m)', price: '$79' },
-  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Pleated Skirt (m)', price: '$49' },
-]
 
 const cartTableItems = [
   { image: '/images/shop/shop-cart/pic1.jpg', name: 'Indoor Oasis Lush Ble...', price: '$40.00', qtyId: 'qty-1', subtotal: '$160.00' },
@@ -110,17 +55,14 @@ const cartTableItems = [
   { image: '/images/shop/shop-cart/pic5.jpg', name: 'Extended Roots Gardens...', price: '$28.00', qtyId: 'qty-5', subtotal: '$45.00' },
   { image: '/images/shop/shop-cart/pic6.jpg', name: 'Streetwear Edit...', price: '$120.00', qtyId: 'qty-6', subtotal: '$40.00' },
 ]
-
-const footerSocialPosts = [1, 2, 3, 4, 5, 6]
 </script>
 
 <template>
   <div id="bg">
     <div class="page-wraper">
-      <PageLoader :show-loader="showLoader" />
+      
 
-      <SiteHeaderMobileNuxt :popular-products="popularProducts" :sidebar-cart-items="sidebarCartItems" :wishlist-items="wishlistItems" />
-
+      
       <div class="page-content">
         <!-- Banner -->
         <div class="dz-bnr-inr" style="background-image:url(/images/background/bg1.jpg);">
@@ -269,7 +211,7 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
         </section>
       </div>
 
-      <SiteFooterNuxt :footer-social-posts="footerSocialPosts" />
+      
     </div>
   </div>
 </template>
@@ -291,12 +233,4 @@ const footerSocialPosts = [1, 2, 3, 4, 5, 6]
   }
 }
 </style>
-
-
-
-
-
-
-
-
 

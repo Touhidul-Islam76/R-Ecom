@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div>
     <!-- Register Section -->
     <section class="px-3">
@@ -136,41 +136,7 @@
 </template>
 
 <script setup>
-import { onBeforeUnmount, onMounted } from 'vue'
-
 definePageMeta({ footerStyle: '2' })
 useHead({ title: 'FasionAble' })
-
-let showTimer
-let activeTimer
-let hideTimer
-
-onMounted(() => {
-  const loader = document.getElementById('loading-area')
-  if (!loader) return
-
-  loader.style.display = ''
-  loader.classList.remove('show', 'active')
-
-  showTimer = setTimeout(() => {
-    loader.classList.add('show')
-  }, 500)
-
-  activeTimer = setTimeout(() => {
-    loader.classList.add('active')
-  }, 1500)
-
-  hideTimer = setTimeout(() => {
-    loader.style.display = 'none'
-  }, 3200)
-})
-
-onBeforeUnmount(() => {
-  clearTimeout(showTimer)
-  clearTimeout(activeTimer)
-  clearTimeout(hideTimer)
-})
 </script>
-
-
 

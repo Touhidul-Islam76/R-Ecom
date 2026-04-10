@@ -116,7 +116,7 @@ export default defineNuxtPlugin(async () => {
 
       await loadScript(src)
 
-      if (src.endsWith('/vendor/bootstrap/dist/js/bootstrap.bundle.min.js')) {
+      if (src.endsWith('/vendor/bootstrap/js/bootstrap.bundle.min.js')) {
         bridgeBootstrapJQueryPlugins()
       }
     } catch (error) {

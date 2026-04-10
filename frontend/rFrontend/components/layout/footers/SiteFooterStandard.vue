@@ -1,12 +1,5 @@
-﻿<script setup lang="ts">
-withDefaults(
-  defineProps<{
-    footerSocialPosts?: Array<number | string>
-  }>(),
-  {
-    footerSocialPosts: () => [],
-  }
-)
+<script setup lang="ts">
+const footerSocialPosts = [1, 2, 3, 4, 5, 6]
 </script>
 <template>
 <!-- Footer -->
