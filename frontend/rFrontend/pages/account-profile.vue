@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, nextTick } from 'vue'
+
+const { handleLogout, isLoggingOut } = useAuth()
+
 useHead({
   title: 'FasionAble',
   meta: [
@@ -42,8 +45,8 @@ useHead({
     { rel: 'stylesheet', href: '/vendor/swiper/swiper-bundle.min.css' },
     { rel: 'stylesheet', href: '/vendor/nouislider/nouislider.min.css' },
     { rel: 'stylesheet', href: '/vendor/animate/animate.css' },
-    { rel: 'stylesheet', type: 'text/css', href: '/css/style.css', class: 'main-css' },
-    { rel: 'stylesheet', type: 'text/css', href: '/css/skin/skin-1.css', class: 'skin' },
+    { rel: 'stylesheet', type: 'text/css', href: '/css/style.css' },
+    { rel: 'stylesheet', type: 'text/css', href: '/css/skin/skin-1.css' },
     { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
     { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
     { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Marcellus&display=swap' },
@@ -139,13 +142,8 @@ const handleImageUpload = (event: Event) => {
                       <span class="text text-primary">info@example.com</span>
                     </div>
                     <div class="account-nav">
-                      <div class="nav-title bg-light">DASHBOARD</div>
-                      <ul>
-                        <li><a href="/account-dashboard">Dashboard</a></li>
-                        <li><a href="/account-orders">Orders</a></li>
-                        <li><a href="/account-downloads">Downloads</a></li>
-                        <li><a href="/account-return-request">Return request</a></li>
-                      </ul>
+
+
                       <div class="nav-title bg-light">ACCOUNT SETTINGS</div>
                       <ul class="account-info-list">
                         <li><a href="/account-profile">Profile</a></li>
@@ -154,6 +152,8 @@ const handleImageUpload = (event: Event) => {
                         <li><a href="/account-payment-methods">Payment Methods</a></li>
                         <li><a href="/account-review">Review</a></li>
                       </ul>
+
+                      
                     </div>
                   </div>
                 </div>
@@ -182,37 +182,37 @@ const handleImageUpload = (event: Event) => {
                     <div class="col-lg-6">
                       <div class="form-group m-b25">
                         <label class="label-title">First Name</label>
-                        <input name="dzName" required="" class="form-control" />
+                        <input name="dzName" required class="form-control" />
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group m-b25">
                         <label class="label-title">Last Name</label>
-                        <input name="dzName" required="" class="form-control" />
+                        <input name="dzName" required class="form-control" />
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group m-b25">
                         <label class="label-title">Email address</label>
-                        <input type="email" name="dzEmail" required="" class="form-control" />
+                        <input type="email" name="dzEmail" required class="form-control" />
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group m-b25">
                         <label class="label-title">Phone</label>
-                        <input type="email" name="dzPhone" required="" class="form-control" />
+                        <input type="email" name="dzPhone" required class="form-control" />
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group m-b25">
                         <label class="label-title">New password (leave blank to leave unchanged)</label>
-                        <input type="password" name="password" required="" class="form-control" />
+                        <input type="password" name="password" required class="form-control" />
                       </div>
                     </div>
                     <div class="col-lg-6">
                       <div class="form-group m-b25">
                         <label class="label-title">Confirm new password</label>
-                        <input type="password" name="password" required="" class="form-control" />
+                        <input type="password" name="password" required class="form-control" />
                       </div>
                     </div>
                   </form>
@@ -223,7 +223,15 @@ const handleImageUpload = (event: Event) => {
                         <label class="form-check-label" for="basic_checkbox_22">Subscribe me to Newsletter</label>
                       </div>
                     </div>
-                    <button class="btn btn-primary mt-3 mt-sm-0" type="button">Update profile</button>
+                    <div class="d-flex gap-2 mt-3 mt-sm-0">
+                      <button class="btn btn-primary" type="button">Update profile</button>
+                      <button
+                        type="button"
+                        class="btn btn-outline-danger btnhover"
+                        :disabled="isLoggingOut"
+                        @click="handleLogout"
+                      >{{ isLoggingOut ? 'Logging out...' : 'Log Out' }}</button>
+                    </div>
                   </div>
                 </div>
               </section>

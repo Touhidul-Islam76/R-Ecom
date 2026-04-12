@@ -394,12 +394,9 @@ watch(
                         <li>
                           <span class="menu-title">Dashboard</span>
                           <ul>
-                            <li><a href="/account-dashboard">Dashboard</a></li>
                             <li><a href="/account-orders">Orders</a></li>
                             <li><a href="/account-order-details">Orders Details</a></li>
                             <li><a href="/account-order-confirmation">Orders Confirmation</a></li>
-                            <li><a href="/account-downloads">Downloads</a></li>
-                            <li><a href="/account-return-request">Return Request</a></li>
                             <li><a href="/account-return-request-detail">Return Request Detail</a></li>
                             <li><a href="/account-refund-requests-confirmed">Return Request Confirmed</a></li>
                           </ul>
@@ -411,21 +408,15 @@ watch(
                   <li class="sub-menu-down">
                     <a href="javascript:void(0);"><span>My Account</span><i class="fas fa-chevron-down tabindex"></i></a>
                     <ul class="sub-menu">
-                      <li><a href="/account-dashboard">Dashboard</a></li>
                       <li><a href="/account-orders">Orders</a></li>
                       <li><a href="/account-order-details">Orders Details</a></li>
                       <li><a href="/account-order-confirmation">Orders Confirmation</a></li>
-                      <li><a href="/account-downloads">Downloads</a></li>
-                      <li><a href="/account-return-request">Return Request</a></li>
                       <li><a href="/account-return-request-detail">Return Request Detail</a></li>
                       <li><a href="/account-refund-requests-confirmed">Return Request Confirmed</a></li>
                       <li><a href="/account-profile">Profile</a></li>
                       <li><a href="/account-address">Address</a></li>
                       <li><a href="/account-shipping-methods">Shipping methods</a></li>
                       <li><a href="/account-payment-methods">Payment Methods</a></li>
-                      <li><a href="/account-review">Review</a></li>
-                      <li><a href="/account-billing-address">Billing address</a></li>
-                      <li><a href="/account-shipping-address">Shipping address</a></li>
                       <li><a href="/account-cancellation-requests">Cancellation Requests</a></li>
                     </ul>
                   </li>

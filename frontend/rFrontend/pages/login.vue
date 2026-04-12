@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- Login Section -->
     <section class="px-3">
       <div class="row align-center-center">
         <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 p-a0">
@@ -14,13 +13,15 @@
             </div>
           </div>
         </div>
+
         <div class="col-xxl-6 col-xl-6 col-lg-6 end-side-content">
           <div class="login-area">
             <h2 class="login-head mb-1">Sign in</h2>
             <p>Please Enter your Detail To Sign In</p>
-            <form class="row gx-2">
+
+            <form class="row gx-2" action="javascript:void(0)" method="post" @submit.prevent>
               <div class="col-xl-6 col-md-12 mb-3 mb-xl-0">
-                <button name="submit" value="submit" type="submit" class="btn google-btn w-100">
+                <button type="button" class="btn google-btn w-100" disabled>
                   <svg width="22" height="22" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_1381_2836)">
                       <path d="M5.76215 15.7122L4.85713 19.0908L1.54929 19.1607C0.560727 17.3272 0 15.2294 0 13.0001C0 10.8443 0.524266 8.81147 1.45356 7.02148H1.45427L4.39918 7.56139L5.68923 10.4886C5.41922 11.2758 5.27206 12.1208 5.27206 13.0001C5.27216 13.9543 5.44502 14.8687 5.76215 15.7122Z" fill="#FBBB00"/>
@@ -34,8 +35,9 @@
                   </svg> Log in with Google
                 </button>
               </div>
+
               <div class="col-xl-6 col-md-12">
-                <button name="submit" value="submit" type="submit" class="btn google-btn w-100">
+                <button type="button" class="btn google-btn w-100" disabled>
                   <svg height="22" viewBox="0 0 176 176" width="22" xmlns="http://www.w3.org/2000/svg">
                     <g id="Layer_2"><g id="_01.facebook">
                       <circle cx="88" cy="88" fill="#1877F2" r="88"/>
@@ -49,16 +51,37 @@
 
               <div class="col-12">
                 <div class="m-b25">
-                  <label class="label-title">Email Address</label>
-                  <input name="dzName" required class="form-control" placeholder="Email Address" type="email">
+                  <label class="label-title">Email Address or Phone Number</label>
+                  <input
+                    v-model="identifier"
+                    required
+                    class="form-control"
+                    placeholder="Email Address or Phone Number"
+                    type="text"
+                  >
                 </div>
               </div>
+
               <div class="col-12">
                 <div class="m-b10">
                   <label class="label-title">Password</label>
                   <div class="dz-search-password">
-                    <input name="dzName" required class="form-control dz-password" placeholder="Password" type="password">
-                    <div class="show-pass">
+                    <input
+                      v-model="password"
+                      required
+                      class="form-control dz-password"
+                      placeholder="Password"
+                      :type="showPassword ? 'text' : 'password'"
+                    >
+                    <div
+                      class="show-pass"
+                      :class="{ active: showPassword }"
+                      role="button"
+                      tabindex="0"
+                      @click="togglePassword"
+                      @keydown.enter.prevent="togglePassword"
+                      @keydown.space.prevent="togglePassword"
+                    >
                       <svg class="eye-close" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#8ea5c8"><path d="M11 17.188a8.71 8.71 0 0 1-1.576-.147.69.69 0 0 1-.579-.678.7.7 0 0 1 .817-.676 7.33 7.33 0 0 0 1.339.127c4.073 0 7.61-3.566 8.722-4.812a18.51 18.51 0 0 0-2.434-2.274.69.69 0 0 1 .335-1.226.69.69 0 0 1 .268.019c.087.024.169.064.24.12a18.79 18.79 0 0 1 3.036 2.939.69.69 0 0 1 0 .848c-.185.234-4.581 5.763-10.167 5.763zm7.361-13.549a.69.69 0 0 0-.972 0l-2.186 2.186a10.68 10.68 0 0 0-2.606-.864c-.527-.099-1.061-.149-1.597-.149-5.585 0-9.982 5.528-10.166 5.763a.69.69 0 0 0 0 .848c.897 1.09 1.915 2.075 3.033 2.936.529.415 1.083.796 1.66 1.142l-1.888 1.887c-.066.063-.118.139-.154.223a.69.69 0 0 0 .145.757.67.67 0 0 0 .226.15c.085.034.175.052.266.051a.69.69 0 0 0 .265-.056c.084-.036.16-.088.223-.154l13.75-13.75a.69.69 0 0 0 0-.972zm-13.65 9.636A18.51 18.51 0 0 1 2.278 11C3.39 9.754 6.927 6.187 11 6.187a7.31 7.31 0 0 1 1.348.127 8.92 8.92 0 0 1 1.814.55L12.895 8.13c-.661-.437-1.453-.632-2.241-.552a3.44 3.44 0 0 0-2.085.989c-.56.56-.91 1.297-.989 2.085a3.44 3.44 0 0 0 .552 2.241l-1.601 1.604a14.43 14.43 0 0 1-1.82-1.222zm4.432-1.392c-.134-.275-.204-.577-.206-.883a2.07 2.07 0 0 1 .6-1.456 2.12 2.12 0 0 1 2.338-.392l-2.731 2.731z"/></svg>
                       <svg class="eye-open" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#8ea5c8"><path d="M19.873 9.611c-.179-.244-4.436-5.985-9.873-5.985S.305 9.367.127 9.611a.66.66 0 0 0 0 .778c.178.244 4.436 5.985 9.873 5.985s9.694-5.74 9.873-5.984a.66.66 0 0 0 0-.778zM10 15.055c-4.005 0-7.474-3.81-8.501-5.055C2.525 8.753 5.986 4.945 10 4.945c4.005 0 7.473 3.809 8.501 5.055-1.025 1.247-4.487 5.054-8.501 5.054zm0-9.011A3.96 3.96 0 0 0 6.044 10 3.96 3.96 0 0 0 10 13.956 3.96 3.96 0 0 0 13.956 10 3.96 3.96 0 0 0 10 6.044zm0 6.593A2.64 2.64 0 0 1 7.363 10 2.64 2.64 0 0 1 10 7.363 2.64 2.64 0 0 1 12.637 10 2.64 2.64 0 0 1 10 12.637z"/></svg>
                     </div>
@@ -69,7 +92,7 @@
               <div class="form-row d-flex justify-content-between m-b30">
                 <div class="form-group">
                   <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="form-check-input" id="basic_checkbox_01">
+                    <input id="basic_checkbox_01" v-model="rememberMe" type="checkbox" class="form-check-input">
                     <label class="form-check-label" for="basic_checkbox_01">Remember For 30 Days</label>
                   </div>
                 </div>
@@ -79,7 +102,24 @@
               </div>
 
               <div>
-                <button type="submit" class="btn btn-primary btn-lg w-100 btnhover mb-3">Sign In</button>
+                <button
+                  type="button"
+                  class="btn btn-primary btn-lg w-100 btnhover mb-3"
+                  :disabled="isSubmitting"
+                  @click.prevent="handleLogin"
+                >
+                  {{ isSubmitting ? 'Signing In...' : 'Sign In' }}
+                </button>
+                <button
+                  v-if="hasToken"
+                  type="button"
+                  class="btn btn-outline-secondary btn-lg w-100 btnhover mb-3"
+                  :disabled="isLoggingOut"
+                  @click="handleLogout"
+                >
+                  {{ isLoggingOut ? 'Logging Out...' : 'Log Out Current Session' }}
+                </button>
+
                 <p class="m-t20 fw-light">Don't Have an Account?
                   <NuxtLink class="register text-primary font-weight-500" to="/registration">Sign up For Free</NuxtLink>
                 </p>
@@ -90,7 +130,6 @@
       </div>
     </section>
 
-    <!-- Newsletter -->
     <section class="content-inner-3 overflow-hidden position-relative border-top">
       <div class="container">
         <div class="row align-items-center">
@@ -118,8 +157,112 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { loginRequest, logoutRequest } from '~/public/js/services/axiosClient.js'
+
 definePageMeta({ footerStyle: '2' })
 useHead({ title: 'FasionAble' })
-</script>
 
+type AuthErrorResponse = {
+  message?: string
+  errors?: Record<string, string[]>
+}
+
+const toast = useToast()
+
+const identifier   = ref('')
+const password     = ref('')
+const rememberMe   = ref(false)
+const showPassword = ref(false)
+const isSubmitting = ref(false)
+const isLoggingOut = ref(false)
+const hasToken     = ref(false)
+
+const togglePassword = () => { showPassword.value = !showPassword.value }
+
+const getErrorMessage = (error: unknown, fallback = 'Something went wrong'): string => {
+  const err = error as { response?: { data?: AuthErrorResponse }; message?: string }
+  const apiMsg = err?.response?.data?.message
+  if (apiMsg) return apiMsg
+  const firstValidation = Object.values(err?.response?.data?.errors ?? {})?.[0]?.[0]
+  if (firstValidation) return firstValidation
+  return err?.message || fallback
+}
+
+const buildPayload = (raw: string, pwd: string) => {
+  const value = raw.trim()
+  if (!value || !pwd.trim()) return null
+  if (value.includes('@')) return { email: value.toLowerCase(), password: pwd }
+  return { phone: value.replace(/[^\d+]/g, ''), password: pwd }
+}
+
+const handleLogin = async () => {
+  const payload = buildPayload(identifier.value, password.value)
+  if (!payload) {
+    toast.error('Please enter a valid email or phone number along with the password.')
+    return
+  }
+  if (password.value.trim().length < 8) {
+    toast.error('password must be at least 8 characters long.')
+    return
+  }
+
+  isSubmitting.value = true
+  try {
+    const res = await loginRequest(payload)
+    const token = res?.data?.data?.token
+
+    if (!token) {
+      toast.error('token not found in response. Login may have failed. Please try again.')
+      return
+    }
+
+    const user = res?.data?.data?.user ?? {}
+    localStorage.setItem('auth_token', token)
+    localStorage.setItem('auth_user', JSON.stringify(user))
+    localStorage.setItem('remember_me', rememberMe.value ? '1' : '0')
+
+    hasToken.value = true
+    toast.success(res?.data?.message || 'Login was successful!')
+
+    // role-based redirect: admin → dashboard, customer → home
+    const role = (user as { role?: string })?.role
+    await navigateTo(role === 'admin' ? '/admin/account-dashboard' : '/')
+  } catch (error: unknown) {
+    toast.error(getErrorMessage(error, 'Login failed. Please try again.'))
+  } finally {
+    isSubmitting.value = false
+  }
+}
+
+const clearAuth = () => {
+  localStorage.removeItem('auth_token')
+  localStorage.removeItem('auth_user')
+  localStorage.removeItem('remember_me')
+  hasToken.value = false
+}
+
+const handleLogout = async () => {
+  isLoggingOut.value = true
+  try {
+    const res = await logoutRequest({ all_devices: false })
+    clearAuth()
+    toast.success(res?.data?.message || 'Logout was successful!')
+  } catch (error: unknown) {
+    const status = (error as { response?: { status?: number } })?.response?.status
+    if (status === 401) {
+      clearAuth()
+      toast.info('Session has expired. You have been logged out locally.')
+      return
+    }
+    toast.error(getErrorMessage(error, 'Logout failed. Please try again.'))
+  } finally {
+    isLoggingOut.value = false
+  }
+}
+
+onMounted(() => {
+  hasToken.value = !!localStorage.getItem('auth_token')
+})
+</script>
