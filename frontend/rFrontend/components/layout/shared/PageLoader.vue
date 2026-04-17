@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
 
 const localVisible = ref(true)
 const visible = computed(() => localVisible.value)
-const route = useRoute()
 
 let showTimer: ReturnType<typeof setTimeout> | null = null
 let activeTimer: ReturnType<typeof setTimeout> | null = null
@@ -43,13 +42,6 @@ const runLoaderCycle = () => {
 onMounted(() => {
   runLoaderCycle()
 })
-
-watch(
-  () => route.fullPath,
-  () => {
-    runLoaderCycle()
-  }
-)
 
 onBeforeUnmount(() => {
   clearTimers()

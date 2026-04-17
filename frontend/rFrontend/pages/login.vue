@@ -158,111 +158,62 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { loginRequest, logoutRequest } from '~/public/js/services/axiosClient.js'
+import { computed, onMounted, ref } from 'vue'
+import { useAuthStore } from '~/stores/authStore'
 
 definePageMeta({ footerStyle: '2' })
 useHead({ title: 'FasionAble' })
 
-type AuthErrorResponse = {
-  message?: string
-  errors?: Record<string, string[]>
-}
-
 const toast = useToast()
+const authStore = useAuthStore()
 
-const identifier   = ref('')
-const password     = ref('')
-const rememberMe   = ref(false)
+const identifier = ref('')
+const password = ref('')
+const rememberMe = ref(false)
 const showPassword = ref(false)
-const isSubmitting = ref(false)
-const isLoggingOut = ref(false)
-const hasToken     = ref(false)
+
+const isSubmitting = computed(() => authStore.isLoggingIn)
+const isLoggingOut = computed(() => authStore.isLoggingOut)
+const hasToken = computed(() => authStore.hasToken)
 
 const togglePassword = () => { showPassword.value = !showPassword.value }
 
-const getErrorMessage = (error: unknown, fallback = 'Something went wrong'): string => {
-  const err = error as { response?: { data?: AuthErrorResponse }; message?: string }
-  const apiMsg = err?.response?.data?.message
-  if (apiMsg) return apiMsg
-  const firstValidation = Object.values(err?.response?.data?.errors ?? {})?.[0]?.[0]
-  if (firstValidation) return firstValidation
-  return err?.message || fallback
-}
-
-const buildPayload = (raw: string, pwd: string) => {
-  const value = raw.trim()
-  if (!value || !pwd.trim()) return null
-  if (value.includes('@')) return { email: value.toLowerCase(), password: pwd }
-  return { phone: value.replace(/[^\d+]/g, ''), password: pwd }
-}
-
 const handleLogin = async () => {
-  const payload = buildPayload(identifier.value, password.value)
-  if (!payload) {
-    toast.error('Please enter a valid email or phone number along with the password.')
-    return
-  }
   if (password.value.trim().length < 8) {
     toast.error('password must be at least 8 characters long.')
     return
   }
 
-  isSubmitting.value = true
   try {
-    const res = await loginRequest(payload)
-    const token = res?.data?.data?.token
+    const { user, message } = await authStore.login(identifier.value, password.value, rememberMe.value)
 
-    if (!token) {
-      toast.error('token not found in response. Login may have failed. Please try again.')
-      return
-    }
+    toast.success(message)
 
-    const user = res?.data?.data?.user ?? {}
-    localStorage.setItem('auth_token', token)
-    localStorage.setItem('auth_user', JSON.stringify(user))
-    localStorage.setItem('remember_me', rememberMe.value ? '1' : '0')
-
-    hasToken.value = true
-    toast.success(res?.data?.message || 'Login was successful!')
-
-    // role-based redirect: admin → dashboard, customer → home
-    const role = (user as { role?: string })?.role
-    await navigateTo(role === 'admin' ? '/admin/account-dashboard' : '/')
+    const role = user?.role
+    const isAdminRole = ['admin', 'superAdmin', 'moderator'].includes(role ?? '')
+    await navigateTo(isAdminRole ? '/admin/account-dashboard' : '/')
   } catch (error: unknown) {
-    toast.error(getErrorMessage(error, 'Login failed. Please try again.'))
-  } finally {
-    isSubmitting.value = false
+    const message = error instanceof Error ? error.message : 'Login failed. Please try again.'
+    toast.error(message)
   }
 }
 
-const clearAuth = () => {
-  localStorage.removeItem('auth_token')
-  localStorage.removeItem('auth_user')
-  localStorage.removeItem('remember_me')
-  hasToken.value = false
-}
-
 const handleLogout = async () => {
-  isLoggingOut.value = true
   try {
-    const res = await logoutRequest({ all_devices: false })
-    clearAuth()
-    toast.success(res?.data?.message || 'Logout was successful!')
-  } catch (error: unknown) {
-    const status = (error as { response?: { status?: number } })?.response?.status
-    if (status === 401) {
-      clearAuth()
-      toast.info('Session has expired. You have been logged out locally.')
+    const { expired, message } = await authStore.logout(false)
+    if (expired) {
+      toast.info(message)
       return
     }
-    toast.error(getErrorMessage(error, 'Logout failed. Please try again.'))
-  } finally {
-    isLoggingOut.value = false
+
+    toast.success(message)
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Logout failed. Please try again.'
+    toast.error(message)
   }
 }
 
 onMounted(() => {
-  hasToken.value = !!localStorage.getItem('auth_token')
+  authStore.hydrateAuthFromStorage()
 })
 </script>

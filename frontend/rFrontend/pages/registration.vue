@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- Register Section -->
     <section class="px-3">
       <div class="row align-center-center">
         <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 p-a0">
@@ -14,13 +13,15 @@
             </div>
           </div>
         </div>
+
         <div class="col-xxl-6 col-xl-6 col-lg-6 end-side-content">
           <div class="login-area">
             <h2 class="login-head mb-1">Sign up</h2>
             <p>Please Enter your Detail To Register</p>
-            <form class="row gx-2">
+
+            <form class="row gx-2" action="javascript:void(0)" method="post" @submit.prevent="handleRegister">
               <div class="col-xl-6 col-md-12 mb-3 mb-xl-0">
-                <button name="submit" value="submit" type="submit" class="btn google-btn w-100">
+                <button type="button" class="btn google-btn w-100" disabled>
                   <svg width="22" height="22" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_1381_2836)">
                       <path d="M5.76215 15.7122L4.85713 19.0908L1.54929 19.1607C0.560727 17.3272 0 15.2294 0 13.0001C0 10.8443 0.524266 8.81147 1.45356 7.02148H1.45427L4.39918 7.56139L5.68923 10.4886C5.41922 11.2758 5.27206 12.1208 5.27206 13.0001C5.27216 13.9543 5.44502 14.8687 5.76215 15.7122Z" fill="#FBBB00"/>
@@ -35,8 +36,9 @@
                   Sign up with Google
                 </button>
               </div>
+
               <div class="col-xl-6 col-md-12">
-                <button name="submit" value="submit" type="submit" class="btn google-btn w-100">
+                <button type="button" class="btn google-btn w-100" disabled>
                   <svg height="22" viewBox="0 0 176 176" width="22" xmlns="http://www.w3.org/2000/svg">
                     <g id="Layer_2"><g id="_01.facebook">
                       <circle cx="88" cy="88" fill="#1877F2" r="88"/>
@@ -52,33 +54,88 @@
               <div class="col-12">
                 <div class="m-b25">
                   <label class="label-title">Full Name</label>
-                  <input name="fullName" required class="form-control" placeholder="Full Name" type="text">
+                  <input v-model="fullName" required class="form-control" placeholder="Full Name" type="text">
                 </div>
               </div>
+
               <div class="col-12">
                 <div class="m-b25">
-                  <label class="label-title">Email Address</label>
-                  <input name="email" required class="form-control" placeholder="Email Address" type="email">
+                  <label class="label-title">Email Address or Phone Number</label>
+                  <input
+                    v-model="identifier"
+                    required
+                    class="form-control"
+                    placeholder="Email Address or Phone Number"
+                    type="text"
+                  >
                 </div>
               </div>
+
+              <div class="col-12">
+                <div class="m-b25">
+                  <label class="label-title">Profile Image (Optional)</label>
+                  <input
+                    class="form-control"
+                    type="file"
+                    accept=".jpg,.jpeg,.png,.webp"
+                    @change="onProfileImageChange"
+                  >
+                  <small class="d-block mt-1 text-muted">
+                    {{ profileImageName || 'Accepted: JPG, JPEG, PNG, WEBP (max 2MB)' }}
+                  </small>
+                  <div v-if="profileImagePreview" class="mt-2">
+                    <img :src="profileImagePreview" alt="Profile preview" style="width: 72px; height: 72px; object-fit: cover; border-radius: 50%;">
+                  </div>
+                </div>
+              </div>
+
               <div class="col-12">
                 <div class="m-b25">
                   <label class="label-title">Password</label>
                   <div class="dz-search-password">
-                    <input name="password" required class="form-control dz-password" placeholder="Password" type="password">
-                    <div class="show-pass">
+                    <input
+                      v-model="password"
+                      required
+                      class="form-control dz-password"
+                      placeholder="Password"
+                      :type="showPassword ? 'text' : 'password'"
+                    >
+                    <div
+                      class="show-pass"
+                      :class="{ active: showPassword }"
+                      role="button"
+                      tabindex="0"
+                      @click="togglePassword"
+                      @keydown.enter.prevent="togglePassword"
+                      @keydown.space.prevent="togglePassword"
+                    >
                       <svg class="eye-close" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#8ea5c8"><path d="M11 17.188a8.71 8.71 0 0 1-1.576-.147.69.69 0 0 1-.579-.678.7.7 0 0 1 .817-.676 7.33 7.33 0 0 0 1.339.127c4.073 0 7.61-3.566 8.722-4.812a18.51 18.51 0 0 0-2.434-2.274.69.69 0 0 1 .335-1.226.69.69 0 0 1 .268.019c.087.024.169.064.24.12a18.79 18.79 0 0 1 3.036 2.939.69.69 0 0 1 0 .848c-.185.234-4.581 5.763-10.167 5.763zm7.361-13.549a.69.69 0 0 0-.972 0l-2.186 2.186a10.68 10.68 0 0 0-2.606-.864c-.527-.099-1.061-.149-1.597-.149-5.585 0-9.982 5.528-10.166 5.763a.69.69 0 0 0 0 .848c.897 1.09 1.915 2.075 3.033 2.936.529.415 1.083.796 1.66 1.142l-1.888 1.887c-.066.063-.118.139-.154.223a.69.69 0 0 0 .145.757.67.67 0 0 0 .226.15c.085.034.175.052.266.051a.69.69 0 0 0 .265-.056c.084-.036.16-.088.223-.154l13.75-13.75a.69.69 0 0 0 0-.972zm-13.65 9.636A18.51 18.51 0 0 1 2.278 11C3.39 9.754 6.927 6.187 11 6.187a7.31 7.31 0 0 1 1.348.127 8.92 8.92 0 0 1 1.814.55L12.895 8.13c-.661-.437-1.453-.632-2.241-.552a3.44 3.44 0 0 0-2.085.989c-.56.56-.91 1.297-.989 2.085a3.44 3.44 0 0 0 .552 2.241l-1.601 1.604a14.43 14.43 0 0 1-1.82-1.222zm4.432-1.392c-.134-.275-.204-.577-.206-.883a2.07 2.07 0 0 1 .6-1.456 2.12 2.12 0 0 1 2.338-.392l-2.731 2.731z"/></svg>
                       <svg class="eye-open" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#8ea5c8"><path d="M19.873 9.611c-.179-.244-4.436-5.985-9.873-5.985S.305 9.367.127 9.611a.66.66 0 0 0 0 .778c.178.244 4.436 5.985 9.873 5.985s9.694-5.74 9.873-5.984a.66.66 0 0 0 0-.778zM10 15.055c-4.005 0-7.474-3.81-8.501-5.055C2.525 8.753 5.986 4.945 10 4.945c4.005 0 7.473 3.809 8.501 5.055-1.025 1.247-4.487 5.054-8.501 5.054zm0-9.011A3.96 3.96 0 0 0 6.044 10 3.96 3.96 0 0 0 10 13.956 3.96 3.96 0 0 0 13.956 10 3.96 3.96 0 0 0 10 6.044zm0 6.593A2.64 2.64 0 0 1 7.363 10 2.64 2.64 0 0 1 10 7.363 2.64 2.64 0 0 1 12.637 10 2.64 2.64 0 0 1 10 12.637z"/></svg>
                     </div>
                   </div>
                 </div>
               </div>
+
               <div class="col-12">
                 <div class="m-b10">
                   <label class="label-title">Confirm Password</label>
                   <div class="dz-search-password">
-                    <input name="confirmPassword" required class="form-control dz-password" placeholder="Confirm Password" type="password">
-                    <div class="show-pass">
+                    <input
+                      v-model="confirmPassword"
+                      required
+                      class="form-control dz-password"
+                      placeholder="Confirm Password"
+                      :type="showConfirmPassword ? 'text' : 'password'"
+                    >
+                    <div
+                      class="show-pass"
+                      :class="{ active: showConfirmPassword }"
+                      role="button"
+                      tabindex="0"
+                      @click="toggleConfirmPassword"
+                      @keydown.enter.prevent="toggleConfirmPassword"
+                      @keydown.space.prevent="toggleConfirmPassword"
+                    >
                       <svg class="eye-close" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#8ea5c8"><path d="M11 17.188a8.71 8.71 0 0 1-1.576-.147.69.69 0 0 1-.579-.678.7.7 0 0 1 .817-.676 7.33 7.33 0 0 0 1.339.127c4.073 0 7.61-3.566 8.722-4.812a18.51 18.51 0 0 0-2.434-2.274.69.69 0 0 1 .335-1.226.69.69 0 0 1 .268.019c.087.024.169.064.24.12a18.79 18.79 0 0 1 3.036 2.939.69.69 0 0 1 0 .848c-.185.234-4.581 5.763-10.167 5.763zm7.361-13.549a.69.69 0 0 0-.972 0l-2.186 2.186a10.68 10.68 0 0 0-2.606-.864c-.527-.099-1.061-.149-1.597-.149-5.585 0-9.982 5.528-10.166 5.763a.69.69 0 0 0 0 .848c.897 1.09 1.915 2.075 3.033 2.936.529.415 1.083.796 1.66 1.142l-1.888 1.887c-.066.063-.118.139-.154.223a.69.69 0 0 0 .145.757.67.67 0 0 0 .226.15c.085.034.175.052.266.051a.69.69 0 0 0 .265-.056c.084-.036.16-.088.223-.154l13.75-13.75a.69.69 0 0 0 0-.972zm-13.65 9.636A18.51 18.51 0 0 1 2.278 11C3.39 9.754 6.927 6.187 11 6.187a7.31 7.31 0 0 1 1.348.127 8.92 8.92 0 0 1 1.814.55L12.895 8.13c-.661-.437-1.453-.632-2.241-.552a3.44 3.44 0 0 0-2.085.989c-.56.56-.91 1.297-.989 2.085a3.44 3.44 0 0 0 .552 2.241l-1.601 1.604a14.43 14.43 0 0 1-1.82-1.222zm4.432-1.392c-.134-.275-.204-.577-.206-.883a2.07 2.07 0 0 1 .6-1.456 2.12 2.12 0 0 1 2.338-.392l-2.731 2.731z"/></svg>
                       <svg class="eye-open" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#8ea5c8"><path d="M19.873 9.611c-.179-.244-4.436-5.985-9.873-5.985S.305 9.367.127 9.611a.66.66 0 0 0 0 .778c.178.244 4.436 5.985 9.873 5.985s9.694-5.74 9.873-5.984a.66.66 0 0 0 0-.778zM10 15.055c-4.005 0-7.474-3.81-8.501-5.055C2.525 8.753 5.986 4.945 10 4.945c4.005 0 7.473 3.809 8.501 5.055-1.025 1.247-4.487 5.054-8.501 5.054zm0-9.011A3.96 3.96 0 0 0 6.044 10 3.96 3.96 0 0 0 10 13.956 3.96 3.96 0 0 0 13.956 10 3.96 3.96 0 0 0 10 6.044zm0 6.593A2.64 2.64 0 0 1 7.363 10 2.64 2.64 0 0 1 10 7.363 2.64 2.64 0 0 1 12.637 10 2.64 2.64 0 0 1 10 12.637z"/></svg>
                     </div>
@@ -89,14 +146,16 @@
               <div class="form-row d-flex justify-content-between m-b30">
                 <div class="form-group">
                   <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="form-check-input" id="basic_checkbox_02" required>
+                    <input id="basic_checkbox_02" v-model="acceptedTerms" type="checkbox" class="form-check-input">
                     <label class="form-check-label" for="basic_checkbox_02">I agree to Terms & Conditions</label>
                   </div>
                 </div>
               </div>
 
               <div>
-                <button type="submit" class="btn btn-primary btn-lg w-100 btnhover mb-3">Create Account</button>
+                <button type="submit" class="btn btn-primary btn-lg w-100 btnhover mb-3" :disabled="isSubmitting">
+                  {{ isSubmitting ? 'Creating Account...' : 'Create Account' }}
+                </button>
                 <p class="m-t20 fw-light">Already have an Account?
                   <NuxtLink class="register text-primary font-weight-500" to="/login">Sign In</NuxtLink>
                 </p>
@@ -107,7 +166,6 @@
       </div>
     </section>
 
-    <!-- Newsletter -->
     <section class="content-inner-3 overflow-hidden position-relative border-top">
       <div class="container">
         <div class="row align-items-center">
@@ -135,8 +193,147 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { computed, onUnmounted, ref } from 'vue'
+import { useAuthStore } from '~/stores/authStore'
+
 definePageMeta({ footerStyle: '2' })
 useHead({ title: 'FasionAble' })
-</script>
 
+const toast = useToast()
+const authStore = useAuthStore()
+
+const fullName = ref('')
+const identifier = ref('')
+const password = ref('')
+const confirmPassword = ref('')
+const acceptedTerms = ref(false)
+const showPassword = ref(false)
+const showConfirmPassword = ref(false)
+const profileImageFile = ref<File | null>(null)
+const profileImagePreview = ref('')
+const profileImageName = ref('')
+
+const isSubmitting = computed(() => authStore.isRegistering)
+
+const togglePassword = () => { showPassword.value = !showPassword.value }
+const toggleConfirmPassword = () => { showConfirmPassword.value = !showConfirmPassword.value }
+
+const normalizeIdentifier = (value: string) => {
+  const trimmed = value.trim()
+  return trimmed.includes('@') ? trimmed.toLowerCase() : trimmed.replace(/[^\d+]/g, '')
+}
+
+const isValidIdentifier = (value: string) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  const phoneRegex = /^\+?[0-9]{8,15}$/
+  return emailRegex.test(value) || phoneRegex.test(value)
+}
+
+const resetProfileImage = () => {
+  if (profileImagePreview.value) {
+    URL.revokeObjectURL(profileImagePreview.value)
+  }
+  profileImagePreview.value = ''
+  profileImageName.value = ''
+  profileImageFile.value = null
+}
+
+const onProfileImageChange = (event: Event) => {
+  const input = event.target as HTMLInputElement
+  const file = input.files?.[0]
+
+  if (!file) {
+    resetProfileImage()
+    return
+  }
+
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/webp']
+  if (!allowedTypes.includes(file.type)) {
+    toast.error('Only JPG, JPEG, PNG, and WEBP files are allowed.')
+    input.value = ''
+    resetProfileImage()
+    return
+  }
+
+  if (file.size > 2 * 1024 * 1024) {
+    toast.error('Profile image size must be 2MB or smaller.')
+    input.value = ''
+    resetProfileImage()
+    return
+  }
+
+  if (profileImagePreview.value) {
+    URL.revokeObjectURL(profileImagePreview.value)
+  }
+
+  profileImageFile.value = file
+  profileImageName.value = file.name
+  profileImagePreview.value = URL.createObjectURL(file)
+}
+
+const handleRegister = async () => {
+  const normalizedIdentifier = normalizeIdentifier(identifier.value)
+
+  if (!fullName.value.trim()) {
+    toast.error('Please enter your full name.')
+    return
+  }
+
+  if (!isValidIdentifier(normalizedIdentifier)) {
+    toast.error('Please enter a valid email or phone number.')
+    return
+  }
+
+  if (password.value.trim().length < 8) {
+    toast.error('Password must be at least 8 characters long.')
+    return
+  }
+
+  if (password.value !== confirmPassword.value) {
+    toast.error('Passwords do not match.')
+    return
+  }
+
+  if (!acceptedTerms.value) {
+    toast.error('Please accept Terms & Conditions to continue.')
+    return
+  }
+
+  try {
+    const { message, token, user } = await authStore.register({
+      name: fullName.value,
+      identifier: normalizedIdentifier,
+      password: password.value,
+      image: profileImageFile.value,
+    })
+
+    toast.success(message)
+
+    fullName.value = ''
+    identifier.value = ''
+    password.value = ''
+    confirmPassword.value = ''
+    acceptedTerms.value = false
+    resetProfileImage()
+
+    if (token) {
+      const role = user?.role
+      const isAdminRole = ['admin', 'superAdmin', 'moderator'].includes(role ?? '')
+      setTimeout(() => navigateTo(isAdminRole ? '/admin/account-dashboard' : '/'), 600)
+      return
+    }
+
+    setTimeout(() => navigateTo('/login'), 1200)
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Registration failed. Please try again.'
+    toast.error(message)
+  }
+}
+
+onUnmounted(() => {
+  if (profileImagePreview.value) {
+    URL.revokeObjectURL(profileImagePreview.value)
+  }
+})
+</script>

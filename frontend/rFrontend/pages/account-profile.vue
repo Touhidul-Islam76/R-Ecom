@@ -1,246 +1,405 @@
-<script setup lang="ts">
-import { ref, onMounted, nextTick } from 'vue'
+﻿<script setup lang="ts">
+import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { useAuthStore } from '~/stores/authStore'
 
-const { handleLogout, isLoggingOut } = useAuth()
+definePageMeta({ footerStyle: '2' })
+useHead({ title: 'Account Profile | FasionAble' })
 
-useHead({
-  title: 'FasionAble',
-  meta: [
-    { charset: 'utf-8' },
-    { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
-    { name: 'author', content: 'DexignZone' },
-    { name: 'robots', content: 'index, follow' },
-    { name: 'format-detection', content: 'telephone=no' },
-    {
-      name: 'keywords',
-      content:
-        'fashion store, dresses, streetwear, ecommerce, clothing, apparel, style, online shopping, modern fashion, boutique, trendy outfits, UI, UX, stylish, responsive design',
-    },
-    {
-      name: 'description',
-      content:
-        'Elevate your online retail presence with FasionAble HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for fashion enthusiasts.',
-    },
-    { property: 'og:title', content: 'FasionAble' },
-    {
-      property: 'og:description',
-      content:
-        'Elevate your online retail presence with FasionAble HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for fashion enthusiasts.',
-    },
-    { property: 'og:image', content: 'https://fasionable.dexignzone.com/xhtml/social-image.png' },
-    { name: 'twitter:title', content: 'FasionAble: Fashion & eCommerce Template | DexignZone' },
-    {
-      name: 'twitter:description',
-      content:
-        'Elevate your online retail presence with FasionAble HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for fashion enthusiasts.',
-    },
-    { name: 'twitter:image', content: 'https://fasionable.dexignzone.com/xhtml/social-image.png' },
-    { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-  ],
-  link: [
-    { rel: 'canonical', href: 'https://fasionable.dexignzone.com/xhtml/account-profile.html' },
-    { rel: 'icon', type: 'image/x-icon', href: '/images/20.jpg.jpeg' },
-    { rel: 'stylesheet', href: '/vendor/bootstrap-select/dist/css/bootstrap-select.min.css' },
-    { rel: 'stylesheet', href: '/vendor/swiper/swiper-bundle.min.css' },
-    { rel: 'stylesheet', href: '/vendor/nouislider/nouislider.min.css' },
-    { rel: 'stylesheet', href: '/vendor/animate/animate.css' },
-    { rel: 'stylesheet', type: 'text/css', href: '/css/style.css' },
-    { rel: 'stylesheet', type: 'text/css', href: '/css/skin/skin-1.css' },
-    { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-    { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-    { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Marcellus&display=swap' },
-  ],
-  script: [
-    { src: '/js/jquery.min.js' },
-    { src: '/vendor/wow/wow.min.js' },
-    { src: '/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' },
-    { src: '/vendor/bootstrap-select/dist/js/bootstrap-select.min.js' },
-    { src: '/vendor/bootstrap-touchspin/bootstrap-touchspin.js' },
-    { src: '/vendor/counter/waypoints-min.js' },
-    { src: '/vendor/swiper/swiper-bundle.min.js' },
-    { src: '/vendor/countdown/jquery.countdown.js' },
-    { src: '/vendor/wnumb/wNumb.js' },
-    { src: '/vendor/nouislider/nouislider.min.js' },
-    { src: '/js/dz.carousel.js' },
-    { src: '/js/dz.ajax.js' },
-    { src: '/js/custom.js' },
-  ],
-})
-
-onMounted(() => {
-
-  const plantZone = (window as Window & { PlantZone?: { init: () => void; load: () => void } }).PlantZone
-  if (plantZone) {
-    plantZone.init()
-    plantZone.load()
-  }
-
-  nextTick(() => {
-    const plantZoneCarousel = (window as Window & { PlantZoneCarousel?: { load: () => void } }).PlantZoneCarousel
-    if (plantZoneCarousel) {
-      plantZoneCarousel.load()
-    }
-  })
-})
-
-const avatarPreview = ref('/images/profile3.jpg')
-
-const handleImageUpload = (event: Event) => {
-  const input = event.target as HTMLInputElement | null
-  const file = input?.files?.[0]
-  if (!file) return
-
-  const reader = new FileReader()
-  reader.onload = (e) => {
-    const result = e.target?.result
-    if (typeof result === 'string') {
-      avatarPreview.value = result
-    }
-  }
-  reader.readAsDataURL(file)
+type ProfileForm = {
+  name: string
+  email: string
+  phone: string
+  address: string
+  district: string
 }
+
+const toast = useToast()
+const authStore = useAuthStore()
+
+const profileForm = ref<ProfileForm>({
+  name: '',
+  email: '',
+  phone: '',
+  address: '',
+  district: '',
+})
+
+const initialForm = ref<ProfileForm>({
+  name: '',
+  email: '',
+  phone: '',
+  address: '',
+  district: '',
+})
+
+const backendUser = ref<Record<string, unknown>>({})
+const profileImageFile = ref<File | null>(null)
+const profileImagePreview = ref('')
+const profileImageName = ref('')
+
+const isLoadingProfile = computed(() => authStore.isLoadingProfile)
+const isUpdatingProfile = computed(() => authStore.isUpdatingProfile)
+const isLoggingOut = computed(() => authStore.isLoggingOut)
+
+const mapUserToForm = (user: Record<string, unknown>): ProfileForm => ({
+  name: String(user.name ?? ''),
+  email: String(user.email ?? ''),
+  phone: String(user.phone ?? ''),
+  address: String(user.address ?? ''),
+  district: String(user.district ?? ''),
+})
+
+const resolveAvatar = (value: unknown) => {
+  if (typeof value !== 'string' || !value.trim()) return ''
+  const normalized = value.trim()
+
+  if (normalized.startsWith('http://') || normalized.startsWith('https://') || normalized.startsWith('/')) {
+    return normalized
+  }
+
+  if (normalized.startsWith('assets/images/')) {
+    return `http://localhost:8000/${normalized}`
+  }
+
+  if (normalized.startsWith('userProfile/')) {
+    return `http://localhost:8000/assets/images/${normalized}`
+  }
+
+  return normalized
+}
+
+const avatarUrl = computed(() => {
+  if (profileImagePreview.value) return profileImagePreview.value
+
+  const user = backendUser.value
+  return (
+    resolveAvatar(user.image_url) ||
+    resolveAvatar(user.image) ||
+    resolveAvatar(authStore.user.image_url) ||
+    resolveAvatar(authStore.user.image) ||
+    '/images/profile3.jpg'
+  )
+})
+
+const headerName = computed(() => profileForm.value.name || 'Customer')
+const headerEmailOrPhone = computed(() => profileForm.value.email || profileForm.value.phone || '-')
+
+const backendEntries = computed(() =>
+  Object.entries(backendUser.value)
+    .filter(([key]) => !['password', 'remember_token'].includes(key))
+    .sort(([a], [b]) => a.localeCompare(b))
+)
+
+const formatValue = (value: unknown) => {
+  if (value === null || value === undefined || value === '') return '-'
+  if (typeof value === 'object') return JSON.stringify(value)
+  return String(value)
+}
+
+const clearPreviewUrl = () => {
+  if (profileImagePreview.value.startsWith('blob:')) {
+    URL.revokeObjectURL(profileImagePreview.value)
+  }
+}
+
+const applyProfileData = (user: Record<string, unknown>) => {
+  backendUser.value = user
+  const nextForm = mapUserToForm(user)
+  profileForm.value = { ...nextForm }
+  initialForm.value = { ...nextForm }
+
+  profileImageFile.value = null
+  profileImageName.value = ''
+  clearPreviewUrl()
+  profileImagePreview.value = ''
+}
+
+const onProfileImageChange = (event: Event) => {
+  const input = event.target as HTMLInputElement
+  const file = input.files?.[0]
+
+  if (!file) {
+    profileImageFile.value = null
+    profileImageName.value = ''
+    clearPreviewUrl()
+    profileImagePreview.value = ''
+    return
+  }
+
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/webp']
+  if (!allowedTypes.includes(file.type)) {
+    toast.error('Only JPG, JPEG, PNG, and WEBP files are allowed.')
+    input.value = ''
+    return
+  }
+
+  if (file.size > 2 * 1024 * 1024) {
+    toast.error('Profile image must be 2MB or smaller.')
+    input.value = ''
+    return
+  }
+
+  clearPreviewUrl()
+  profileImageFile.value = file
+  profileImageName.value = file.name
+  profileImagePreview.value = URL.createObjectURL(file)
+}
+
+const buildUpdatePayload = () => {
+  const payload: Record<string, string | null | File> = {}
+  const fields: Array<keyof ProfileForm> = ['name', 'email', 'phone', 'address', 'district']
+
+  for (const key of fields) {
+    const currentValue = profileForm.value[key].trim()
+    const initialValue = initialForm.value[key].trim()
+
+    if (currentValue !== initialValue) {
+      payload[key] = currentValue || null
+    }
+  }
+
+  if (profileImageFile.value) {
+    payload.image = profileImageFile.value
+  }
+
+  return payload
+}
+
+const loadProfile = async () => {
+  authStore.hydrateAuthFromStorage()
+
+  if (!authStore.hasToken) {
+    toast.error('Please login first.')
+    await navigateTo('/login')
+    return
+  }
+
+  try {
+    const { user } = await authStore.fetchCurrentUser()
+    applyProfileData(user as Record<string, unknown>)
+  } catch (error: unknown) {
+    const fallbackUser = authStore.user as Record<string, unknown>
+    const hasFallbackData = Object.keys(fallbackUser).length > 0
+
+    if (hasFallbackData) {
+      applyProfileData(fallbackUser)
+      toast.info('Live profile fetch failed. Showing cached profile data.')
+      return
+    }
+
+    const message = error instanceof Error ? error.message : 'Failed to load profile.'
+    toast.error(message)
+  }
+}
+
+const handleUpdateProfile = async () => {
+  const payload = buildUpdatePayload()
+  if (Object.keys(payload).length === 0) {
+    toast.info('No changes detected.')
+    return
+  }
+
+  try {
+    const { user, message } = await authStore.updateProfile(payload)
+    applyProfileData(user as Record<string, unknown>)
+    toast.success(message)
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Failed to update profile.'
+    toast.error(message)
+  }
+}
+
+const handleLogout = async () => {
+  try {
+    const { expired, message } = await authStore.logout(false)
+    if (expired) {
+      toast.info(message)
+    } else {
+      toast.success(message)
+    }
+    await navigateTo('/login')
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Logout failed.'
+    toast.error(message)
+  }
+}
+
+onMounted(async () => {
+  await loadProfile()
+})
+
+onUnmounted(() => {
+  clearPreviewUrl()
+})
 </script>
 
 <template>
-  <div class="page-wraper">
-      
-
-      
-      <div class="page-content">
-
-        <!--Banner Start-->
-        <div class="dz-bnr-inr" style="background-image:url('/images/background/bg1.jpg');">
-          <div class="container">
-            <div class="dz-bnr-inr-entry">
-              <nav aria-label="breadcrumb" class="breadcrumb-row">
-                <ul class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="/"> Home</a></li>
-                  <li class="breadcrumb-item">Account Profile</li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-        </div>
-        <!--Banner End-->
-
-        <div class="content-inner-1">
-          <div class="container">
-            <div class="row">
-              <aside class="col-xl-3">
-                <div class="toggle-info">
-                  <h5 class="title mb-0">Account Navbar</h5>
-                  <a class="toggle-btn" href="#accountSidebar">Account Menu</a>
-                </div>
-                <div class="sticky-top account-sidebar-wrapper">
-                  <div class="account-sidebar" id="accountSidebar">
-                    <div class="profile-head">
-                      <div class="user-thumb">
-                        <img class="rounded-circle" src="/images/profile4.jpg" alt="Susan Gardner" />
-                      </div>
-                      <h5 class="title mb-0">Ronald M. Spino</h5>
-                      <span class="text text-primary">info@example.com</span>
-                    </div>
-                    <div class="account-nav">
-
-
-                      <div class="nav-title bg-light">ACCOUNT SETTINGS</div>
-                      <ul class="account-info-list">
-                        <li><a href="/account-profile">Profile</a></li>
-                        <li><a href="/account-address">Address</a></li>
-                        <li><a href="/account-shipping-methods">Shipping methods</a></li>
-                        <li><a href="/account-payment-methods">Payment Methods</a></li>
-                        <li><a href="/account-review">Review</a></li>
-                      </ul>
-
-                      
-                    </div>
-                  </div>
-                </div>
-              </aside>
-
-              <section class="col-xl-9 account-wrapper">
-                <div class="account-card">
-                  <div class="profile-edit">
-                    <div class="avatar-upload d-flex align-items-center">
-                      <div class="position-relative">
-                        <div class="avatar-preview thumb">
-                          <div id="imagePreview" :style="{ backgroundImage: `url(${avatarPreview})` }"></div>
-                        </div>
-                        <div class="change-btn thumb-edit d-flex align-items-center flex-wrap">
-                          <input id="imageUpload" type="file" class="form-control d-none" accept=".png, .jpg, .jpeg" @change="handleImageUpload" />
-                          <label for="imageUpload" class="btn btn-light ms-0"><i class="fa-solid fa-camera"></i></label>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="clearfix">
-                      <h2 class="title mb-0">John Doe</h2>
-                      <span class="text text-primary">johndoe@example.com</span>
-                    </div>
-                  </div>
-                  <form action="#" class="row" @submit.prevent>
-                    <div class="col-lg-6">
-                      <div class="form-group m-b25">
-                        <label class="label-title">First Name</label>
-                        <input name="dzName" required class="form-control" />
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <div class="form-group m-b25">
-                        <label class="label-title">Last Name</label>
-                        <input name="dzName" required class="form-control" />
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <div class="form-group m-b25">
-                        <label class="label-title">Email address</label>
-                        <input type="email" name="dzEmail" required class="form-control" />
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <div class="form-group m-b25">
-                        <label class="label-title">Phone</label>
-                        <input type="email" name="dzPhone" required class="form-control" />
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <div class="form-group m-b25">
-                        <label class="label-title">New password (leave blank to leave unchanged)</label>
-                        <input type="password" name="password" required class="form-control" />
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <div class="form-group m-b25">
-                        <label class="label-title">Confirm new password</label>
-                        <input type="password" name="password" required class="form-control" />
-                      </div>
-                    </div>
-                  </form>
-                  <div class="d-flex flex-wrap justify-content-between align-items-center">
-                    <div class="form-group">
-                      <div class="custom-control custom-checkbox text-black">
-                        <input type="checkbox" class="form-check-input" id="basic_checkbox_22" />
-                        <label class="form-check-label" for="basic_checkbox_22">Subscribe me to Newsletter</label>
-                      </div>
-                    </div>
-                    <div class="d-flex gap-2 mt-3 mt-sm-0">
-                      <button class="btn btn-primary" type="button">Update profile</button>
-                      <button
-                        type="button"
-                        class="btn btn-outline-danger btnhover"
-                        :disabled="isLoggingOut"
-                        @click="handleLogout"
-                      >{{ isLoggingOut ? 'Logging out...' : 'Log Out' }}</button>
-                    </div>
-                  </div>
-                </div>
-              </section>
-            </div>
-          </div>
+  <div class="page-content">
+    <div class="dz-bnr-inr" style="background-image: url('/images/background/bg1.jpg')">
+      <div class="container">
+        <div class="dz-bnr-inr-entry">
+          <nav aria-label="breadcrumb" class="breadcrumb-row">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><NuxtLink to="/">Home</NuxtLink></li>
+              <li class="breadcrumb-item">Account Profile</li>
+            </ul>
+          </nav>
         </div>
       </div>
-
-      
     </div>
+
+    <div class="content-inner-1">
+      <div class="container">
+        <section class="account-wrapper account-wrapper--full">
+          <div class="account-card">
+            <div class="profile-edit">
+              <div class="avatar-upload d-flex align-items-center">
+                <div class="position-relative">
+                  <div class="avatar-preview thumb">
+                    <div id="imagePreview" :style="{ backgroundImage: `url(${avatarUrl})` }"></div>
+                  </div>
+                  <div class="change-btn thumb-edit d-flex align-items-center flex-wrap">
+                    <input
+                      id="imageUpload"
+                      type="file"
+                      class="form-control d-none"
+                      accept=".jpg,.jpeg,.png,.webp"
+                      @change="onProfileImageChange"
+                    >
+                    <label for="imageUpload" class="btn btn-light ms-0"><i class="fa-solid fa-camera"></i></label>
+                  </div>
+                </div>
+              </div>
+              <div class="clearfix">
+                <h2 class="title mb-0">{{ headerName }}</h2>
+                <span class="text text-primary">{{ headerEmailOrPhone }}</span>
+                <small class="d-block mt-1 text-muted">{{ profileImageName || 'Accepted: JPG, JPEG, PNG, WEBP (max 2MB)' }}</small>
+              </div>
+            </div>
+
+            <form class="row" @submit.prevent="handleUpdateProfile">
+              <div class="col-lg-6">
+                <div class="form-group m-b25">
+                  <label class="label-title">Name</label>
+                  <input v-model="profileForm.name" type="text" class="form-control" placeholder="Full name">
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group m-b25">
+                  <label class="label-title">Email</label>
+                  <input v-model="profileForm.email" type="email" class="form-control" placeholder="Email address">
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group m-b25">
+                  <label class="label-title">Phone</label>
+                  <input v-model="profileForm.phone" type="text" class="form-control" placeholder="Phone number">
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div class="form-group m-b25">
+                  <label class="label-title">District</label>
+                  <input v-model="profileForm.district" type="text" class="form-control" placeholder="District">
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="form-group m-b25">
+                  <label class="label-title">Address</label>
+                  <input v-model="profileForm.address" type="text" class="form-control" placeholder="Address">
+                </div>
+              </div>
+
+              <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+                <button class="btn btn-primary" type="submit" :disabled="isUpdatingProfile || isLoadingProfile">
+                  {{ isUpdatingProfile ? 'Updating...' : 'Update Profile' }}
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-danger btnhover"
+                  :disabled="isLoggingOut"
+                  @click="handleLogout"
+                >
+                  {{ isLoggingOut ? 'Logging out...' : 'Log Out' }}
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- <div class="account-card mt-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h4 class="title mb-0">Backend Profile Data</h4>
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-secondary"
+                :disabled="isLoadingProfile"
+                @click="loadProfile"
+              >
+                {{ isLoadingProfile ? 'Refreshing...' : 'Refresh Data' }}
+              </button>
+            </div>
+
+            <div v-if="backendEntries.length === 0" class="text-muted">
+              No profile data found yet.
+            </div>
+
+            <div v-else class="backend-grid">
+              <div v-for="[key, value] in backendEntries" :key="key" class="backend-item">
+                <span class="backend-key">{{ key }}</span>
+                <span class="backend-value">{{ formatValue(value) }}</span>
+              </div>
+            </div>
+          </div> -->
+        </section>
+      </div>
+    </div>
+  </div>
 </template>
 
+<style scoped>
+.account-wrapper--full {
+  width: 100%;
+}
+
+.backend-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.backend-item {
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  padding: 12px;
+  background: #fff;
+}
+
+.backend-key {
+  display: block;
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.backend-value {
+  word-break: break-word;
+  color: #222;
+}
+
+.profile-edit .thumb-edit label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+}
+
+.profile-edit .thumb-edit label i {
+  display: block;
+  line-height: 1;
+}
+</style>

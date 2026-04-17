@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cp \"D:\\\\bootstrap-admin-dashboard-template-2024-12-05-12-01-20-utc\\\\Velonic_v6.0.0\\\\Admin\\\\dist\\\\assets\\\\css\\\\app.min.css\" \"c:\\\\Users\\\\user\\\\Documents\\\\GitHub\\\\R-Ecom\\\\frontend\\\\rFrontend\\\\public\\\\velonic\\\\css\\\\app.min.css\")",
+      "Bash(cp \"D:\\\\bootstrap-admin-dashboard-template-2024-12-05-12-01-20-utc\\\\Velonic_v6.0.0\\\\Admin\\\\dist\\\\assets\\\\css\\\\icons.min.css\" \"c:\\\\Users\\\\user\\\\Documents\\\\GitHub\\\\R-Ecom\\\\frontend\\\\rFrontend\\\\public\\\\velonic\\\\css\\\\icons.min.css\")",
+      "Bash(cp \"D:\\\\bootstrap-admin-dashboard-template-2024-12-05-12-01-20-utc\\\\Velonic_v6.0.0\\\\Admin\\\\dist\\\\assets\\\\js\\\\config.js\" \"c:\\\\Users\\\\user\\\\Documents\\\\GitHub\\\\R-Ecom\\\\frontend\\\\rFrontend\\\\public\\\\velonic\\\\js\\\\config.js\")",
+      "Bash(cp \"D:\\\\bootstrap-admin-dashboard-template-2024-12-05-12-01-20-utc\\\\Velonic_v6.0.0\\\\Admin\\\\dist\\\\assets\\\\js\\\\app.min.js\" \"c:\\\\Users\\\\user\\\\Documents\\\\GitHub\\\\R-Ecom\\\\frontend\\\\rFrontend\\\\public\\\\velonic\\\\js\\\\app.min.js\")",
+      "Bash(cp \"D:\\\\bootstrap-admin-dashboard-template-2024-12-05-12-01-20-utc\\\\Velonic_v6.0.0\\\\Admin\\\\dist\\\\assets\\\\js\\\\vendor.min.js\" \"c:\\\\Users\\\\user\\\\Documents\\\\GitHub\\\\R-Ecom\\\\frontend\\\\rFrontend\\\\public\\\\velonic\\\\js\\\\vendor.min.js\")",
+      "Bash(cp \"D:\\\\bootstrap-admin-dashboard-template-2024-12-05-12-01-20-utc\\\\Velonic_v6.0.0\\\\Admin\\\\dist\\\\assets\\\\images\\\\logo.png\" \"c:\\\\Users\\\\user\\\\Documents\\\\GitHub\\\\R-Ecom\\\\frontend\\\\rFrontend\\\\public\\\\velonic\\\\images\\\\\" && cp \"D:\\\\bootstrap-admin-dashboard-template-2024-12-05-12-01-20-utc\\\\Velonic_v6.0.0\\\\Admin\\\\dist\\\\assets\\\\images\\\\logo-dark.png\" \"c:\\\\Users\\\\user\\\\Documents\\\\GitHub\\\\R-Ecom\\\\frontend\\\\rFrontend\\\\public\\\\velonic\\\\images\\\\\")",
+      "Bash(cp \"D:\\\\bootstrap-admin-dashboard-template-2024-12-05-12-01-20-utc\\\\Velonic_v6.0.0\\\\Admin\\\\dist\\\\assets\\\\images\\\\logo-sm.png\" \"c:\\\\Users\\\\user\\\\Documents\\\\GitHub\\\\R-Ecom\\\\frontend\\\\rFrontend\\\\public\\\\velonic\\\\images\\\\\" && echo \"Logos copied\")",
+      "Bash(cp D:/bootstrap-admin-dashboard-template-2024-12-05-12-01-20-utc/Velonic_v6.0.0/Admin/dist/assets/images/logo.png c:/Users/user/Documents/GitHub/R-Ecom/frontend/rFrontend/public/velonic/images/)",
+      "Bash(cp D:/bootstrap-admin-dashboard-template-2024-12-05-12-01-20-utc/Velonic_v6.0.0/Admin/dist/assets/images/logo-dark.png c:/Users/user/Documents/GitHub/R-Ecom/frontend/rFrontend/public/velonic/images/)",
+      "Bash(cp D:/bootstrap-admin-dashboard-template-2024-12-05-12-01-20-utc/Velonic_v6.0.0/Admin/dist/assets/images/logo-sm.png c:/Users/user/Documents/GitHub/R-Ecom/frontend/rFrontend/public/velonic/images/)",
+      "Bash(cp D:/bootstrap-admin-dashboard-template-2024-12-05-12-01-20-utc/Velonic_v6.0.0/Admin/dist/assets/images/favicon.ico c:/Users/user/Documents/GitHub/R-Ecom/frontend/rFrontend/public/velonic/images/)",
+      "Bash(cp D:/bootstrap-admin-dashboard-template-2024-12-05-12-01-20-utc/Velonic_v6.0.0/Admin/dist/assets/images/users/avatar-1.jpg c:/Users/user/Documents/GitHub/R-Ecom/frontend/rFrontend/public/velonic/images/users/)",
+      "Bash(cp D:/bootstrap-admin-dashboard-template-2024-12-05-12-01-20-utc/Velonic_v6.0.0/Admin/dist/assets/js/pages/dashboard.js c:/Users/user/Documents/GitHub/R-Ecom/frontend/rFrontend/public/velonic/js/pages/dashboard.js)",
+      "Bash(cp D:/bootstrap-admin-dashboard-template-2024-12-05-12-01-20-utc/Velonic_v6.0.0/Admin/dist/assets/vendor/apexcharts/apexcharts.min.js c:/Users/user/Documents/GitHub/R-Ecom/frontend/rFrontend/public/velonic/vendor/apexcharts/)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\user\\Documents\\GitHub\\R-Ecom\\frontend\\rFrontend\\public\\velonic"
+    ]
+  }
+}

@@ -208,7 +208,7 @@ var PlantZone = function(){
 		if(screenWidth <= 991 ){
 			
 			var menuObj ;
-			 jQuery('.navbar-nav > li > a, .sub-menu > li > a, .navbar-nav > li > a > i, .sub-menu > li > a > i')
+			 jQuery('.navbar-nav > li > a:not([data-router-link]), .sub-menu > li > a:not([data-router-link]), .navbar-nav > li > a > i, .sub-menu > li > a > i')
 				.unbind()
 				.on({
 					click: function(e){
@@ -225,6 +225,9 @@ var PlantZone = function(){
 				});
 			jQuery('.tabindex').attr("tabindex","0");	
 			function handleMenus(e, menuObj){
+				if(menuObj.is('[data-router-link]')){
+					return;
+				}
 				
 				if(menuObj.parent('li').has('ul').length > 0){e.preventDefault();}					
 					
@@ -658,6 +661,9 @@ var PlantZone = function(){
 	var priceslider = function(){
 		if($("#slider-tooltips").length > 0 ) {
 			var tooltipSlider = document.getElementById('slider-tooltips');
+			if (tooltipSlider && tooltipSlider.noUiSlider) {
+				tooltipSlider.noUiSlider.destroy();
+			}
 			
 			var formatForSlider = {
 				from: function (formattedValue) {
@@ -689,6 +695,9 @@ var PlantZone = function(){
 		}
 		if($("#slider-tooltips2").length > 0 ) {
 			var tooltipSlider = document.getElementById('slider-tooltips2');
+			if (tooltipSlider && tooltipSlider.noUiSlider) {
+				tooltipSlider.noUiSlider.destroy();
+			}
 			
 			var formatForSlider = {
 				from: function (formattedValue) {

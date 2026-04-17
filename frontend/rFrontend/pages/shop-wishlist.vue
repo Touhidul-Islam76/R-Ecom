@@ -1,5 +1,58 @@
 <script setup lang="ts">
-import { onMounted, nextTick } from 'vue'
+import { storeToRefs } from 'pinia'
+import { computed, nextTick, onMounted, onBeforeUnmount } from 'vue'
+import { useCartStore } from '~/stores/cartStore'
+import { useWishlistStore } from '~/stores/wishlistStore'
+
+const toast = useToast()
+const cartStore = useCartStore()
+const wishlistStore = useWishlistStore()
+const authUser = useAuthUser()
+const { items: wishlistProducts, totalItems } = storeToRefs(wishlistStore)
+
+const isLoggedIn = computed(() =>
+  Boolean(authUser.value?.id || authUser.value?.email || authUser.value?.phone || authUser.value?.role),
+)
+
+const formatPrice = (value: unknown) => `$${Number(value || 0).toFixed(2)}`
+
+const addWishlistItemToCart = async (productId: number) => {
+  const item = wishlistProducts.value.find((row) => row.product_id === productId)
+  if (!item) return
+
+  await cartStore.addItem({
+    product_id: item.product_id,
+    title: item.title,
+    image: item.image,
+    price: Number(item.price || 0),
+    size: null,
+    color: null,
+    quantity: 1,
+  })
+
+  await wishlistStore.removeProduct(item.product_id)
+  toast.success('Moved to cart.')
+}
+
+const removeFromWishlist = async (productId: number) => {
+  const ok = await wishlistStore.removeProduct(productId)
+  if (!ok) {
+    toast.error('Could not remove item from wishlist.')
+    return
+  }
+
+  toast.success('Removed from wishlist.')
+}
+
+const handleAuthChange = () => {
+  if (isLoggedIn.value) {
+    void wishlistStore.refreshFromServer()
+    return
+  }
+
+  wishlistStore.resetLocalWishlist()
+}
+
 useHead({
   title: 'FasionAble',
   meta: [
@@ -49,6 +102,15 @@ useHead({
 })
 
 onMounted(() => {
+  cartStore.hydrateCart()
+  wishlistStore.hydrateWishlist()
+  if (isLoggedIn.value) {
+    void wishlistStore.refreshFromServer()
+  }
+
+  if (typeof window !== 'undefined') {
+    window.addEventListener('auth-change', handleAuthChange)
+  }
 
   const plantZone = (window as Window & { PlantZone?: { init: () => void; load: () => void } }).PlantZone
   if (plantZone) {
@@ -64,16 +126,11 @@ onMounted(() => {
   })
 })
 
-const wishlistProducts = [
-  { image: '/images/shop/product/1.png', title: 'Runway Reach Dress (m)', price: '$1099', oldPrice: '$659' },
-  { image: '/images/shop/product/2.png', title: 'Classic Denim Set (m)', price: '$659', oldPrice: '$1299' },
-  { image: '/images/shop/product/3.png', title: 'Longline Fashion Dress (m)', price: '$659', oldPrice: '$1299' },
-  { image: '/images/shop/product/4.png', title: 'Premium Maxi Dress (m)', price: '$659', oldPrice: '$1299' },
-  { image: '/images/shop/product/5.png', title: 'long Vine Flora (m)', price: '$659', oldPrice: '$1099' },
-  { image: '/images/shop/product/6.png', title: 'Streetwear Edit (m)', price: '$659', oldPrice: '$1299' },
-  { image: '/images/shop/product/7.png', title: 'long Vine Flora (m)', price: '$659', oldPrice: '$1299' },
-  { image: '/images/shop/product/8.png', title: 'Premium Maxi Dress (m)', price: '$659', oldPrice: '$1299' },
-]
+onBeforeUnmount(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('auth-change', handleAuthChange)
+  }
+})
 </script>
 
 <template>
@@ -102,13 +159,19 @@ const wishlistProducts = [
           <div class="container">
             <div class="section-head style-3 m-b30 wow fadeInUp" data-wow-delay="0.2s">
               <div class="left-content text-center">
-                <h2 class="title">You Have 8 Items in Wishlist </h2>
+                <h2 class="title">You Have {{ totalItems }} Items in Wishlist</h2>
               </div>
+            </div>
+            <div v-if="!isLoggedIn" class="alert alert-info m-b20 text-center">
+              Please <NuxtLink to="/login">login</NuxtLink> to view your wishlist.
+            </div>
+            <div v-else-if="!wishlistProducts.length" class="alert alert-warning m-b20 text-center">
+              Your wishlist is empty.
             </div>
             <div class="row">
               <div
-                v-for="(item, idx) in wishlistProducts"
-                :key="`wish-grid-${idx}`"
+                v-for="item in wishlistProducts"
+                :key="`wish-grid-${item.product_id}`"
                 class="col-xl-3 col-lg-3 col-md-4 col-sm-6 m-b30"
               >
                 <div class="shop-card style-1">
@@ -116,28 +179,28 @@ const wishlistProducts = [
                     <img :src="item.image" alt="image">
                   </div>
                   <div class="shop-meta">
-                    <a href="javascript:void(0);" class="btn btn-primary btn-md w-100" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <NuxtLink :to="`/product/${item.product_id}`" class="btn btn-primary btn-md w-100">
                       <i class="fa-solid fa-eye"></i>
                       <span class="d-lg-block d-none">Quick View</span>
-                    </a>
+                    </NuxtLink>
                     <div class="btn btn-primary meta-icon dz-refresh">
                       <i class="flaticon flaticon-refresh dz-refresh"></i>
                       <i class="flaticon flaticon-refresh-on dz-refresh-fill"></i>
                     </div>
-                    <div class="btn btn-primary meta-icon dz-wishicon">
+                    <button type="button" class="btn btn-primary meta-icon dz-wishicon active" @click="removeFromWishlist(item.product_id)">
                       <i class="icon feather icon-heart dz-heart"></i>
                       <i class="icon feather icon-heart-on dz-heart-fill"></i>
-                    </div>
-                    <div class="btn btn-primary meta-icon dz-carticon">
+                    </button>
+                    <button type="button" class="btn btn-primary meta-icon dz-carticon" @click="addWishlistItemToCart(item.product_id)">
                       <i class="flaticon flaticon-shopping-cart-1 dz-cart"></i>
                       <i class="flaticon flaticon-shopping-cart-1-on dz-cart-fill"></i>
-                    </div>
+                    </button>
                   </div>
                   <div class="dz-content">
-                    <h3 class="title"><a href="/shop-list">{{ item.title }}</a></h3>
+                    <h3 class="title"><NuxtLink :to="`/product/${item.product_id}`">{{ item.title }}</NuxtLink></h3>
                     <span class="price">
-                      {{ item.price }}
-                      <del>{{ item.oldPrice }}</del>
+                      {{ formatPrice(item.price) }}
+                      <del v-if="item.old_price !== null">{{ formatPrice(item.old_price) }}</del>
                     </span>
                   </div>
                 </div>

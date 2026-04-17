@@ -39,6 +39,7 @@ class UserRegisterReq extends ApiFormRequest
                 'unique:users,email',
             ],
             'password' => ['required', 'string', 'min:8'],
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ];
     }
 

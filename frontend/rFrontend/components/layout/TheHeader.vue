@@ -53,7 +53,7 @@
                         </li>
                         <li><span class="menu-title">Shop Pages</span>
                           <ul>
-                            <li><NuxtLink to="/shop-wishlist">Wishlist</NuxtLink></li>
+                            <li v-if="isLoggedIn"><NuxtLink to="/shop-wishlist">Wishlist</NuxtLink></li>
                             <li><NuxtLink to="/shop-cart">Cart</NuxtLink></li>
                             <li><NuxtLink to="/shop-checkout">Checkout</NuxtLink></li>
                             <li><NuxtLink to="/shop-compare">Compare</NuxtLink></li>
@@ -315,7 +315,7 @@
                     <i class="iconly-Light-Search"></i>
                   </a>
                 </li>
-                <li class="nav-item wishlist-link">
+                <li v-if="isLoggedIn" class="nav-item wishlist-link">
                   <a class="nav-link" href="javascript:void(0);" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                     <i class="iconly-Light-Heart2"></i>
                   </a>
@@ -323,7 +323,7 @@
                 <li class="nav-item cart-link">
                   <a href="javascript:void(0);" class="nav-link cart-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                     <i class="iconly-Broken-Buy"></i>
-                    <span class="badge badge-circle">5</span>
+                    <span class="badge badge-circle">{{ totalItems }}</span>
                   </a>
                 </li>
                 <li class="nav-item filte-link">
@@ -373,10 +373,10 @@
           <ul class="nav nav-tabs center" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
               <button class="nav-link active" id="shopping-cart" data-bs-toggle="tab" data-bs-target="#shopping-cart-pane" type="button" role="tab" aria-selected="true">
-                Shopping Cart <span class="badge badge-light">5</span>
+                Shopping Cart <span class="badge badge-light">{{ totalItems }}</span>
               </button>
             </li>
-            <li class="nav-item" role="presentation">
+            <li v-if="isLoggedIn" class="nav-item" role="presentation">
               <button class="nav-link" id="wishlist" data-bs-toggle="tab" data-bs-target="#wishlist-pane" type="button" role="tab" aria-selected="false">
                 Wishlist <span class="badge badge-light">2</span>
               </button>
@@ -386,25 +386,29 @@
             <div class="tab-pane fade show active" id="shopping-cart-pane" role="tabpanel" tabindex="0">
               <div class="shop-sidebar-cart">
                 <ul class="sidebar-cart-list">
-                  <li v-for="(item, i) in cartItems" :key="i">
+                  <li v-if="!hasCartItems" class="text-center text-muted py-3">
+                    Your cart is empty.
+                  </li>
+                  <li v-for="(item, i) in cartItems" :key="`cart-${item.product_id}-${item.size}-${item.color}-${i}`">
                     <div class="cart-widget">
-                      <div class="dz-media me-3"><img :src="item.img" alt=""></div>
+                      <div class="dz-media me-3"><img :src="item.image" alt=""></div>
                       <div class="cart-content">
-                        <h6 class="title"><NuxtLink to="/product-thumbnail">{{ item.name }}</NuxtLink></h6>
+                        <h6 class="title"><NuxtLink :to="`/product/${item.product_id}`">{{ item.title }}</NuxtLink></h6>
+                        <small v-if="itemOption(item.size, item.color)" class="d-block text-muted">{{ itemOption(item.size, item.color) }}</small>
                         <div class="d-flex align-items-center">
                           <div class="btn-quantity light quantity-sm me-3 ms-0 style-1">
-                            <input type="text" value="1" name="demo_vertical2">
+                            <input type="text" :value="item.quantity" name="demo_vertical2" readonly>
                           </div>
-                          <h6 class="dz-price mb-0">${{ item.price }} <del>${{ item.oldPrice }}</del></h6>
+                          <h6 class="dz-price mb-0">{{ formatPrice(item.price) }}</h6>
                         </div>
                       </div>
-                      <a href="javascript:void(0);" class="dz-close"><i class="ti-close"></i></a>
+                      <a href="javascript:void(0);" class="dz-close" @click.prevent="removeCartItem(i)"><i class="ti-close"></i></a>
                     </div>
                   </li>
                 </ul>
                 <div class="cart-total">
                   <h5 class="mb-0">Subtotal:</h5>
-                  <h5 class="mb-0">300.00$</h5>
+                  <h5 class="mb-0">{{ formatPrice(subtotal) }}</h5>
                 </div>
                 <div class="mt-auto">
                   <div class="shipping-time">
@@ -418,12 +422,14 @@
                       </div>
                     </div>
                   </div>
-                  <NuxtLink to="/shop-checkout" class="btn btn-outline-secondary btn-block m-b20">Checkout</NuxtLink>
+                  <NuxtLink :to="hasCartItems ? '/shop-checkout' : '/shop-standard'" class="btn btn-outline-secondary btn-block m-b20">
+                    {{ hasCartItems ? 'Checkout' : 'Shop Now' }}
+                  </NuxtLink>
                   <NuxtLink to="/shop-cart" class="btn btn-secondary btn-block">View Cart</NuxtLink>
                 </div>
               </div>
             </div>
-            <div class="tab-pane fade" id="wishlist-pane" role="tabpanel" tabindex="0">
+            <div v-if="isLoggedIn" class="tab-pane fade" id="wishlist-pane" role="tabpanel" tabindex="0">
               <div class="shop-sidebar-cart">
                 <ul class="sidebar-cart-list">
                   <li v-for="(item, i) in wishlistItems" :key="i">
@@ -499,13 +505,30 @@
   </div>
 </template>
 
-<script setup>
-const cartItems = [
-  { img: '/images/shop/shop-cart/pic1.jpg', name: 'Large Majesty Palm (m)', price: '59', oldPrice: '99' },
-  { img: '/images/shop/shop-cart/pic2.jpg', name: 'Endless Stems Gardens (m)', price: '79', oldPrice: '99' },
-  { img: '/images/shop/shop-cart/pic3.jpg', name: 'Feather Reed Grass (m)', price: '49', oldPrice: '99' },
-  { img: '/images/shop/shop-cart/pic3.jpg', name: 'Long Strider Pants (m)', price: '99', oldPrice: '199' },
-]
+<script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { computed, onMounted } from 'vue'
+import { useCartStore } from '~/stores/cartStore'
+
+const cartStore = useCartStore()
+const authUser = useAuthUser()
+const { items: cartItems, subtotal, totalItems } = storeToRefs(cartStore)
+const hasCartItems = computed(() => cartItems.value.length > 0)
+const isLoggedIn = computed(() =>
+  Boolean(authUser.value?.id || authUser.value?.email || authUser.value?.phone || authUser.value?.role),
+)
+
+const formatPrice = (value: number) => `$${Number(value || 0).toFixed(2)}`
+const itemOption = (size: string | null, color: string | null) => [size, color].filter(Boolean).join(' / ')
+
+const removeCartItem = async (index: number) => {
+  await cartStore.removeItem(index)
+}
+
+onMounted(() => {
+  cartStore.hydrateCart()
+})
+
 const wishlistItems = [
   { img: '/images/shop/shop-cart/pic1.jpg', name: 'Large Majesty Palm (m)', price: '59' },
   { img: '/images/shop/shop-cart/pic2.jpg', name: 'Endless Stems Gardens (m)', price: '79' },

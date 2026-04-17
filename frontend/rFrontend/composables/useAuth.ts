@@ -1,5 +1,25 @@
 import { ref } from 'vue'
 import { logoutRequest } from '~/public/js/services/axiosClient.js'
+import { useCartStore } from '~/stores/cartStore'
+import { useWishlistStore } from '~/stores/wishlistStore'
+
+export type AuthUser = {
+  id?: number
+  name?: string
+  email?: string | null
+  phone?: string | null
+  address?: string | null
+  district?: string | null
+  image?: string | null
+  image_url?: string | null
+  role?: string
+  created_at?: string
+  updated_at?: string
+  [key: string]: unknown
+}
+
+export const useAuthUser = () =>
+  useState<AuthUser>('auth:user', () => ({}))
 
 export const useAuth = () => {
   const toast        = useToast()
@@ -21,9 +41,17 @@ export const useAuth = () => {
     localStorage.removeItem('auth_token')
     localStorage.removeItem('auth_user')
     localStorage.removeItem('remember_me')
+    useAuthUser().value = {}
+    window.dispatchEvent(new Event('auth-change'))
+
+    const cartStore = useCartStore()
+    cartStore.onAuthStateChanged()
+    void cartStore.refreshFromServer()
+    const wishlistStore = useWishlistStore()
+    wishlistStore.resetLocalWishlist()
   }
 
-  const getAuthUser = (): { role?: string; name?: string; email?: string } => {
+  const getAuthUser = (): AuthUser => {
     if (typeof window === 'undefined') return {}
     try {
       return JSON.parse(localStorage.getItem('auth_user') || '{}')
@@ -36,20 +64,18 @@ export const useAuth = () => {
     isLoggingOut.value = true
     try {
       const res = await logoutRequest({ all_devices: false })
-      clearAuth()
       toast.success(res?.data?.message || 'Logout সফল হয়েছে!')
-      await navigateTo('/login')
     } catch (error: unknown) {
       const status = (error as { response?: { status?: number } })?.response?.status
       if (status === 401) {
-        clearAuth()
         toast.info('Session মেয়াদ শেষ। Locally logout করা হয়েছে।')
-        await navigateTo('/login')
-        return
+      } else {
+        toast.error(getErrorMessage(error, 'Logout ব্যর্থ হয়েছে।'))
       }
-      toast.error(getErrorMessage(error, 'Logout ব্যর্থ হয়েছে।'))
     } finally {
+      clearAuth()
       isLoggingOut.value = false
+      await navigateTo('/')
     }
   }
 

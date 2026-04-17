@@ -4,6 +4,7 @@ const withBase = (assetPath: string) => `${baseURL}${assetPath.replace(/^\/+/, '
 
 export default defineNuxtConfig({
   compatibilityDate: '2026-04-08',
+  modules: ['@pinia/nuxt'],
   components: [
     {
       path: '~/components',
@@ -50,6 +51,10 @@ export default defineNuxtConfig({
         { rel: 'stylesheet', href: withBase('/css/style.css') },
         { rel: 'stylesheet', href: withBase('/css/skin/skin-1.css') },
         { rel: 'stylesheet', href: withBase('/css/custom.css') },
+
+        // Velonic admin panel CSS — loaded last so it overrides Bootstrap on admin pages
+        { rel: 'stylesheet', href: withBase('/velonic/css/app.min.css'),   id: 'vel-app'   },
+        { rel: 'stylesheet', href: withBase('/velonic/css/icons.min.css'), id: 'vel-icons' },
       ],
       script: []
     },

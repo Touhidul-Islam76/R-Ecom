@@ -1,292 +1,447 @@
 <script setup lang="ts">
-import { onMounted, nextTick } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useAdminCatalogStore } from '~/stores/adminCatalogStore'
 
 definePageMeta({ layout: 'admin' })
+useHead({ title: 'Dashboard | FasionAble Admin' })
 
-const { handleLogout, isLoggingOut } = useAuth()
-useHead({
-  title: 'FasionAble',
-  meta: [
-    { charset: 'utf-8' },
-    { 'http-equiv': 'X-UA-Compatible', content: 'IE=edge' },
-    { name: 'author', content: 'DexignZone' },
-    { name: 'robots', content: 'index, follow' },
-    { name: 'format-detection', content: 'telephone=no' },
-    {
-      name: 'keywords',
-      content:
-        'fashion store, dresses, streetwear, ecommerce, clothing, apparel, style, online shopping, modern fashion, boutique, trendy outfits, UI, UX, stylish, responsive design',
-    },
-    {
-      name: 'description',
-      content:
-        'Elevate your online retail presence with FasionAble HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for fashion enthusiasts.',
-    },
-    { property: 'og:title', content: 'FasionAble' },
-    {
-      property: 'og:description',
-      content:
-        'Elevate your online retail presence with FasionAble HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for fashion enthusiasts.',
-    },
-    { property: 'og:image', content: 'https://fasionable.dexignzone.com/xhtml/social-image.png' },
-    { name: 'twitter:title', content: 'FasionAble: Fashion & eCommerce Template | DexignZone' },
-    {
-      name: 'twitter:description',
-      content:
-        'Elevate your online retail presence with FasionAble HTML Template. Meticulously crafted, this responsive and feature-rich template offers a seamless and visually stunning shopping experience for fashion enthusiasts.',
-    },
-    { name: 'twitter:image', content: 'https://fasionable.dexignzone.com/xhtml/social-image.png' },
-    { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-  ],
-  link: [
-    { rel: 'canonical', href: 'https://fasionable.dexignzone.com/xhtml/account-dashboard.html' },
-    { rel: 'icon', type: 'image/x-icon', href: '/images/20.jpg.jpeg' },
-    { rel: 'stylesheet', href: '/vendor/bootstrap-select/dist/css/bootstrap-select.min.css' },
-    { rel: 'stylesheet', href: '/vendor/swiper/swiper-bundle.min.css' },
-    { rel: 'stylesheet', href: '/vendor/nouislider/nouislider.min.css' },
-    { rel: 'stylesheet', href: '/vendor/animate/animate.css' },
-    { rel: 'stylesheet', type: 'text/css', href: '/css/style.css', class: 'main-css' },
-    { rel: 'stylesheet', type: 'text/css', href: '/css/skin/skin-1.css', class: 'skin' },
-    { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-    { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-    { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Marcellus&display=swap' },
-  ],
-  script: [
-    { src: '/js/jquery.min.js' },
-    { src: '/vendor/wow/wow.min.js' },
-    { src: '/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' },
-    { src: '/vendor/apexchart/apexchart.js' },
-    { src: '/js/dashbord-account.js' },
-    { src: '/vendor/bootstrap-select/dist/js/bootstrap-select.min.js' },
-    { src: '/vendor/bootstrap-touchspin/bootstrap-touchspin.js' },
-    { src: '/vendor/counter/waypoints-min.js' },
-    { src: '/vendor/swiper/swiper-bundle.min.js' },
-    { src: '/vendor/countdown/jquery.countdown.js' },
-    { src: '/vendor/wnumb/wNumb.js' },
-    { src: '/vendor/nouislider/nouislider.min.js' },
-    { src: '/js/dz.carousel.js' },
-    { src: '/js/dz.ajax.js' },
-    { src: '/js/custom.js' },
-  ],
+const catalogStore = useAdminCatalogStore()
+const { brandMeta, categoryMeta, productMeta, products } = storeToRefs(catalogStore)
+
+const isLoadingCatalogStats = ref(false)
+const catalogStatsError = ref('')
+const pageVariantCount = computed(() =>
+  products.value.reduce((sum, product) => sum + (product.variants?.length || 0), 0),
+)
+
+const loadCatalogStats = async () => {
+  isLoadingCatalogStats.value = true
+  catalogStatsError.value = ''
+
+  try {
+    await Promise.all([
+      catalogStore.fetchBrands(1),
+      catalogStore.fetchCategories(1),
+      catalogStore.fetchProducts(1, {
+        search: '',
+        category_id: '',
+        brand_id: '',
+        size: '',
+        color: '',
+        min_price: '',
+        max_price: '',
+        sort: '',
+      }),
+    ])
+  } catch (error) {
+    catalogStatsError.value = (error as Error).message || 'Failed to load dashboard stats.'
+  } finally {
+    isLoadingCatalogStats.value = false
+  }
+}
+
+// ── Chart helpers ──────────────────────────────────────────────
+const loadScript = (src: string) => new Promise<void>((resolve) => {
+  if (document.querySelector(`script[data-chart="${src}"]`)) { resolve(); return }
+  const s = document.createElement('script')
+  s.src = src
+  s.dataset.chart = src
+  s.onload = () => resolve()
+  s.onerror = () => resolve()
+  document.body.appendChild(s)
 })
 
-onMounted(() => {
+const initCharts = () => {
+  const ApexCharts = (window as any).ApexCharts
+  if (!ApexCharts) return
 
-  const plantZone = (window as Window & { PlantZone?: { init: () => void; load: () => void } }).PlantZone
-  if (plantZone) {
-    plantZone.init()
-    plantZone.load()
+  // Weekly Sales
+  if (document.getElementById('revenue-chart')) {
+    new ApexCharts(document.getElementById('revenue-chart'), {
+      chart: { height: 250, type: 'bar', toolbar: { show: false } },
+      plotOptions: { bar: { columnWidth: '40%', borderRadius: 4 } },
+      dataLabels: { enabled: false },
+      series: [
+        { name: 'This Week',   data: [31, 40, 28, 51, 42, 85, 77] },
+        { name: 'Last Week',   data: [11, 32, 45, 32, 34, 52, 41] },
+      ],
+      colors: ['#3bc0c3', '#1a2942'],
+      xaxis: { categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] },
+      legend: { position: 'top' },
+      grid: { row: { colors: ['#f3f3f3', 'transparent'], opacity: 0.5 } },
+    }).render()
   }
 
-  nextTick(() => {
-    const plantZoneCarousel = (window as Window & { PlantZoneCarousel?: { load: () => void } }).PlantZoneCarousel
-    if (plantZoneCarousel) {
-      plantZoneCarousel.load()
-    }
-  })
-})
+  // Yearly Sales
+  if (document.getElementById('yearly-sales-chart')) {
+    new ApexCharts(document.getElementById('yearly-sales-chart'), {
+      chart: { height: 200, type: 'donut', toolbar: { show: false } },
+      series: [44, 55, 41],
+      labels: ['Q1', 'Q2', 'Q3-Q4'],
+      colors: ['#3bc0c3', '#1a2942', '#d1d7d9'],
+      legend: { position: 'bottom' },
+      dataLabels: { enabled: false },
+    }).render()
+  }
+}
 
+onMounted(async () => {
+  await loadScript('/velonic/vendor/apexcharts/apexcharts.min.js')
+  initCharts()
+  await loadCatalogStats()
+})
 </script>
 
 <template>
-  <div class="page-wraper">
-      
+  <!-- Page Title -->
+  <div class="row">
+    <div class="col-12">
+      <div class="page-title-box">
+        <div class="page-title-right">
+          <ol class="breadcrumb m-0">
+            <li class="breadcrumb-item"><a href="javascript:void(0)">Admin</a></li>
+            <li class="breadcrumb-item active">Dashboard</li>
+          </ol>
+        </div>
+        <h4 class="page-title">Welcome!</h4>
+      </div>
+    </div>
+  </div>
 
-      
-      <div class="page-content">
-        <!-- Banner Start -->
-        <div class="dz-bnr-inr" style="background-image: url('/images/background/bg1.jpg');">
-          <div class="container">
-            <div class="dz-bnr-inr-entry">
-              <nav aria-label="breadcrumb" class="breadcrumb-row">
-                <ul class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="/">Home</a></li>
-                  <li class="breadcrumb-item">Account Dashboard</li>
-                </ul>
-              </nav>
+  <!-- Stat Cards -->
+  <div class="row">
+    <div v-if="catalogStatsError" class="col-12">
+      <div class="alert alert-danger mb-3" role="alert">
+        {{ catalogStatsError }}
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-sm-6">
+      <div class="card widget-flat text-bg-pink">
+        <div class="card-body">
+          <div class="float-end"><i class="ri-award-line widget-icon"></i></div>
+          <h6 class="text-uppercase mt-0">Total Brands</h6>
+          <h2 class="my-2">{{ isLoadingCatalogStats ? '...' : brandMeta.total }}</h2>
+          <p class="mb-0">
+            <span class="badge bg-white bg-opacity-10 me-1">Live</span>
+            <span class="text-nowrap">Catalog data</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-sm-6">
+      <div class="card widget-flat text-bg-purple">
+        <div class="card-body">
+          <div class="float-end"><i class="ri-list-check-3 widget-icon"></i></div>
+          <h6 class="text-uppercase mt-0">Total Categories</h6>
+          <h2 class="my-2">{{ isLoadingCatalogStats ? '...' : categoryMeta.total }}</h2>
+          <p class="mb-0">
+            <span class="badge bg-white bg-opacity-10 me-1">Live</span>
+            <span class="text-nowrap">Catalog data</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-sm-6">
+      <div class="card widget-flat text-bg-info">
+        <div class="card-body">
+          <div class="float-end"><i class="ri-shopping-basket-line widget-icon"></i></div>
+          <h6 class="text-uppercase mt-0">Total Products</h6>
+          <h2 class="my-2">{{ isLoadingCatalogStats ? '...' : productMeta.total }}</h2>
+          <p class="mb-0">
+            <span class="badge bg-white bg-opacity-25 me-1">Live</span>
+            <span class="text-nowrap">Catalog data</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xxl-3 col-sm-6">
+      <div class="card widget-flat text-bg-primary">
+        <div class="card-body">
+          <div class="float-end"><i class="ri-t-shirt-2-line widget-icon"></i></div>
+          <h6 class="text-uppercase mt-0">Variants (Page 1)</h6>
+          <h2 class="my-2">{{ isLoadingCatalogStats ? '...' : pageVariantCount }}</h2>
+          <p class="mb-0">
+            <span class="badge bg-white bg-opacity-10 me-1">Live</span>
+            <span class="text-nowrap">From product list</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end stat cards -->
+
+  <!-- Charts Row -->
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="header-title mb-0">Weekly Sales Report</h5>
+          <div class="pt-3">
+            <div id="revenue-chart" class="apex-charts"></div>
+            <div class="row text-center mt-2">
+              <div class="col">
+                <p class="text-muted mt-3">Current Week</p>
+                <h3 class="mb-0">$506.54</h3>
+              </div>
+              <div class="col">
+                <p class="text-muted mt-3">Previous Week</p>
+                <h3 class="mb-0">$305.25</h3>
+              </div>
+              <div class="col">
+                <p class="text-muted mt-3">Conversion</p>
+                <h3 class="mb-0">3.27%</h3>
+              </div>
+              <div class="col">
+                <p class="text-muted mt-3">Customers</p>
+                <h3 class="mb-0">3k</h3>
+              </div>
             </div>
           </div>
         </div>
-        <!-- Banner End -->
+      </div>
+    </div>
 
-        <div class="content-inner-1">
-          <div class="container">
-            <div class="row">
-              <aside class="col-xl-3">
-                <div class="toggle-info">
-                  <h5 class="title mb-0">Account Navbar</h5>
-                  <a class="toggle-btn" href="#accountSidebar">Account Menu</a>
-                </div>
-                <div class="account-sidebar-wrapper">
-                  <div class="account-sidebar" id="accountSidebar">
-                    <div class="profile-head">
-                      <div class="user-thumb">
-                        <img class="rounded-circle" src="/images/profile4.jpg" alt="Susan Gardner" />
-                      </div>
-                      <h5 class="title mb-0">Ronald M. Spino</h5>
-                      <span class="text text-primary">info@example.com</span>
-                    </div>
-                    <div class="account-nav">
-                      <div class="nav-title bg-light">DASHBOARD</div>
-                      <ul>
-                        <li><a href="/account-dashboard">Dashboard</a></li>
-                        <li><a href="/account-orders">Orders</a></li>
-                        <li><a href="/account-downloads">Downloads</a></li>
-                        <li><a href="/account-return-request">Return request</a></li>
-                      </ul>
-
-                      
-                      <div class="nav-title bg-light">SESSION</div>
-                      <ul>
-                        <li>
-                          <button
-                            type="button"
-                            class="btn btn-outline-danger w-100 btnhover mt-1"
-                            :disabled="isLoggingOut"
-                            @click="handleLogout"
-                          >
-                            <i class="fa fa-sign-out me-2"></i>
-                            {{ isLoggingOut ? 'Logging out...' : 'Log Out' }}
-                          </button>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </aside>
-
-              <section class="col-xl-9 account-wrapper">
-                <div class="account-card">
-                  <div class="m-b30">
-                    <p>
-                      Hello <strong class="text-black">John Doe</strong> (not John Doe?
-                      <button
-                        type="button"
-                        class="btn btn-link p-0 text-primary text-underline border-0"
-                        :disabled="isLoggingOut"
-                        @click="handleLogout"
-                      >{{ isLoggingOut ? 'Logging out...' : 'Log out' }}</button>)
-                    </p>
-                    <p>
-                      From your account dashboard you can view your
-                      <a href="/account-orders" class="text-underline">recent orders</a>, manage your
-                      <a href="/account-address" class="text-underline">shipping and billing addresses</a>, and
-                      <a href="/account-profile" class="text-underline">edit your password and account details</a>.
-                    </p>
-                  </div>
-
-                  <div class="row g-4">
-                    <div class="col-md-4">
-                      <div class="total-contain">
-                        <div class="total-icon">
-                          <svg width="36" height="37" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M32.4473 8.03086C32.482 8.37876 32.5 8.73144 32.5 9.08829C32.5 14.919 27.7564 19.6625 21.9258 19.6625C16.0951 19.6625 11.3516 14.919 11.3516 9.08829C11.3516 8.73144 11.3695 8.37876 11.4042 8.03086H8.98055L8.05537 0.628906H0.777344V2.74375H6.18839L8.56759 21.7774H34.1868L35.8039 8.03086H32.4473Z" fill="#FFBB38"></path>
-                            <path d="M9.09669 26.0074H6.06485C4.31566 26.0074 2.89258 27.4305 2.89258 29.1797C2.89258 30.9289 4.31566 32.352 6.06485 32.352H6.24672C6.12935 32.6829 6.06485 33.0386 6.06485 33.4094C6.06485 35.1586 7.48793 36.5816 9.23711 36.5816C11.4247 36.5816 12.9571 34.4091 12.2274 32.352H22.1081C21.377 34.413 22.9157 36.5816 25.0985 36.5816C26.8476 36.5816 28.2707 35.1586 28.2707 33.4094C28.2707 33.0386 28.2061 32.6829 28.0888 32.352H30.3856V30.2371H6.06485C5.48178 30.2371 5.00742 29.7628 5.00742 29.1797C5.00742 28.5966 5.48178 28.1223 6.06485 28.1223H33.4407L33.9384 23.8926H8.83233L9.09669 26.0074Z" fill="#FFBB38"></path>
-                            <path d="M21.9262 17.5477C26.5907 17.5477 30.3856 13.7528 30.3856 9.08829C30.3856 4.42378 26.5907 0.628906 21.9262 0.628906C17.2616 0.628906 13.4668 4.42378 13.4668 9.08829C13.4668 13.7528 17.2617 17.5477 21.9262 17.5477ZM20.8688 5.91602H22.9836V8.6503L24.7886 10.4554L23.2932 11.9508L20.8687 9.5262V5.91602H20.8688Z" fill="#FFBB38"></path>
-                          </svg>
-                        </div>
-                        <div class="total-detail">
-                          <span class="text">Total Order</span>
-                          <h2 class="title">3658</h2>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-md-4">
-                      <div class="total-contain">
-                        <div class="total-icon">
-                          <svg width="33" height="27" viewBox="0 0 33 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M30.2253 12.8816H29.4827L28.6701 9.36514C28.376 8.10431 27.2552 7.22168 25.9662 7.22168H21.8474V3.84528C21.8474 2.03804 20.3764 0.581055 18.5831 0.581055H3.17237C1.46313 0.581055 0.0761719 1.96801 0.0761719 3.67717V20.0967C0.0761719 21.8058 1.46313 23.1928 3.17237 23.1928H4.29313C4.89555 25.1962 6.74485 26.6533 8.93037 26.6533C11.1159 26.6533 12.9792 25.1962 13.5816 23.1928C13.8455 23.1928 20.3459 23.1928 20.1942 23.1928C20.7966 25.1962 22.6459 26.6533 24.8315 26.6533C27.031 26.6533 28.8803 25.1962 29.4827 23.1928H30.2253C31.7663 23.1928 32.9992 21.9599 32.9992 20.4189V15.6555C32.9992 14.1145 31.7663 12.8816 30.2253 12.8816ZM8.93037 23.8513C7.78968 23.8513 6.88491 22.8969 6.88491 21.7918C6.88491 20.657 7.79558 19.7324 8.93037 19.7324C10.0652 19.7324 10.9898 20.657 10.9898 21.7918C10.9898 22.9151 10.0692 23.8513 8.93037 23.8513ZM13.9739 8.06224L9.79897 11.3125C9.20227 11.7767 8.30347 11.6903 7.82363 11.0604L6.21247 8.94486C5.7361 8.32843 5.86222 7.4458 6.47866 6.98346C7.08107 6.50717 7.96369 6.63321 8.44006 7.24965L9.19656 8.23035L12.2507 5.84867C12.8531 5.3864 13.7357 5.48448 14.2121 6.10092C14.6884 6.71727 14.5763 7.58595 13.9739 8.06224ZM24.8315 23.8513C23.6906 23.8513 22.7861 22.8969 22.7861 21.7918C22.7861 20.657 23.7107 19.7324 24.8315 19.7324C25.9662 19.7324 26.8909 20.657 26.8909 21.7918C26.8909 22.9166 25.9683 23.8513 24.8315 23.8513ZM22.618 10.0236H25.2798C25.6021 10.0236 25.8962 10.2337 26.0083 10.542L26.8629 13.0497C27.031 13.5541 26.6667 14.0724 26.1344 14.0724H22.618C22.1976 14.0724 21.8474 13.7222 21.8474 13.3019V10.7942C21.8474 10.3739 22.1976 10.0236 22.618 10.0236Z" fill="#FFBB38"></path>
-                          </svg>
-                        </div>
-                        <div class="total-detail">
-                          <span class="text">Total Pending Order</span>
-                          <h2 class="title">215</h2>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-md-4">
-                      <div class="total-contain">
-                        <div class="total-icon">
-                          <svg width="27" height="31" viewBox="0 0 27 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M9.79749 18.4331C6.71621 20.0289 5.95627 20.8019 4.64859 23.6816C3.76653 22.8387 2.90107 22.0123 2.00953 21.1599C2.5288 20.3146 3.03267 19.4942 3.53535 18.6726C3.88035 18.1071 3.46066 17.0579 2.82282 16.899C1.88623 16.6666 0.94845 16.4426 0 16.2114C0 14.4034 0 12.6274 0 10.7827C0.921182 10.561 1.85422 10.3405 2.78489 10.1117C3.46777 9.94331 3.8922 8.90476 3.52705 8.30605C3.03385 7.49868 2.5371 6.6925 2.06051 5.91596C3.35514 4.62014 4.62251 3.35396 5.92426 2.05339C6.70673 2.53355 7.52832 3.03978 8.35347 3.54246C8.88698 3.8673 9.94331 3.44524 10.0927 2.84416C10.3262 1.90638 10.5491 0.965048 10.7839 0C12.5883 0 14.3785 0 16.2197 0C16.4366 0.906955 16.6548 1.8234 16.8777 2.73865C17.0555 3.46777 18.0763 3.89694 18.7082 3.50926C19.5144 3.01489 20.3182 2.52051 21.0829 2.05102C22.3763 3.34447 23.6318 4.59998 24.943 5.9124C24.4783 6.67235 23.9756 7.49038 23.4753 8.31079C23.1114 8.90713 23.5405 9.93976 24.2258 10.1081C25.1434 10.3334 26.0646 10.5503 27 10.7756C27 12.5954 27 14.3892 27 16.2197C26.1298 16.426 25.2667 16.6287 24.4048 16.8338C23.4658 17.0579 23.0651 18.0122 23.5654 18.8267C24.029 19.5819 24.4914 20.3383 24.9727 21.122C24.1487 22.004 23.3473 22.8612 22.4901 23.7776C21.5393 21.1741 19.8297 19.4243 17.3163 18.4592C20.5565 15.5332 19.8558 11.4668 17.659 9.41099C15.2973 7.19992 11.5995 7.26157 9.31378 9.56393C7.15368 11.7406 6.71858 15.6885 9.79749 18.4331Z" fill="#FFBB38"></path>
-                            <path d="M21.0695 30.3147C16.0415 30.3147 11.0847 30.3147 6.03891 30.3147C6.03891 29.9768 6.03416 29.6496 6.04009 29.3224C6.06262 28.0396 5.97963 26.7426 6.13612 25.4752C6.53566 22.2576 9.12611 19.9244 12.3722 19.8213C13.5886 19.7821 14.8417 19.7762 16.0249 20.0169C18.8643 20.5954 20.8916 23.0258 21.0552 25.9364C21.1359 27.3709 21.0695 28.8138 21.0695 30.3147Z" fill="#FFBB38"></path>
-                            <path d="M13.5375 17.9235C11.2244 17.9093 9.35005 16.0112 9.38325 13.7195C9.41763 11.4124 11.3169 9.55701 13.6157 9.58428C15.8849 9.61036 17.7486 11.5013 17.7403 13.7693C17.7332 16.0752 15.8481 17.9378 13.5375 17.9235Z" fill="#FFBB38"></path>
-                          </svg>
-                        </div>
-                        <div class="total-detail">
-                          <span class="text">Total Wishlist</span>
-                          <h2 class="title">31576</h2>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="col-xl-8">
-                      <div class="sales-chart-wraper">
-                        <div id="handleSalesChart"></div>
-                      </div>
-                    </div>
-
-                    <div class="col-xl-4">
-                      <div class="card countries-card px-3 pt-3 pb-2 mb-2">
-                        <h6>Your Top Countries</h6>
-                        <ul>
-                          <li>
-                            <div class="thumb-detail">
-                              <img src="/images/country/pic1.png" alt="" />
-                              <span>United States</span>
-                            </div>
-                            <div class="thumb-content"><h6 class="amount">$130.00</h6></div>
-                          </li>
-                          <li>
-                            <div class="thumb-detail">
-                              <img src="/images/country/pic2.png" alt="" />
-                              <span>India</span>
-                            </div>
-                            <div class="thumb-content"><h6 class="amount">$110.00</h6></div>
-                          </li>
-                          <li>
-                            <div class="thumb-detail">
-                              <img src="/images/country/pic3.png" alt="" />
-                              <span>Africa</span>
-                            </div>
-                            <div class="thumb-content"><h6 class="amount">$90.00</h6></div>
-                          </li>
-                          <li>
-                            <div class="thumb-detail">
-                              <img src="/images/country/pic4.png" alt="" />
-                              <span>Canada</span>
-                            </div>
-                            <div class="thumb-content"><h6 class="amount">$75.00</h6></div>
-                          </li>
-                          <li>
-                            <div class="thumb-detail">
-                              <img src="/images/country/pic5.png" alt="" />
-                              <span>Brazil</span>
-                            </div>
-                            <div class="thumb-content"><h6 class="amount">$60.00</h6></div>
-                          </li>
-                          <li class="border-bottom-0">
-                            <div class="thumb-detail">
-                              <img src="/images/country/pic6.png" alt="" />
-                              <span>Jordan</span>
-                            </div>
-                            <div class="thumb-content"><h6 class="amount">$50.00</h6></div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </section>
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="header-title mb-0">Yearly Sales Report</h5>
+          <div class="pt-3">
+            <div id="yearly-sales-chart" class="apex-charts"></div>
+            <div class="row text-center mt-2">
+              <div class="col">
+                <p class="text-muted mt-2 mb-1">Quarter 1</p>
+                <h4 class="mb-0">$56.2k</h4>
+              </div>
+              <div class="col">
+                <p class="text-muted mt-2 mb-1">Quarter 2</p>
+                <h4 class="mb-0">$42.5k</h4>
+              </div>
+              <div class="col">
+                <p class="text-muted mt-2 mb-1">All Time</p>
+                <h4 class="mb-0">$102k</h4>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      
+      <!-- Quick Stats -->
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="header-title mb-0">Quick Stats</h5>
+          </div>
+          <div class="d-flex align-items-center mb-2">
+            <div class="flex-shrink-0 me-2">
+              <div class="avatar-xs rounded bg-primary-subtle d-flex align-items-center justify-content-center">
+                <i class="ri-shopping-cart-line text-primary"></i>
+              </div>
+            </div>
+            <div class="flex-grow-1">
+              <p class="mb-0 text-muted">Pending Orders</p>
+            </div>
+            <div class="flex-shrink-0">
+              <span class="badge bg-warning-subtle text-warning fs-12">42</span>
+            </div>
+          </div>
+          <div class="d-flex align-items-center mb-2">
+            <div class="flex-shrink-0 me-2">
+              <div class="avatar-xs rounded bg-success-subtle d-flex align-items-center justify-content-center">
+                <i class="ri-check-line text-success"></i>
+              </div>
+            </div>
+            <div class="flex-grow-1">
+              <p class="mb-0 text-muted">Delivered Today</p>
+            </div>
+            <div class="flex-shrink-0">
+              <span class="badge bg-success-subtle text-success fs-12">127</span>
+            </div>
+          </div>
+          <div class="d-flex align-items-center">
+            <div class="flex-shrink-0 me-2">
+              <div class="avatar-xs rounded bg-danger-subtle d-flex align-items-center justify-content-center">
+                <i class="ri-arrow-go-back-line text-danger"></i>
+              </div>
+            </div>
+            <div class="flex-grow-1">
+              <p class="mb-0 text-muted">Return Requests</p>
+            </div>
+            <div class="flex-shrink-0">
+              <span class="badge bg-danger-subtle text-danger fs-12">8</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+  <!-- end charts row -->
+
+  <!-- Recent Orders Table -->
+  <div class="row">
+    <div class="col-12" style="overflow: visible !important; padding: 0 !important;">
+      <div class="card" style="overflow: visible !important;">
+        <div class="card-body p-0" style="overflow: visible !important; padding: 0 !important;">
+          <div class="p-3">
+            <h5 class="header-title mb-0">Recent Orders</h5>
+          </div>
+          <div class="table-scroll-wrapper">
+            <table class="table table-nowrap table-hover mb-0">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>#ORD-1042</td>
+                  <td>Rashed Ahmed</td>
+                  <td>13/04/2026</td>
+                  <td>৳ 2,400</td>
+                  <td><span class="badge bg-warning-subtle text-warning">Pending</span></td>
+                  <td><a href="javascript:void(0);" class="btn btn-sm btn-primary-subtle">View</a></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>#ORD-1041</td>
+                  <td>Sadia Islam</td>
+                  <td>13/04/2026</td>
+                  <td>৳ 5,150</td>
+                  <td><span class="badge bg-success-subtle text-success">Delivered</span></td>
+                  <td><a href="javascript:void(0);" class="btn btn-sm btn-primary-subtle">View</a></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>#ORD-1040</td>
+                  <td>Karim Hossain</td>
+                  <td>12/04/2026</td>
+                  <td>৳ 1,800</td>
+                  <td><span class="badge bg-info-subtle text-info">Processing</span></td>
+                  <td><a href="javascript:void(0);" class="btn btn-sm btn-primary-subtle">View</a></td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>#ORD-1039</td>
+                  <td>Nusrat Jahan</td>
+                  <td>12/04/2026</td>
+                  <td>৳ 3,600</td>
+                  <td><span class="badge bg-danger-subtle text-danger">Cancelled</span></td>
+                  <td><a href="javascript:void(0);" class="btn btn-sm btn-primary-subtle">View</a></td>
+                </tr>
+                <tr>
+                  <td>5</td>
+                  <td>#ORD-1038</td>
+                  <td>Farhan Chowdhury</td>
+                  <td>11/04/2026</td>
+                  <td>৳ 7,200</td>
+                  <td><span class="badge bg-success-subtle text-success">Delivered</span></td>
+                  <td><a href="javascript:void(0);" class="btn btn-sm btn-primary-subtle">View</a></td>
+                </tr>
+                <tr>
+                  <td>6</td>
+                  <td>#ORD-1037</td>
+                  <td>Tania Begum</td>
+                  <td>11/04/2026</td>
+                  <td>৳ 990</td>
+                  <td><span class="badge bg-purple-subtle text-purple">Shipped</span></td>
+                  <td><a href="javascript:void(0);" class="btn btn-sm btn-primary-subtle">View</a></td>
+                </tr>
+                <tr>
+                  <td>7</td>
+                  <td>#ORD-1036</td>
+                  <td>Mahbub Alam</td>
+                  <td>10/04/2026</td>
+                  <td>৳ 4,300</td>
+                  <td><span class="badge bg-pink-subtle text-pink">Return Req.</span></td>
+                  <td><a href="javascript:void(0);" class="btn btn-sm btn-primary-subtle">View</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end table row -->
 </template>
 
+<style scoped>
+/* Table scroll wrapper - allows horizontal scroll on mobile */
+.table-scroll-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  display: block !important;
+}
+
+.table {
+  width: 100% !important;
+  margin-bottom: 0 !important;
+  display: table;
+}
+
+.table thead {
+  background-color: #f8f9fa;
+  position: relative;
+}
+
+.table th {
+  white-space: nowrap !important;
+  border-bottom: 1px solid #dee2e6;
+  vertical-align: middle;
+  padding: 12px 8px !important;
+}
+
+.table td {
+  white-space: nowrap !important;
+  padding: 10px 8px !important;
+  vertical-align: middle;
+}
+
+.table tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* Mobile specific optimizations */
+@media (max-width: 768px) {
+  .table-scroll-wrapper {
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+  }
+
+  .table {
+    min-width: 750px !important;
+    font-size: 13px !important;
+  }
+
+  .table th,
+  .table td {
+    padding: 8px 6px !important;
+    font-size: 12px !important;
+  }
+
+  .btn-sm {
+    white-space: nowrap !important;
+    padding: 3px 6px !important;
+    font-size: 11px !important;
+  }
+
+  .badge {
+    white-space: nowrap !important;
+    font-size: 10px !important;
+    padding: 3px 5px !important;
+  }
+}
+</style>

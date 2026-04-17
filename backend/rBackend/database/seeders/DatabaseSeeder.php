@@ -15,16 +15,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
+        User::query()->updateOrCreate([
+            'email' => 'test@example.com',
+        ], [
             'name' => 'Test User',
             'phone' => '01700000000',
-            'email' => 'test@example.com',
             'address' => 'Dhaka',
             'district' => 'Dhaka',
             'password' => 'password',
             'role' => 'admin',
         ]);
+
+        $this->call(CatalogDummySeeder::class);
+        $this->call(ProductReviewSeeder::class);
     }
 }

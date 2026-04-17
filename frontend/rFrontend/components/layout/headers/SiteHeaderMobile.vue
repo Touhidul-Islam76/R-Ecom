@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { storeToRefs } from 'pinia'
+import { ref, watch, onMounted, onUnmounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useCartStore } from '~/stores/cartStore'
 
 const popularProducts = [
   { image: '/images/shop/product/1.png', title: 'Premium Maxi Dress (m)', price: '$79', oldPrice: '$99' },
@@ -11,13 +13,6 @@ const popularProducts = [
   { image: '/images/shop/product/6.png', title: 'Premium Maxi Dress (m)', price: '$79', oldPrice: '$99' },
   { image: '/images/shop/product/7.png', title: 'Oversized Street Jacket (M)', price: '$99', oldPrice: '$110' },
   { image: '/images/shop/product/8.png', title: 'Premium Maxi Dress (m)', price: '$79', oldPrice: '$99' },
-]
-
-const sidebarCartItems = [
-  { image: '/images/shop/shop-cart/pic1.jpg', title: 'Premium Maxi Dress (m)', qty: 1, price: '$59', oldPrice: '$99' },
-  { image: '/images/shop/shop-cart/pic2.jpg', title: 'Elegant Evening Dress (m)', qty: 1, price: '$79', oldPrice: '$99' },
-  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Pleated Skirt (m)', qty: 1, price: '$49', oldPrice: '$99' },
-  { image: '/images/shop/shop-cart/pic3.jpg', title: 'Slim Fit Trouser (m)', qty: 1, price: '$99', oldPrice: '$199' },
 ]
 
 const wishlistItems = [
@@ -34,6 +29,43 @@ watch(
     mobileMenuOpen.value = false
   }
 )
+
+const authUser = ref<{ id?: number; role?: string; email?: string | null; phone?: string | null }>({})
+
+const readAuth = () => {
+  try {
+    const stored = localStorage.getItem('auth_user')
+    authUser.value = stored ? JSON.parse(stored) : {}
+  } catch {
+    authUser.value = {}
+  }
+}
+
+onMounted(() => {
+  readAuth()
+  cartStore.hydrateCart()
+  window.addEventListener('auth-change', readAuth)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('auth-change', readAuth)
+})
+
+const isCustomer = computed(() => authUser.value.role === 'customer')
+const isAdmin    = computed(() => ['admin', 'superAdmin', 'moderator'].includes(authUser.value.role ?? ''))
+const isLoggedIn = computed(() =>
+  Boolean(authUser.value.id || authUser.value.email || authUser.value.phone || authUser.value.role),
+)
+const cartStore = useCartStore()
+const { items: cartItems, subtotal, totalItems } = storeToRefs(cartStore)
+const hasCartItems = computed(() => cartItems.value.length > 0)
+
+const formatPrice = (value: number) => `$${Number(value || 0).toFixed(2)}`
+const itemOption = (size: string | null, color: string | null) => [size, color].filter(Boolean).join(' / ')
+
+const removeCartItem = async (index: number) => {
+  await cartStore.removeItem(index)
+}
 </script>
 <template>
 <!-- Header Start -->
@@ -107,13 +139,13 @@ watch(
                             <li>
                               <span class="menu-title">Shop Pages</span>
                               <ul>
-                                <li><a href="/shop-wishlist">Wishlist</a></li>
+                                <li v-if="isLoggedIn"><a href="/shop-wishlist">Wishlist</a></li>
                                 <li><a href="/shop-cart">Cart</a></li>
                                 <li><a href="/shop-checkout">Checkout</a></li>
                                 <li><a href="/shop-compare">Compare</a></li>
                                 <li><a href="/shop-order-tracking">Order Tracking</a></li>
-                                <li><a href="/login">Login</a></li>
-                                <li><a href="/registration">Registration</a></li>
+                                <li><NuxtLink to="/login" data-router-link="1">Login</NuxtLink></li>
+                                <li><NuxtLink to="/registration" data-router-link="1">Registration</NuxtLink></li>
                                 <li>
                                   <a href="/forget-password">
                                     Forget Password
@@ -405,24 +437,21 @@ watch(
                     </div>
                   </li>
 
-                  <li class="sub-menu-down">
+                  <li v-if="isCustomer" class="sub-menu-down">
                     <a href="javascript:void(0);"><span>My Account</span><i class="fas fa-chevron-down tabindex"></i></a>
                     <ul class="sub-menu">
-                     
-                      <li><a href="/account-orders">Orders</a></li>
-                      <li><a href="/account-order-details">Orders Details</a></li>
-                      <li><a href="/account-order-confirmation">Orders Confirmation</a></li>
-                      
-                     
-                      <li><a href="/account-return-request-detail">Return Request Detail</a></li>
-                      <li><a href="/account-refund-requests-confirmed">Return Request Confirmed</a></li>
                       <li><a href="/account-profile">Profile</a></li>
-                      <li><a href="/account-address">Address</a></li>
-                      <li><a href="/account-shipping-methods">Shipping methods</a></li>
-                      <li><a href="/account-payment-methods">Payment Methods</a></li>
-                      
-                      <li><a href="/account-cancellation-requests">Cancellation Requests</a></li>
+                      <li><a href="/account-orders">Orders</a></li>
+                      <li><a href="/account-order-details">Order Details</a></li>
+                      <li><a href="/account-return-request-detail">Return Request Details</a></li>
+                      <li><a href="/account-refund-requests-confirmed">Return Request Confirmed</a></li>
+                      <li><a href="/account-shipping-methods">Shipping Method</a></li>
+                      <li><a href="/account-payment-methods">Payment Method</a></li>
+                      <li><a href="/account-cancellation-requests">Cancellation Request</a></li>
                     </ul>
+                  </li>
+                  <li v-else-if="isAdmin" class="sub-menu-down">
+                    <a href="/admin/account-dashboard"><span>My Account</span></a>
                   </li>
                 </ul>
 
@@ -441,14 +470,14 @@ watch(
                 <div class="extra-cell">
                   <ul class="header-right">
                     <li class="nav-item login-link">
-                    <a class="nav-link" href="/login">Login / Register</a>
+                    <NuxtLink class="nav-link" to="/login" data-router-link="1">Login / Register</NuxtLink>
                     </li>
                     <li class="nav-item search-link">
                       <a class="nav-link" href="javascript:void(0);" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
                         <i class="iconly-Light-Search"></i>
                       </a>
                     </li>
-                    <li class="nav-item wishlist-link">
+                    <li v-if="isLoggedIn" class="nav-item wishlist-link">
                       <a class="nav-link" href="javascript:void(0);" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                         <i class="iconly-Light-Heart2"></i>
                       </a>
@@ -456,7 +485,7 @@ watch(
                     <li class="nav-item cart-link">
                       <a href="javascript:void(0);" class="nav-link cart-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                         <i class="iconly-Broken-Buy"></i>
-                        <span class="badge badge-circle">5</span>
+                        <span class="badge badge-circle">{{ totalItems }}</span>
                       </a>
                     </li>
                     <li class="nav-item filte-link">
@@ -540,10 +569,10 @@ watch(
                       aria-controls="shopping-cart-pane"
                       aria-selected="true"
                     >
-                      Shopping Cart <span class="badge badge-light">5</span>
+                      Shopping Cart <span class="badge badge-light">{{ totalItems }}</span>
                     </button>
                   </li>
-                  <li class="nav-item" role="presentation">
+                  <li v-if="isLoggedIn" class="nav-item" role="presentation">
                     <button
                       class="nav-link"
                       id="wishlist"
@@ -564,21 +593,29 @@ watch(
                   <div class="tab-pane fade show active" id="shopping-cart-pane" role="tabpanel" aria-labelledby="shopping-cart" tabindex="0">
                     <div class="shop-sidebar-cart">
                       <ul class="sidebar-cart-list">
-                        <li v-for="(item, index) in sidebarCartItems" :key="`cart-${index}`">
+                        <li v-if="!hasCartItems" class="text-center text-muted py-3">
+                          Your cart is empty.
+                        </li>
+                        <li v-for="(item, index) in cartItems" :key="`cart-${item.product_id}-${item.size}-${item.color}-${index}`">
                           <div class="cart-widget">
                             <div class="dz-media me-3">
                               <img :src="item.image" alt="" />
                             </div>
                             <div class="cart-content">
-                              <h6 class="title"><a href="/product-thumbnail">{{ item.title }}</a></h6>
+                              <h6 class="title">
+                                <NuxtLink :to="`/product/${item.product_id}`">{{ item.title }}</NuxtLink>
+                              </h6>
+                              <small v-if="itemOption(item.size, item.color)" class="d-block text-muted">
+                                {{ itemOption(item.size, item.color) }}
+                              </small>
                               <div class="d-flex align-items-center">
                                 <div class="btn-quantity light quantity-sm me-3 ms-0 style-1">
-                                  <input type="text" :value="item.qty" name="demo_vertical2" />
+                                  <input type="text" :value="item.quantity" name="demo_vertical2" readonly />
                                 </div>
-                                <h6 class="dz-price mb-0">{{ item.price }} <del>{{ item.oldPrice }}</del></h6>
+                                <h6 class="dz-price mb-0">{{ formatPrice(item.price) }}</h6>
                               </div>
                             </div>
-                            <a href="javascript:void(0);" class="dz-close">
+                            <a href="javascript:void(0);" class="dz-close" @click.prevent="removeCartItem(index)">
                               <i class="ti-close"></i>
                             </a>
                           </div>
@@ -586,7 +623,7 @@ watch(
                       </ul>
                       <div class="cart-total">
                         <h5 class="mb-0">Subtotal:</h5>
-                        <h5 class="mb-0">300.00$</h5>
+                        <h5 class="mb-0">{{ formatPrice(subtotal) }}</h5>
                       </div>
                       <div class="mt-auto">
                         <div class="shipping-time">
@@ -602,14 +639,16 @@ watch(
                             </div>
                           </div>
                         </div>
-                        <a href="/shop-checkout" class="btn btn-outline-secondary btn-block m-b20">Checkout</a>
+                        <NuxtLink :to="hasCartItems ? '/shop-checkout' : '/shop-standard'" class="btn btn-outline-secondary btn-block m-b20">
+                          {{ hasCartItems ? 'Checkout' : 'Shop Now' }}
+                        </NuxtLink>
                     <a href="/shop-cart" class="btn btn-secondary btn-block">View Cart</a>
                       </div>
                     </div>
                   </div>
 
                   <!-- Wishlist Tab -->
-                  <div class="tab-pane fade" id="wishlist-pane" role="tabpanel" aria-labelledby="wishlist" tabindex="0">
+                  <div v-if="isLoggedIn" class="tab-pane fade" id="wishlist-pane" role="tabpanel" aria-labelledby="wishlist" tabindex="0">
                     <div class="shop-sidebar-cart">
                       <ul class="sidebar-cart-list">
                         <li v-for="(item, index) in wishlistItems" :key="`wish-${index}`">
@@ -696,5 +735,3 @@ watch(
       <!-- Header End -->
 
 </template>
-
-

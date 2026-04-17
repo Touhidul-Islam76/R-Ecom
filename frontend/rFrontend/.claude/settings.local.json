@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//d/bootstrap-admin-dashboard-template-2024-12-05-12-01-20-utc/Velonic_v6.0.0/Admin/dist/assets/css/**)",
+      "Read(//d/bootstrap-admin-dashboard-template-2024-12-05-12-01-20-utc/Velonic_v6.0.0/Admin/dist/**)",
+      "Bash(powershell -Command \"'{0:N2} MB' -f \\(\\(Get-ChildItem 'D:\\\\bootstrap-admin-dashboard-template-2024-12-05-12-01-20-utc\\\\Velonic_v6.0.0\\\\Admin\\\\dist\\\\assets' -Recurse | Measure-Object -Property Length -Sum\\).Sum / 1MB\\)\")"
+    ]
+  }
+}

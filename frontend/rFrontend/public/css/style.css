@@ -4497,7 +4497,7 @@ select.is-invalid {
   font-size: var(--bs-navbar-toggler-font-size);
   line-height: 1;
   color: var(--bs-navbar-color);
-  background-color: transparent;
+  background-color: black;
   border: var(--bs-border-width) solid var(--bs-navbar-toggler-border-color);
   border-radius: var(--bs-navbar-toggler-border-radius);
   transition: var(--bs-navbar-toggler-transition); }
@@ -13081,7 +13081,7 @@ section {
     margin-bottom: 0px; }
   .card .card-body {
     padding: 20px 30px;
-    background: #ffffff;
+    /* background: #ffffff; */
     border-radius: 15px; }
 
 .form-label {
